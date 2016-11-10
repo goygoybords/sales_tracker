@@ -46,21 +46,37 @@ $columns = array(
     array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`status`',          'dt' => 7, 'formatter' => function( $d, $row )
+            {
+                if($d == 0)
+                {
+                    return "Need Approval";
+                }
+                else if($d == 1)
+                {
+                    return "Approved";
+                }
+            },
+            'field' => 'status' 
+            ),
+    
+    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
                 return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
                         </a> &nbsp;
-                        <a href="../process/lead_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to delete this record?\')" >
+
+                        <a href="../process/order_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to delete this record?\')" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Delete
                             </span>
                         </a>
                         ';
             },
-            'field' => 'id' )
+            'field' => 'id' 
+            )
     );
 
 // SQL server connection information

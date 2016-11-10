@@ -82,7 +82,7 @@
 											</div>
 											<!-- <input type = "text" name = "filter" id = "filter"> -->
 											<input type = "submit" id = "filteraction" value = "Apply Filter" class = "btn btn-success">
-											<a href = "" id = "export" class = "btn btn-success">Export To Excel</a>
+											<a href = "../process/export2.php" id = "export" class = "btn btn-success">Export To Excel</a>
 												<br/>
 												<br/>
 												<table class = "table display responsive nowrap" id = "lead-tbl">
@@ -94,6 +94,7 @@
 														<th>Shipping Method</th>
 														<th>Remarks</th>
 														<th>Notes</th>
+														<th>Status</th>
 														<th>Action</th>
 													</thead>
 <!-- 													<tfoot>
