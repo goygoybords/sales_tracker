@@ -1,0 +1,74 @@
+/**************************
+*	Custom site style
+*	Brought to you by:SMY
+***************************/
+
+/** {
+
+    border: 1px solid black;
+}*/
+
+a, a:hover{
+	font-size: 14px;
+	text-decoration: none;
+}
+/**** Customer Tab ****/
+.remove_phone_group,.add_phone_group{
+    margin-top: 28px;
+    display: inline-block;
+    position: relative;
+    width: auto;
+    text-align: center;
+    float: left;
+}
+
+/**** Reports Tab ****/
+#reports .form-group .btn-success{
+	margin-top:25px;
+}
+/*#rproductionsum div,
+#rproduction div,
+#rquoted div,
+#rprospect .date{
+	display:inline-block;
+}*/
+#rgrade.form-horizontal .checkbox{
+    width: 15%;
+    display: inline-block;
+}
+/**** Admin Tab ****/
+.search_mod{
+	background:#ffefd5;
+}
+.customer_mod{
+	background:#ffd5d5;
+}
+.report_mod{
+	background:#d5edff;
+}
+div#msg_inf {
+    position: fixed;
+    z-index: 9999;
+    top: 10em;
+    left: 9em;
+}
+
+#spacer{
+	margin-top: 20px;
+
+}
+
+#profile-info{
+    margin-top: 12px;
+    color: darkgray;
+}
+
+.text-biz{
+    color: steelblue;
+}
+
+#div-add-user{
+    margin-left: auto;
+    margin-right: auto;
+}
+/*#listcus tbody tr>td:last-child{text-align: center;}*/
