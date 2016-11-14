@@ -114,36 +114,42 @@
 			height: 700,
 			header: false,
 			editable: true,
-			droppable: true,
-			drop: function (date, allDay) { // this function is called when something is dropped
-				// retrieve the dropped element's stored Event Object
-				var originalEventObject = $(this).data('eventObject');
+			droppable: false,
+			// drop: function (date, allDay) { // this function is called when something is dropped
+			// 	// retrieve the dropped element's stored Event Object
+			// 	var originalEventObject = $(this).data('eventObject');
 
-				// we need to copy it, so that multiple events don't have a reference to the same object
-				var copiedEventObject = $.extend({}, originalEventObject);
+			// 	// we need to copy it, so that multiple events don't have a reference to the same object
+			// 	var copiedEventObject = $.extend({}, originalEventObject);
 
-				// assign it the date that was reported
-				copiedEventObject.start = date;
-				copiedEventObject.allDay = allDay;
-				copiedEventObject.className = originalEventObject.className;
+			// 	// assign it the date that was reported
+			// 	copiedEventObject.start = date;
+			// 	copiedEventObject.allDay = allDay;
+			// 	copiedEventObject.className = originalEventObject.className;
 				
-				// render the event on the calendar
-				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+			// 	// render the event on the calendar
+			// 	// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+			// 	$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 
-				// is the "remove after drop" checkbox checked?
-				if ($('#drop-remove').is(':checked')) {
-					// if so, remove the element from the "Draggable Events" list
-					$(this).remove();
-				}
-			},
+			// 	// is the "remove after drop" checkbox checked?
+			// 	if ($('#drop-remove').is(':checked')) {
+			// 		// if so, remove the element from the "Draggable Events" list
+			// 		$(this).remove();
+			// 	}
+			// },
 			events: '../process/calendar_events_list.php',
 			eventClick: function(event) 
 					{
-				        if (event.url) {
-				            window.open(event.url);
-				            return false;
-				        }
+				        // if (event.url) {
+				        //     window.open(event.url);
+				        //     return false;
+				        // }
+				         $("#cal_event_title").val(event.title);
+				         $("#cal_description").val(event.description);
+				         $("#cal_start").val(event.start);
+				         $("#cal_end").val(event.end);
+				         $('#calendarModal').modal("show");
+				         console.log(event);
 				    },
 			eventRender: function (event, element) {
 				element.find('#date-title').html(element.find('span.fc-event-title').text());

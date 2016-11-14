@@ -76,7 +76,7 @@ $columns = array(
                             </span>
                         </a> &nbsp;
 
-                        <a href="../process/order_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
+                        <a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Approve This Record
                             </span>

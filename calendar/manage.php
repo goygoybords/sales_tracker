@@ -9,12 +9,12 @@
 
 	require '../class/database.php';
 	require '../class/calendar_events.php';
-	require '../model/calendar_events_model.php';
 
 
 	$event_id = (isset($_GET["id"]) ? $_GET["id"] : "");
+	$db = new Database();
 	$events = new CalendarEvents();
-	$events_model = new Calendar_Events_Model(new Database());
+	
 	$form_state = 1;
 	$form_header = "Create Calendar Event";
 	$submit_caption = "Create Event";
@@ -28,16 +28,17 @@
 				$fields = array('*');
 				$where = " id = ? ";
 				$params = array($event_id);
-				$events_data = $events_model->get_all($table, $fields, $where, $params);
+				$events_data = $db->select($table, $fields, $where, $params);
 
 				if(count($events_data))
 				{
 					foreach ($events_data as $l)
 					{
 						$events->setId($l['id']);
-						$events->setEvent_name($l['event_name']);
-						$events->setStart_date(date('m/d/Y', $l['start_date']));
-						$events->setEnd_date(date('m/d/Y', $l['end_date']));
+						$events->setEventName($l['event_name']);
+						$events->setDescription($l['description']);
+						$events->setStartDate(date('m/d/Y', $l['start_date']));
+						$events->setEndDate(date('m/d/Y', $l['end_date']));
 						$events->setStatus($l['status']);
 					}
 
@@ -93,7 +94,14 @@
 															<label for="eventname" class="col-sm-2 control-label">Event Name</label>
 															<div class="col-sm-10">
 																<input type="text" name = "eventname" class="form-control"  id="eventname"
-																value="<?php echo $events->getEvent_name(); ?>" required autofocus='autofocus'>
+																value="<?php echo $events->getEventName(); ?>" required autofocus='autofocus'>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="eventname" class="col-sm-2 control-label">Description</label>
+															<div class="col-sm-10">
+																<input type="text" name = "description" class="form-control"  id="description"
+																value="<?php echo $events->getDescription(); ?>" required >
 															</div>
 														</div>
 
@@ -103,7 +111,7 @@
 																<div class="input-group date" data-provide="datepicker">
 																	<div class="input-group-content">
 																		<input class="form-control static" name="start_date" id="datepicker"
-																		value="<?php echo $events->getStart_date(); ?>" type="text">
+																		value="<?php echo $events->getStartDate(); ?>" type="text">
 																	</div>
 																	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 																</div>
@@ -116,7 +124,7 @@
 																<div class="input-group date" data-provide="datepicker">
 																	<div class="input-group-content">
 																		<input class="form-control static" name="end_date" id="datepicker"
-																		value="<?php echo $events->getEnd_date(); ?>" type="text">
+																		value="<?php echo $events->getEndDate(); ?>" type="text">
 																	</div>
 																	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 																</div>
@@ -133,13 +141,7 @@
 																		$txt_name = "update_event";
 																?>
 																<button type="submit" name = "<?php echo $txt_name; ?>" class="btn btn-info"><?php echo $submit_caption; ?></button>
-																<?php
-																	if($form_state == 2)
-																	{
-																		echo "<button type='submit' name = 'delete_event'
-																		class='btn btn-warning' >Delete</button>";
-																	}
-																?>
+																
 															</div>
 														</div>
 													</div><!--end .card-body -->

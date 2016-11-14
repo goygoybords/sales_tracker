@@ -1,113 +1,154 @@
-<?php
-	class CalendarEvents
-	{
-		private $id;
+<?php /**
+* 
+    */
+    class CalendarEvents 
+    {
+        private $id;
         private $event_name;
-        private $leadid;
+        private $description;
         private $start_date;
         private $end_date;
-        private $datecreated;
         private $status;
-        private $description;
-        private $user;
-        private $event_type;
 
 
-        public function getEventType()
-        {
-            return $this->event_type;
-        }
-        public function setEventType($event_type)
-        {
-            return $this->event_type = $event_type;
-        }
-
-        public function getUser()
-        {
-            return $this->user;
-        }
-        public function setUser($user)
-        {
-            return $this->user = $user;
-        }
-
-        public function getDescription()
-        {
-            return $this->description;
-        }
-        public function setDescription($description)
-        {   
-            return $this->description = $description;
-        }
-
-        public function getId()
-        {
-            return $this->id;
-        }
-
-        public function setId($id){
-            $this->id = $id;
-        }
-
-        public function getLeadid()
-        {
-            return $this->leadid;
-        }
-
-        public function setLeadid($leadid)
-        {
-            $this->leadid = $leadid;
-        }
-
-        public function getEvent_name()
-        {
-            return $this->event_name;
-        }
-
-        public function setEvent_name($event_name)
-        {
-            $this->event_name = $event_name;
-        }
-
-        public function getStart_date()
-        {
-            return $this->start_date;
-        }
-
-        public function setStart_date($start_date)
-        {
-            $this->start_date = $start_date;
-        }
-
-        public function getEnd_date()
-        {
-            return $this->end_date;
-        }
-
-        public function setEnd_date($end_date)
-        {
-            $this->end_date = $end_date;
-        }
-
-        public function getDatecreated()
-        {
-            return $this->datecreated;
-        }
-
-        public function setDatecreated($datecreated)
-        {
-            $this->datecreated = $datecreated;
-        }
-
-        public function getStatus()
-        {
-            return $this->status;
-        }
-
-        public function setStatus($status)
-        {
-            $this->status = $status;
-        }
+    public function getId()
+    {
+        return $this->id;
     }
+
+    /**
+     * Sets the value of event_name.
+     *
+     * @param mixed $event_name the event name
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    
+    /**
+     * Gets the value of event_name.
+     *
+     * @return mixed
+     */
+    public function getEventName()
+    {
+        return $this->event_name;
+    }
+
+    /**
+     * Sets the value of event_name.
+     *
+     * @param mixed $event_name the event name
+     *
+     * @return self
+     */
+    public function setEventName($event_name)
+    {
+        $this->event_name = $event_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of description.
+     *
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the value of description.
+     *
+     * @param mixed $description the description
+     *
+     * @return self
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of start_date.
+     *
+     * @return mixed
+     */
+    public function getStartDate()
+    {
+        return $this->start_date;
+    }
+
+    /**
+     * Sets the value of start_date.
+     *
+     * @param mixed $start_date the start date
+     *
+     * @return self
+     */
+    public function setStartDate($start_date)
+    {
+        $this->start_date = $start_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of end_date.
+     *
+     * @return mixed
+     */
+    public function getEndDate()
+    {
+        return $this->end_date;
+    }
+
+    /**
+     * Sets the value of end_date.
+     *
+     * @param mixed $end_date the end date
+     *
+     * @return self
+     */
+    public function setEndDate($end_date)
+    {
+        $this->end_date = $end_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of status.
+     *
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Sets the value of status.
+     *
+     * @param mixed $status the status
+     *
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+}
 
 ?>

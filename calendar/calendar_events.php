@@ -10,14 +10,14 @@
 
 	require '../class/database.php';
 	require '../class/calendar_events.php';
-	require '../model/calendar_events_model.php';
 
-	$event_model = new Calendar_Events_Model(new Database());
+	$db = new Database();
+	
 		$table = 'calendar_events';
 		$fields = array('*');
 		$where = "status = ? ORDER BY 1 DESC";
 		$params = array(1);
-	$event_data = $event_model->get_all($table, $fields, $where, $params);
+	$event_data = $db->select($table, $fields, $where, $params);
 ?>
 <!-- BEGIN BASE-->
 <div id="base">

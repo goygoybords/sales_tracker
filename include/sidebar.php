@@ -36,13 +36,13 @@
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-calendar"></i></div>
-						<span class="title">Calendar</span>
+						<span class="title">Reminders</span>
 					</a>
 					<!--start submenu -->
 					<ul>
 						<li>
 							<a href="../calendar/calendar.php">
-								<span class="title">Calendar</span>
+								<span class="title">Calendar View</span>
 							</a>
 						</li>
 					<!-- 	<li>
@@ -52,7 +52,7 @@
 						</li> -->
 						<li>
 							<a href="../calendar/upcoming_events.php">
-								<span class="title">Upcoming Events</span>
+								<span class="title">Create Reminder</span>
 							</a>
 						</li>
 

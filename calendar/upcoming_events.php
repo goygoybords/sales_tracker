@@ -10,14 +10,16 @@
 
 	require '../class/database.php';
 	require '../class/calendar_events.php';
-	require '../model/calendar_events_model.php';
 
-	$event_model = new Calendar_Events_Model(new Database());
-		// $table = 'calendar_events';
-		// $fields = array('*');
-		// $where = "status = ? ORDER BY datecreated DESC";
-		// $params = array(1);
-	$event_data = $event_model->get_all_join();
+
+	$db = new Database();
+		$table = 'calendar_events';
+		$fields = array('*');
+		$where = "status = ? ORDER BY 1 DESC";
+		$params = array(1);
+
+		$event_data = $db->select($table, $fields, $where, $params);   
+           
 ?>
 <!-- BEGIN BASE-->
 <div id="base">
@@ -57,19 +59,16 @@
 							<div class="col-lg-offset-0 col-md-12">
 								<div class="card-body style-default-bright">
 									<div class="card-body">
-										<!-- <div class="row">
+										<div class="row">
 											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-												<a class="btn btn-success btn-block" href="manage.php" name="btnAddUser" id="btnAddUser">Create Calendar Events</a>
+												<a class="btn btn-success btn-block" href="manage.php" name="btnAddUser" id="btnAddUser">Create Calendar Event</a>
 											</div>
-										</div> -->
+										</div>
 										<br />
 										<div class="col-lg-offset-0 col-md-12">
 											<div class = "row" >
 												<table class = "display responsive nowrap" id = "event-tbl">
 													<thead>
-														<th>Date Created</th>
-														<th>Customer</th>
-														<th>Event Type</th>
 														<th>Event Name</th>
 														<th>Start Date</th>
 														<th>End Date</th>
@@ -80,37 +79,28 @@
 
 														<?php
 															$events = new CalendarEvents();
-															$events->setDatecreated(date('Y-m-d', $e['datecreated']));
-															$events->setEventType($e['event_type']);
-															$events->setEvent_name($e['event_name']);
-															$events->setStart_date(date('Y-m-d' , $e['start_date']));
-															$events->setEnd_date(date('Y-m-d' , $e['end_date']));
+															$events->setEventName($e['event_name']);
+															$events->setStartDate(date('Y-m-d' , $e['start_date']));
+															$events->setEndDate(date('Y-m-d' , $e['end_date']));
 															$events->setId($e['id']);
 														?>
 															<tr>
-																<td><?php echo $events->getDatecreated(); ?></td>
-																<td><?php echo $e['companyname']; ?></td>
+																<td><?php echo $events->getEventName(); ?></td>
+																<td><?php echo $events->getStartDate(); ?></td>
+																<td><?php echo $events->getEndDate();  ?></td>
 																<td>
-																	<?php 
-																		if( $events->getEventType() == 1 ) echo "Task";
-																		else if( $events->getEventType() == 2 ) echo "Appointment";  
-																	?>
-																</td>
-																<td><?php echo $events->getEvent_name(); ?></td>
-																<td><?php echo $events->getStart_date(); ?></td>
-																<td><?php echo $events->getEnd_date();  ?></td>
-																<td>
-																	<a href="../process/events_manage.php?id=<?php echo $events->getId(); ?>" >
+																	<a href="manage.php?id=<?php echo $events->getId(); ?>" >
 																		<span class="label label-inverse" style = "color:black;">
-																			<i class="fa fa-edit"></i> Finish
+																			<i class="fa fa-edit"></i> Edit
 																		</span>
 																	</a>
-																	<!--  <a href="../process/lead_manage.php?id='.$d.'&p=list&del"
-																	 onclick="return confirm(\'Are you sure you want to delete this record?\')" >
+																	 <a href="../process/events_manage.php?id=<?php echo $e['id']; ?>&p=list&del" 
+																	 onclick="return confirm('Are you sure you want to delete this record?')" >
 											                            <span class="label label-inverse" style = "color:black;">
 											                                <i class="fa fa-remove"></i> Delete
 											                            </span>
-											                        </a> -->
+											                        </a>
+																	 
 																</td>
 															</tr>
 														<?php endforeach; ?>
