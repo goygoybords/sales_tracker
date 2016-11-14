@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2016 at 03:06 AM
+-- Generation Time: Nov 14, 2016 at 01:50 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -19,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `sales_tracker`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `calendar_events`
+--
+
+CREATE TABLE `calendar_events` (
+  `id` int(11) NOT NULL,
+  `event_name` varchar(35) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `start_date` int(16) NOT NULL,
+  `end_date` int(16) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `calendar_events`
+--
+
+INSERT INTO `calendar_events` (`id`, `event_name`, `description`, `start_date`, `end_date`, `status`) VALUES
+(1, 'Order List', 'Test', 1479337200, 1479423600, 1);
 
 -- --------------------------------------------------------
 
@@ -307,10 +329,11 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `firstname`, `lastname`, `contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `status`) VALUES
-(1, 'Kevin updated1', 'Kho updated1', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 1),
+(1, 'Kevin ', 'Kane', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 1),
 (2, 'Kane', 'Undertaker', '123123', 230, 'Houston', 'Death Valley', '78787', 51, 1),
 (3, 'Chris', 'Tomlin', '123', 230, 'asdasd', 'cebu', '451', 3, 1),
-(4, 'asdasd', 'asdasdasd', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, 1);
+(4, 'asdasd', 'asdasdasd', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, 1),
+(5, 'ghjghjhghgj', 'ghjghh', '123123213', 230, 'asdsad', 'fdfg', '5000', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -335,10 +358,11 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `status`) VALUES
-(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0),
+(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 1),
 (2, 1478646000, 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0),
 (3, 1478646000, 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0),
-(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0);
+(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0),
+(5, 1478818800, 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0);
 
 -- --------------------------------------------------------
 
@@ -365,7 +389,8 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_pr
 (2, 1, 1, '5.00', '5.00', '25.00', 1),
 (3, 2, 1, '2.00', '2.00', '4.00', 1),
 (4, 3, 1, '2.00', '2.00', '0.00', 1),
-(5, 4, 1, '5.00', '5.00', '25.00', 1);
+(5, 4, 1, '5.00', '5.00', '25.00', 1),
+(6, 5, 3, '2.00', '5.00', '10.00', 1);
 
 -- --------------------------------------------------------
 
@@ -511,7 +536,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473717600, 1478732400, 1),
+(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473717600, 1479078000, 1),
 (2, 'Joaqui', 'Patino', 'patinoj@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473717600, 1477260000, 1),
 (3, 'Carlo', 'Jacaban', 'carloc@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473890400, 0, 0),
 (4, 'John', 'Doe', 'jdoe@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 3, 1478732400, 0, 1);
@@ -539,6 +564,12 @@ INSERT INTO `usertypes` (`id`, `type`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `calendar_events`
+--
+ALTER TABLE `calendar_events`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `countries`
@@ -599,6 +630,11 @@ ALTER TABLE `usertypes`
 --
 
 --
+-- AUTO_INCREMENT for table `calendar_events`
+--
+ALTER TABLE `calendar_events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `countries`
 --
 ALTER TABLE `countries`
@@ -607,17 +643,17 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `products`
 --
