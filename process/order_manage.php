@@ -12,6 +12,7 @@
 	extract($_POST);
 	if(!isset($_GET['approve']))
 	{
+	
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
 		$customer->setContactNumber(htmlentities($contact_num));
@@ -32,8 +33,9 @@
 
 		if(isset($_POST['save_order']))
 		{
-		
-			$data = [
+			if($customer_state == 0)
+			{
+				$data = [
 						'firstname' 	   => $customer->getFirstName(),
 						'lastname' 		   => $customer->getLastname() ,
 						'contact_number'   => $customer->getContactNumber() ,
@@ -45,8 +47,8 @@
 						'status' 		   => $customer->getStatus() ,
 					];
 
-
-			$customer_id = $db->insert("customer", $data);
+				$customer_id = $db->insert("customer", $data);
+			}
 			//orders
 			if($customer_id)
 			{

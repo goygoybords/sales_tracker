@@ -124,7 +124,7 @@
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
 													<select name = "customer_id" class = "form-control" id = "customer_id" >
-													<option value = "add-new-cust">Add New Customer</option>
+													<option value = "add-new-cust" selected>Add New Customer</option>
 													<?php foreach ($list_customer as $c ) : ?>
 							  							<option value ="<?php echo $c['id']; ?>">
 						  									<?php echo $c['firstname']." ".$c['lastname'] ?>
@@ -134,7 +134,7 @@
 													<label class="customer">Customer</label>
 												</div>
 
-													<input type="hidden" name="customer-state"  id = "customer-state" value = "0">
+													<input type="hidden" name="customer_state"  id = "customer-state" value = "0">
 											</div>	
 										
 											<div class="col-sm-4">
@@ -444,10 +444,62 @@
 					  url: "../process/ajax/get_specific_customer.php", 
 					  data: {"customer": customer} ,
 					  success: function(data)
-	                    {
-	                       	
-	                    }
+	                   {	
+	                   		var parse = JSON.parse(data);
+	                   		for (var i = 0; i < parse.length; i++) 
+	                   		{
+	                   			console.log();
+	                   			$("#firstname").val(parse[i].firstname).addClass("dirty");
+	                   			$("#lastname").val(parse[i].lastname).addClass("dirty");
+	                   			$("#contact_num").val(parse[i].contact_number).addClass("dirty");
+	                   			$("#address").val(parse[i].shipping_address).addClass("dirty");
+	                   			$("#city").val(parse[i].city).addClass("dirty");
+	                   			$("#zip").val(parse[i].zip).addClass("dirty");
+
+
+	                   			$('#country').val(parse[i].country_id);
+								$('#country').trigger('change');
+								$('[name=country] option').filter(function() 
+								{ 
+							    	return ($(this).val() == data.country_id);
+								}).prop('selected', true);
+
+								$('#state').val(parse[i].state_id);
+								$('#state').trigger('change');
+								$('[name=state] option').filter(function() 
+								{ 
+							    	return ($(this).val() == data.state_id);
+								}).prop('selected', true);
+	                   			
+	                   		} 	
+	                   }
 					}); 
+	       		}
+	       		else
+	       		{
+       				$("#customer-state").val(0);
+       				$("#firstname").val("").removeClass("dirty");
+                   	$("#lastname").val("").removeClass("dirty");
+                   	$("#contact_num").val("").removeClass("dirty");
+                   	$("#address").val("").removeClass("dirty");
+                   	$("#city").val("").removeClass("dirty");
+                   	$("#zip").val("").removeClass("dirty");
+
+
+                   	$('#country').val(0);
+					$('#country').trigger('change');
+					$('[name=country] option').filter(function() 
+					{ 
+				    	return ($(this).val() == 230 );
+					}).prop('selected', true);
+					$("#country").addClass("dirty");
+
+					$('#state').val(0);
+					$('#state').trigger('change');
+					// $('[name=state] option').filter(function() 
+					// { 
+				 //    	return ($(this).val() == data.state_id);
+					// }).prop('selected', true);
 
 	       		}
 	            
