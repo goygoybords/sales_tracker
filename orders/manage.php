@@ -28,6 +28,7 @@
 	$list_product = $db->select("products", array("*"), "status = ?" , array(1));
 	$list_countries = $db->select("countries" , array("*"));
 	$list_methods = $db->select("shipping_method", array("*") , "status = 1");
+	$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
 	
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
@@ -120,6 +121,22 @@
 										</div>
 
 										<div class="row">
+											<div class="col-sm-12">
+												<div class="form-group floating-label">
+													<select name = "customer_id" class = "form-control" id = "customer_id" >
+													<option value = "add-new-cust">Add New Customer</option>
+													<?php foreach ($list_customer as $c ) : ?>
+							  							<option value ="<?php echo $c['id']; ?>">
+						  									<?php echo $c['firstname']." ".$c['lastname'] ?>
+						  								</option>
+						  							<?php endforeach; ?>
+													</select>
+													<label class="customer">Customer</label>
+												</div>
+
+													<input type="hidden" name="customer-state"  id = "customer-state" value = "0">
+											</div>	
+										
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
 													<input type="text" name = "firstname" class="form-control" id="firstname" value="<?php echo $customer->getFirstName(); ?>" required >
@@ -354,10 +371,14 @@
 										<div class="row">
 
 											<div class="col-sm-12">
-												<div class="form-group floating-label">
+											<div class="form-group floating-label">
+														<textarea class ="form-control" name = "remarks" id = "remarks" rows = "5"><?php echo $order->getRemarks(); ?></textarea>
+													<label class="notes">Remarks</label>
+												</div>
+											<!-- 	<div class="form-group floating-label">
 														<input type="text" name="remarks" id = "remarks" class = "form-control" value="<?php echo $order->getRemarks(); ?>">
 													<label class="remarks">Remarks</label>
-												</div>
+												</div> -->
 											</div>
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
@@ -412,6 +433,26 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
+		 $('#customer_id').change(function()
+	       {
+	       		var customer = $( "#customer_id option:selected" ).val();
+	       		if(customer != 'add-new-cust')
+	       		{
+	       			$("#customer-state").val(1);
+	       			$.ajax({ 
+					  type: "POST", 
+					  url: "../process/ajax/get_specific_customer.php", 
+					  data: {"customer": customer} ,
+					  success: function(data)
+	                    {
+	                       	
+	                    }
+					}); 
+
+	       		}
+	            
+		});//end of i
+
 		  var counter = 0;
 		  var qty = 0;
 		  var price = 0.0;

@@ -24,6 +24,13 @@
 						<span class="title">Orders</span>
 					</a>
 				</li>
+				
+				<li>
+					<a href="../customer/customer.php">
+						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
+						<span class="title">Customer</span>
+					</a>
+				</li>
 
 				<li>
 					<a href="../product/product.php">
@@ -31,8 +38,7 @@
 						<span class="title">Product</span>
 					</a>
 				</li>
-				
-				
+
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-calendar"></i></div>
