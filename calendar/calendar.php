@@ -60,6 +60,66 @@
 					</div><!--end .section-body -->
 				</section>
 			</div><!--end #content-->
+
+			<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button> -->
+			<!-- Modal -->
+				<div id="calendarModal" class="modal fade">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Event Details</h4>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-11">
+										
+											<div class="card-body" id="div-add-lead">
+												<div class="form-group">
+													<label for="event_title" class="col-sm-2 control-label">Event:</label>
+													<div class="col-sm-10">
+														<input type="text" name = "eventname" class="form-control"  id="cal_event_title"
+														value="" readonly="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="event_title" class="col-sm-2 control-label">Description:</label>
+													<div class="col-sm-10">
+														<input type="text" name = "eventname" class="form-control"  id="cal_description"
+														value="" readonly="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="event_title" class="col-sm-2 control-label">Start:</label>
+													<div class="col-sm-10">
+														<input type="text" name = "eventname" class="form-control"  id="cal_start"
+														value="" readonly="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="event_title" class="col-sm-2 control-label">End:</label>
+													<div class="col-sm-10">
+														<input type="text" name = "eventname" class="form-control"  id="cal_end"
+														value="" readonly="">
+													</div>
+												</div>
+												
+											</div>
+									</div>
+								</div>
+													
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			
 			<!-- END CONTENT -->
 		</div>
 		<!-- END BASE -->

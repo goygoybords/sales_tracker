@@ -141,13 +141,7 @@
 																		$txt_name = "update_event";
 																?>
 																<button type="submit" name = "<?php echo $txt_name; ?>" class="btn btn-info"><?php echo $submit_caption; ?></button>
-																<?php
-																	if($form_state == 2)
-																	{
-																		echo "<button type='submit' name = 'delete_event'
-																		class='btn btn-warning' >Delete</button>";
-																	}
-																?>
+																
 															</div>
 														</div>
 													</div><!--end .card-body -->

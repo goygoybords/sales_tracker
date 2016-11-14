@@ -52,7 +52,7 @@
 						</li> -->
 						<li>
 							<a href="../calendar/upcoming_events.php">
-								<span class="title">Upcoming Events</span>
+								<span class="title">Create Event</span>
 							</a>
 						</li>
 

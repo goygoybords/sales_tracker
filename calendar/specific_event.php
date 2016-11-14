@@ -8,71 +8,29 @@
 	require('../include/header.php');
 
 	require '../class/database.php';
-	require '../class/lead.php';
 	require '../class/calendar_events.php';
+	
+	$db = new Database();
+	$events = new CalendarEvents();
 
-
-	require '../model/lead_model.php';
-	require '../model/calendar_events_model.php';
-
-
-	$customer_id = (isset($_GET["id"]) ? $_GET["id"] : "");
 	$event_id = (isset($_GET["event"]) ? $_GET["event"] : "");
 
-	$events = new CalendarEvents();
-	$leads = new Leads();
-	$events_model = new Calendar_Events_Model(new Database());
-	$lead_model = new Lead_Model(new Database());
-
+	
+	
 	$form_state = 1;
 	$form_header = "Join Event";
 	$submit_caption = "Join Event";
 
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
-	if($customer_id)
-	{
-		$table = 'calendar_events';
-		$fields = array('*');
-		$where = " status = ? ";
-		$params = array(1);
-		$events_data = $events_model->get_all($table, $fields, $where, $params);
-
-		$table = 'leads';
-		$fields = array('companyname');
-		$where = " id = ? AND status = ? ";
-		$params = array($customer_id, 1);
-		$company = $lead_model->get_by_id($table, $fields, $where, $params);
-		foreach ($company as $c )
-		{
-			$leads->setId($customer_id);
-			$leads->setCompanyname($c['companyname']);
-		}
-	}
-	if($event_id && $customer_id )
+	
+	if($event_id)
 	{
 		$submit_caption = "Event Detail";
 		$table = 'calendar_events';
 		$fields = array('*');
 		$where = " id = ? AND status = ? ";
 		$params = array($event_id, 2);
-		$events_data = $events_model->get_all($table, $fields, $where, $params);
-
-		foreach ($events_data as $d )
-		{
-			$events->setEvent_name($d['event_name']);
-		}
-
-		$table = 'leads';
-		$fields = array('companyname');
-		$where = " id = ? AND status = ? ";
-		$params = array($customer_id, 1);
-		$company = $lead_model->get_by_id($table, $fields, $where, $params);
-		foreach ($company as $c )
-		{
-			$leads->setId($customer_id);
-			$leads->setCompanyname($c['companyname']);
-		}
-
+		$events_data = $db->select($table, $fields, $where, $params);
 	}
 
 ?>
