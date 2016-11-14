@@ -57,38 +57,39 @@
 			header("location: ../calendar/manage.php?id=".$events->getId()."&msg=updated");
 	}
 	
-	else if(isset($_POST['delete_event']))
-	{
-		$events->setId($id);
-		$events->setStatus(0);
-		$fields = array('status');
-		$where  = "WHERE id = ?";
-		$params = array(
-								$events->getStatus(),
-								$events->getId()
-							);
-		$result = $events_model->updateEvent($table, $fields, $where, $params);
-		header("location: ../calendar/manage.php?id=".$events->getId()."&msg=deleted");
-	}
+	// else if(isset($_POST['delete_event']))
+	// {
+	// 	$events->setId($id);
+	// 	$events->setStatus(0);
+	// 	$fields = array('status');
+	// 	$where  = "WHERE id = ?";
+	// 	$params = array(
+	// 							$events->getStatus(),
+	// 							$events->getId()
+	// 						);
+	// 	$result = $events_model->updateEvent($table, $fields, $where, $params);
+	// 	header("location: ../calendar/manage.php?id=".$events->getId()."&msg=deleted");
+	// }
 
-	else if(isset($_POST['join_event']))
-	{
-		$events->setId($event);
-		$events->setLead_id($id);
-		$events->setStatus(2);
-		$fields = array('lead_id', 'status');
-		$where  = "WHERE id = ? and status = 1";
-		$params = array(
-								$events->getLead_id(),
-								$events->getStatus(),
-								$events->getId()
-							);
-		$result = $events_model->updateEvent($table, $fields, $where, $params);
-		header("location: ../calendar/specific_event.php?id=".$events->setLead_id()."&msg=joined");
-	}
+	// else if(isset($_POST['join_event']))
+	// {
+	// 	$events->setId($event);
+	// 	$events->setLead_id($id);
+	// 	$events->setStatus(2);
+	// 	$fields = array('lead_id', 'status');
+	// 	$where  = "WHERE id = ? and status = 1";
+	// 	$params = array(
+	// 							$events->getLead_id(),
+	// 							$events->getStatus(),
+	// 							$events->getId()
+	// 						);
+	// 	$result = $events_model->updateEvent($table, $fields, $where, $params);
+	// 	header("location: ../calendar/specific_event.php?id=".$events->setLead_id()."&msg=joined");
+	// }
 	
-	if(isset($_GET['id']))
+	if(isset($_GET['id']) && isset($_GET['del']))
 	{
+
 		$events->setId($_GET['id']);
 		$events->setStatus(0);
 		$fields = array('status');
@@ -97,7 +98,7 @@
 								$events->getStatus(),
 								$events->getId()
 							);
-		$result = $events_model->updateEvent($table, $fields, $where, $params);
+		$result = $db->update($table, $fields, $where, $params);
 		header("location: ../calendar/upcoming_events.php");
 	}
 
