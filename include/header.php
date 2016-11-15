@@ -8,7 +8,7 @@
 					<li class="header-nav-brand" >
 						<div class="brand-holder">
 							<a href="">
-								<span class="text-lg text-bold text-biz"><i class="fa fa-cube fa-fw"></i>CRM</span>
+								<span class="text-lg text-bold text-biz"><i class="fa fa-cube fa-fw"></i>Sales Tracker</span>
 							</a>
 						</div>
 					</li>
