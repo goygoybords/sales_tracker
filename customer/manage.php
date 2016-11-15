@@ -38,6 +38,7 @@
 						$customer->setCustomerId($c['id']);
 						$customer->setFirstname($c['firstname']);
 						$customer->setLastname($c['lastname']);
+						$customer->setEmail($c['email']);
 						$customer->setContactNumber($c['contact_number']);
 						$customer->setCountryId($c['country_id']);
 						$customer->setShippingAddress($c['shipping_address']);
@@ -91,20 +92,26 @@
 										</div>
 
 										<div class="row">
-											<div class="col-sm-4">
+											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text" name = "firstname" class="form-control" id="firstname" value="<?php echo $customer->getFirstName(); ?>" >
 													<label for="firstname">First Name</label>
 												</div>
 											</div>
 
-											<div class="col-sm-4">
+											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text" name = "lastname" class="form-control" id="lastname" value="<?php echo $customer->getLastName(); ?>" >
 													<label for="lastname">Last Name</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<input type="email" name = "email" class="form-control" id="email" value="<?php echo $customer->getEmail(); ?>" >
+													<label for="email">Email Address</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text" name = "contact_num" class="form-control" id="contact_num" value="<?php echo $customer->getContactNumber(); ?>" required >
 													<label for="lastname">Contact Number</label>

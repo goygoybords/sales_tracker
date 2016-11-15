@@ -7,6 +7,7 @@
         private $customer_id;
         private $firstname;
         private $lastname;
+        private $email;
         private $contact_number;
         private $country_id;
         private $shipping_address;
@@ -83,6 +84,18 @@
         public function setLastname($lastname)
         {
             $this->lastname = $lastname;
+
+            return $this;
+        }
+
+        public function getEmail()
+        {
+            return $this->email;
+        }
+
+        public function setEmail($email)
+        {
+            $this->email = $email;
 
             return $this;
         }

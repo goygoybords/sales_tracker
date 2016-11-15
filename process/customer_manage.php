@@ -15,6 +15,7 @@
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
 		$customer->setContactNumber(htmlentities($contact_num));
+		$customer->setEmail(htmlentities($email));
 		$customer->setCountryId(intval($country));
 		$customer->setShippingAddress(htmlentities($address));
 		$customer->setStateId(intval($state));
@@ -22,13 +23,13 @@
 		$customer->setZip(htmlentities($zip));
 		$customer->setStatus(1);
 
-
 		if(isset($_POST['save_customer']))
 		{
 		
 			$data = [
 						'firstname' 	   => $customer->getFirstName(),
 						'lastname' 		   => $customer->getLastname() ,
+						'email'			   => $customer->getEmail(),
 						'contact_number'   => $customer->getContactNumber() ,
 						'country_id'  	   => $customer->getCountryId()   ,
 						'shipping_address' => $customer->getShippingAddress()      ,
@@ -40,22 +41,18 @@
 
 
 			$customer_id = $db->insert("customer", $data);
-			//orders
-			
 			header("location: ../customer/manage.php?msg=inserted");
-				
-				
-			
 		}
 		if(isset($_POST['update_customer']))
 		{
 			$customer->setCustomerId($customer_id_fm);
 
-			$fields = array('firstname' ,'lastname' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id');
+			$fields = array('firstname' ,'lastname','email' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
 						$customer->getFirstname(),
 						$customer->getLastname(),
+						$customer->getEmail(),
 						$customer->getContactNumber(),
 						$customer->getCountryId(),
 						$customer->getShippingAddress(),
