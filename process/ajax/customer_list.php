@@ -36,11 +36,19 @@ $columns = array(
     array( 'db' => '`c`.`shipping_address`',  'dt' => 4, 'field' => 'shipping_address' ),
     array( 'db' => '`c`.`id`',              'dt' => 5, 'formatter' => function( $d, $row )
             {
-                return '<a href="manage.php?id='.$d.'" >
+                return '
+                         <a href="customer_orders.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> View Orders
+                            </span>
+                        </a> &nbsp;
+                        
+                        <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
                         </a> &nbsp;
+                       
                         <a href="../process/customer_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to delete this record?\')" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Delete

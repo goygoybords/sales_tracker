@@ -67,6 +67,7 @@
 						$customer->setCustomerId($c['id']);
 						$customer->setFirstname($c['firstname']);
 						$customer->setLastname($c['lastname']);
+						$customer->setEmail($c['email']);
 						$customer->setContactNumber($c['contact_number']);
 						$customer->setCountryId($c['country_id']);
 						$customer->setShippingAddress($c['shipping_address']);
@@ -137,20 +138,26 @@
 													<input type="hidden" name="customer_state"  id = "customer-state" value = "0">
 											</div>	
 										
-											<div class="col-sm-4">
+											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text" name = "firstname" class="form-control" id="firstname" value="<?php echo $customer->getFirstName(); ?>" required >
 													<label for="firstname">First Name</label>
 												</div>
 											</div>
 
-											<div class="col-sm-4">
+											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text" name = "lastname" class="form-control" id="lastname" value="<?php echo $customer->getLastName(); ?>" required >
 													<label for="lastname">Last Name</label>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<input type="email" name = "email" class="form-control" id="email" value="<?php echo $customer->getEmail(); ?>" >
+													<label for="email">Email Address</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text" name = "contact_num" class="form-control" id="contact_num" value="<?php echo $customer->getContactNumber(); ?>" required >
 													<label for="lastname">Contact Number</label>
@@ -452,6 +459,7 @@
 	                   			$("#firstname").val(parse[i].firstname).addClass("dirty");
 	                   			$("#lastname").val(parse[i].lastname).addClass("dirty");
 	                   			$("#contact_num").val(parse[i].contact_number).addClass("dirty");
+	                   			$("#email").val(parse[i].email).addClass("dirty");
 	                   			$("#address").val(parse[i].shipping_address).addClass("dirty");
 	                   			$("#city").val(parse[i].city).addClass("dirty");
 	                   			$("#zip").val(parse[i].zip).addClass("dirty");
@@ -481,6 +489,7 @@
        				$("#firstname").val("").removeClass("dirty");
                    	$("#lastname").val("").removeClass("dirty");
                    	$("#contact_num").val("").removeClass("dirty");
+                   	$("#email").val("").removeClass("dirty");
                    	$("#address").val("").removeClass("dirty");
                    	$("#city").val("").removeClass("dirty");
                    	$("#zip").val("").removeClass("dirty");

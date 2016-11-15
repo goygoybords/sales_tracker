@@ -50,7 +50,7 @@
 					}
 				
 					$form_state = 2;
-					$form_header = "Edit Order Details";
+					$form_header = "Edit Customer Details";
 					$submit_caption = "Save Changes";
 					$submit_name = "update_customer";
 				}
