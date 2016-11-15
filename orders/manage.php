@@ -312,7 +312,7 @@
 										  								value = "<?php echo $details->getQuantity();  ?>">		
 													  				</td>
 										  							<td>
-										  								<input type = "text" class = "form-control lblUprice" name = "unit_price[]" placeholder="Unit Price" 
+										  								<input type = "text" class = "form-control lblUprice" readonly name = "unit_price[]" placeholder="Unit Price" 
 										  								value = "<?php echo $details->getUnitPrice(); ?>">
 										  							</td>
 										  							<td>
@@ -541,25 +541,31 @@
 	                        }
 	                        $('.item_list'+counter).change(function()
 	                         {
-	                            	$('.quantity'+counter).change(function () 
-								  	{ 
-								  		qty = parseInt($(".quantity"+counter).val());
-								  		
-								  		 $('.lblUprice'+counter).change(function () 
-										  	{ 
-										  		price = parseFloat($(".lblUprice"+counter).val());
+	                         	var item = $(".item_list"+counter+" option:selected").val();
+					       	  	$.ajax({
+				                        type: "POST",
+				                        url: '../process/ajax/get_specific_item.php',
+				                        data: { item: item },
+				                        success: function(data)
+				                        {   
+				                        	var parse = JSON.parse(data);
+				                            parseFloat($('.lblUprice'+counter).val(parse[0].product_price));
+				                            // // compute amount
+				                             $('.quantity'+counter).change(function()
+				                             {
+
+				                             	qty = parseInt($(".quantity"+counter).val());
+				                             	price = parseFloat($(".lblUprice"+counter).val());
 										  		amount = parseFloat(qty * price);
 	                                                // compute total
 	                                                //total = parseFloat($('.displayTotal').val());
-	                                                grand = parseFloat( total + amount + shipping);
+	                                             grand = parseFloat( total + amount + shipping);
 	                                                // grand = parseFloat(total);
 										  		$(".lblAmount"+counter).val(amount.toFixed(2));
 										  		$(".displayTotal").val(grand.toFixed(2));
-										  	}
-										  );
-								  	}
-								  );
-	                            
+				                            });
+				                        }
+				                    }); // end of ajax   
 	                        });//end of item list
 	                    }
 	                }); // end of ajax                 
@@ -567,23 +573,35 @@
 
 		  $('.item_list').change(function()
 	       {
-	            $('.quantity').change(function () 
-			  	{ 
-			  		qty = parseInt($(".quantity").val());
-			  		console.log(qty);
-			  		 $('.lblUprice').change(function () 
-					  	{ 
-					  		price = parseFloat($(".lblUprice").val());
-					  		amount = parseFloat(qty * price);
-					  		total = parseFloat(amount);
-					  		grand = parseFloat(total + shipping);
+	       		var item = $(".item_list option:selected").val();
+	       	  	$.ajax({
+                        type: "POST",
+                        url: '../process/ajax/get_specific_item.php',
+                        data: { item: item },
+                        success: function(data)
+                        {   
+                        	var parse = JSON.parse(data);
+                            parseFloat($('.lblUprice').val(parse[0].product_price));
+                            // // compute amount
+                             $('.quantity').change(function()
+                             {
+
+                             	qty = parseInt($(".quantity").val());
+                          		price = $(".lblUprice").val();
+                           
+                             	amount = parseFloat(qty * price);
+					  			total = parseFloat(amount);
+					  			grand = parseFloat(total + shipping);
 					  	
-					  		$(".lblAmount").val(amount.toFixed(2));
-					  		$(".displayTotal").val(grand.toFixed(2) );
-					  	}
-					  );
-			  	}
-			  );
-			});//end of item list	   
+						  		$(".lblAmount").val(amount.toFixed(2));
+						  		$(".displayTotal").val(grand.toFixed(2) );
+                            });
+                        }
+                    }); // end of ajax   
+			});//end of item list	
+
+
+
+
 	} );
 </script>
