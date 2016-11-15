@@ -36,9 +36,9 @@
 				$customer->setZip($c['zip']);
 				$customer->setStateId($c['state_id']);
 				$customer->setStatus($c['status']);
-
 			}
-		}	
+		}
+		$get_orders = $db->select('orders', array('*'), 'customer_id = ?', array($customer_id))	;
 	}
 
 ?>
@@ -109,13 +109,27 @@
 														<div class="col-lg-offset-0 col-md-12">
 															<table class = "table display responsive nowrap" id = "lead-tbl">
 																<thead>
-																	<th>ID</th>
-																	<th>Firstname</th>
-																	<th>Lastname</th>
-																	<th>Contact Number</th>
-																	<th>Shipping Address</th>
+																	<th>Invoice Number</th>
+																	<th>Remarks</th>
+																	<th>Total</th>
 																	<th>Action</th>
 																</thead>
+																<tbody>
+																	<?php foreach($get_orders as $o): ?>
+																	<tr>
+																		<td><?php echo "INV-".$o['id'];?></td>
+																		<td><?php echo $o['remarks'];?></td>
+																		<td><?php echo $o['total'];?></td>
+																		<td> 
+																		<a href="../orders/manage.php?id=<?php echo $o['id']; ?>&view" >
+												                            <span class="label label-inverse" style = "color:black;">
+												                                <i class="fa fa-edit"></i> View Record
+												                            </span>
+												                        </a> &nbsp;
+												                        </td>
+																	</tr>
+																	<?php endforeach;?>
+																</tbody>
 															</table>
 														</div>
 													</div>
@@ -143,19 +157,6 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{		
-		var dataTable = $('#lead-tbl').DataTable(
-	    {
-			// "bProcessing": true,
-			// "bServerSide": true,
-			// 	"responsive": true,
-	  //       "sPaginationType": "full_numbers",
-	  //       "order": [0,'desc'],
-	  //           "ajax":{
-	  //               url :"../process/ajax/customer_list.php", // json datasource
-	  //               type: "get",  // method  , by default get
-	  //           }
-
-
-	    } );
+		var dataTable = $('#lead-tbl').DataTable();
 	} );
 </script>
