@@ -36,6 +36,18 @@
 	$customer = new Customer();
 	$order->setShippingFee(5.00);
 
+	if(isset($_GET['view']))
+	{
+		$read_only = "readonly";
+		$style = "display:none";
+		$disabled = "disabled";
+	}
+	else
+	{
+		$read_only = "";
+		$style = "";
+		$disabled = "";
+	}
 										
 	if($order_id)
 	{
@@ -122,7 +134,7 @@
 										</div>
 
 										<div class="row">
-											<div class="col-sm-12">
+											<div class="col-sm-12" style="<?php echo $style; ?>">
 												<div class="form-group floating-label">
 													<select name = "customer_id" class = "form-control" id = "customer_id" >
 													<option value = "add-new-cust" selected>Add New Customer</option>
@@ -137,29 +149,30 @@
 
 													<input type="hidden" name="customer_state"  id = "customer-state" value = "0">
 											</div>	
-										
+											
+
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name = "firstname" class="form-control" id="firstname" value="<?php echo $customer->getFirstName(); ?>" required >
+													<input type="text" name = "firstname" <?php echo $read_only; ?> class="form-control" id="firstname" value="<?php echo $customer->getFirstName(); ?>" required >
 													<label for="firstname">First Name</label>
 												</div>
 											</div>
 
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name = "lastname" class="form-control" id="lastname" value="<?php echo $customer->getLastName(); ?>" required >
+													<input type="text" name = "lastname" class="form-control" <?php echo $read_only; ?> id="lastname" value="<?php echo $customer->getLastName(); ?>" required >
 													<label for="lastname">Last Name</label>
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="email" name = "email" class="form-control" id="email" value="<?php echo $customer->getEmail(); ?>" >
+													<input type="email" name = "email" class="form-control" <?php echo $read_only; ?> id="email" value="<?php echo $customer->getEmail(); ?>" >
 													<label for="email">Email Address</label>
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name = "contact_num" class="form-control" id="contact_num" value="<?php echo $customer->getContactNumber(); ?>" required >
+													<input type="text" name = "contact_num" class="form-control" <?php echo $read_only; ?> id="contact_num" value="<?php echo $customer->getContactNumber(); ?>" required >
 													<label for="lastname">Contact Number</label>
 												</div>
 											</div>
@@ -171,7 +184,7 @@
 										<div class="row">
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<select name = "country" class = "form-control" id = "country" >
+													<select name = "country" class = "form-control" id = "country" <?php echo $disabled; ?> >
 													<option value="230">United States</option>
 													<?php 
 						  								foreach ($list_countries as $p ) : 
@@ -192,7 +205,7 @@
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name = "address" class="form-control"  id="address" value="<?php echo $customer->getShippingAddress(); ?>" required>
+													<input type="text" name = "address" class="form-control" <?php echo $read_only; ?>  id="address" value="<?php echo $customer->getShippingAddress(); ?>" required>
 													<label class="address">Address</label>
 												</div>
 											</div>
@@ -200,7 +213,7 @@
 										<div class="row">
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<select name = "state" class = "form-control" id = "state" required>
+													<select name = "state" class = "form-control" id = "state"  <?php echo $disabled; ?> >
 														<option></option>
 														<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
 														<?php
@@ -221,14 +234,14 @@
 
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name = "city" class="form-control" id="city" required value="<?php echo $customer->getCity(); ?>">
+													<input type="text" name = "city" class="form-control" id="city"  <?php echo $read_only; ?> value="<?php echo $customer->getCity(); ?>">
 													<label class="city">City</label>
 												</div>
 											</div>
 
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name = "zip" class="form-control" id="zip" required value="<?php echo $customer->getZip(); ?>" >
+													<input type="text" name = "zip" class="form-control" id="zip"  <?php echo $read_only; ?> value="<?php echo $customer->getZip(); ?>" >
 													<label class="zip">Zip</label>
 												</div>
 											</div>
@@ -261,7 +274,7 @@
 								  						<?php if($form_state == 1): ?>
 															<tr>
 									  							<td>
-									  								<select  name = "product[]" class = "form-control item_list browser-default">
+									  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list browser-default">
 										  							<option disabled selected>Choose Items Here</option>
 												  							<?php 
 												  								foreach ($list_product as $p ) : 
@@ -277,7 +290,7 @@
 												  					</select>
 									  							</td>
 									  							<td>
-									  								<input type="text" name="quantity[]" class = "form-control quantity browser-default" placeholder="Quantity" >		
+									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" placeholder="Quantity" >		
 												  				</td>
 									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" placeholder="Unit Price"></td>
 									  							<td><input type = "text" class = "form-control lblAmount" readonly name = "amount[]" placeholder="Amount"></td>
@@ -296,7 +309,7 @@
 								  							?>
 									  							<tr>
 										  							<td>
-										  								<select  name = "product[]" class = "form-control item_list browser-default">
+										  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list browser-default">
 											  							<option disabled selected>Choose Items Here</option>
 											  								<?php 
 													  								foreach ($list_product as $p ) : 
@@ -315,7 +328,7 @@
 													  					</select>
 										  							</td>
 										  							<td>
-										  								<input type="text" name="quantity[]" class = "form-control quantity browser-default" placeholder="Quantity" 
+										  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" placeholder="Quantity" 
 										  								value = "<?php echo $details->getQuantity();  ?>">		
 													  				</td>
 										  							<td>
@@ -355,7 +368,7 @@
 										<div class="row">
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
-													<select name = "shipping_method" class = "form-control" id = "shipping_method" required>
+													<select name = "shipping_method" class = "form-control" <?php echo $disabled; ?> id = "shipping_method" required>
 														<?php foreach ($list_methods as $m ): 
 															$method = new Shipping_Method();
 															$method->setId($m['id']);
@@ -379,7 +392,7 @@
 
 											<div class="col-sm-12">
 											<div class="form-group floating-label">
-														<textarea class ="form-control" name = "remarks" id = "remarks" rows = "5"><?php echo $order->getRemarks(); ?></textarea>
+														<textarea class ="form-control" name = "remarks" <?php echo $read_only; ?> id = "remarks" rows = "5"><?php echo $order->getRemarks(); ?></textarea>
 													<label class="notes">Remarks</label>
 												</div>
 											<!-- 	<div class="form-group floating-label">
@@ -389,7 +402,7 @@
 											</div>
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
-														<textarea class ="form-control" name = "notes" id = "notes" rows = "5"><?php echo $order->getNotes(); ?></textarea>
+														<textarea class ="form-control" name = "notes" <?php echo $read_only; ?> id = "notes" rows = "5"><?php echo $order->getNotes(); ?></textarea>
 													<label class="notes">Notes</label>
 												</div>
 											</div>
@@ -398,7 +411,8 @@
 										<div class="row">
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
 												
-												<button type="submit" name = "<?php echo $submit_name; ?>" class="btn btn-info"><?php echo $submit_caption; ?></button>
+												<button type="submit" style="<?php echo $style; ?>" name = "<?php echo $submit_name; ?>" class="btn btn-info">
+												<?php echo $submit_caption; ?></button>
 												
 											</div>
 										</div>
