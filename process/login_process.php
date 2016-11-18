@@ -32,7 +32,7 @@
 				$_SESSION['user_type'] = $l['usertypeid'];
 				$_SESSION['isLogin'] = true;
 				$db->update("users", array('datelastlogin'), "WHERE id = ?" , array($user->getDatelastlogin() , $l['id']));
-				header("location: ../orders/orders.php");
+				header("location: ../orders/unapproved_orders.php");
 			}
 		}
 		else

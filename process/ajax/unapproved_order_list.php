@@ -47,24 +47,8 @@ $columns = array(
     array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => '`o`.`status`',      'dt' => 7, 'formatter' => function( $d, $row )
-            {
-                $_SESSION['status'] = $d;
-                if($d == 0)
-                {
-                    return "Record Needs Approval";
-                }
-                else if($d == 1)
-                {
-                    return "Record Approved";
-                }
-                
-                
-            },
-            'field' => 'status' 
-            ),
-    
-    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
+
+    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
                 {

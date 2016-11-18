@@ -133,6 +133,7 @@
 																	<option value = "1" <?php if($user->getUsertypeid() == 1) echo "selected"; ?> >Admin</option>
 																	<option value = "2" <?php if($user->getUsertypeid() == 2) echo "selected"; ?> >QA</option>
 																	<option value = "3" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Agent</option>
+																	<option value = "4" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Team Leader</option>
 																</select>
 															</div>
 														</div>

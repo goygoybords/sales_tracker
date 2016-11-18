@@ -382,8 +382,127 @@
 													<label class="method">Shipping Method</label>
 												</div>
 											</div>
+										</div>
+
+										<div class="form-group">
+											<label><b>BILLING DETAILS</b></label>
+										</div>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="form-group floating-label">
+													<select name = "payment_method" class = "form-control" <?php echo $disabled; ?> id = "payment_method" >
+														<option value = "1">Credit Card</option>
+														<option value = "2">Direct Debit</option>
+														<option value = "3">Check Payment</option>
+													</select>
+													<label class="method">Payment Method</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+    										<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<select name="card_type" class = "form-control" id = "card_type">
+												    	<option value="MasterCard">MasterCard</option>
+												      	<option value="American Express">American Express</option>
+												      	<option value="Carte Blanche">Carte Blanche</option>
+												      	<option value="Diners Club">Diners Club</option>
+													    <option value="Discover">Discover</option>
+													    <option value="Enroute">enRoute</option>
+													    <option value="JCB">JCB</option>
+													    <option value="Maestro">Maestro</option>
+													    <option value="MasterCard">MasterCard</option>
+													    <option value="Solo">Solo</option>
+													    <option value="Switch">Switch</option>
+													    <option value="Visa">Visa</option>
+													    <option value="Visa Electron">Visa Electron</option>
+													    <option value="LaserCard">Laser</option>
+												    </select>
+													<label class="card_type">Card Type</label>
+												</div>
+											</div> 
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<input type="text" name="cardholder" class = "form-control">
+													<label class="card_holder">Card Holders Name</label>
+												</div>
+											</div>
 											
 										</div>
+
+
+										<!-- billing address -->
+										<div class="form-group">
+											<label><b>BILLING ADDRESS </b></label>
+										</div>
+
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<select name = "billing_country" class = "form-control" id = "billing_country" <?php echo $disabled; ?> >
+													<option value="230">United States</option>
+													<?php 
+						  								foreach ($list_countries as $p ) : 
+						  								
+						  									$countries = new Countries();
+						  									$countries->setCountryId($p['country_id']);
+						  									$countries->setCountryName($p['country_name']);
+						  							?>
+							  							<option value ="<?php echo $countries->getCountryId(); ?>"
+														<?php echo ($countries->getCountryId() == $customer->getCountryId() ? "selected='selected'" : ""); ?>
+							  							>
+						  									<?php echo $countries->getCountryName(); ?>
+						  								</option>
+						  							<?php endforeach; ?>
+													</select>
+													<label class="country">County</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<input type="text" name = "billing_address" class="form-control" <?php echo $read_only; ?>  id="billing_address" value="<?php echo $customer->getShippingAddress(); ?>" required>
+													<label class="address">Address</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<select name = "billing_state" class = "form-control" id = "billing_state"  <?php echo $disabled; ?> >
+														<option></option>
+														<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
+														<?php
+															$state = new State();
+															$state->setId($s['id']);
+															$state->setCode($s['code']);
+														?>
+															<option value = "<?php echo $state->getId(); ?>"
+																<?php echo ($state->getId() == $customer->getStateId() ? "selected='selected'" : ""); ?>
+															>
+																<?php echo $state->getCode(); ?>
+															</option>
+														<?php endforeach; ?>
+													</select>
+													<label class="state">State</label>
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "billing_city" class="form-control" id="billing_city"  <?php echo $read_only; ?> value="<?php echo $customer->getCity(); ?>">
+													<label class="city">City</label>
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "billing_zip" class="form-control" id="billing_zip"  <?php echo $read_only; ?> value="<?php echo $customer->getZip(); ?>" >
+													<label class="zip">Zip</label>
+												</div>
+											</div>
+										</div>
+										<!-- end of billing address -->
 
 										<div class="form-group">
 											<label><b>REMARKS AND NOTES</b></label>

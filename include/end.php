@@ -36,10 +36,11 @@
 		<script src="../assets/js/jquery.cookie.js"></script>
 	
 		<!-- END JAVASCRIPT -->
-	
+			
 		<script type="text/javascript">
-			$( document ).ready(function() 
-			{	 
+				// $.removeCookie('msg', 'str'); 
+			// $( document ).ready(function() 
+			// {	 
 				if($.cookie('msg') == null)
 		        {
 		            $.ajax({
@@ -65,9 +66,8 @@
 		       else
 		       {
 		       		$.cookie('msg', 'str');    
-
 		       }
-			});
+			// });
 		</script>
 	</body>
 </html>

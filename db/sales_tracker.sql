@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2016 at 01:50 AM
+-- Generation Time: Nov 18, 2016 at 04:28 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -40,7 +40,8 @@ CREATE TABLE `calendar_events` (
 --
 
 INSERT INTO `calendar_events` (`id`, `event_name`, `description`, `start_date`, `end_date`, `status`) VALUES
-(1, 'Order List', 'Test', 1479337200, 1479423600, 1);
+(1, 'Order List', 'Test', 1479337200, 1479423600, 1),
+(2, 'Undertaker Returns', 'the return of the deadman', 1480028400, 1480201200, 1);
 
 -- --------------------------------------------------------
 
@@ -315,12 +316,17 @@ CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `contact_number` varchar(15) NOT NULL,
   `country_id` int(11) NOT NULL,
   `shipping_address` varchar(250) NOT NULL,
   `city` varchar(50) NOT NULL,
   `zip` varchar(8) NOT NULL,
   `state_id` int(11) NOT NULL,
+  `billing_address` varchar(100) NOT NULL,
+  `billing_city` varchar(50) NOT NULL,
+  `billing_zip` varchar(8) NOT NULL,
+  `billing_state_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -328,12 +334,18 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `firstname`, `lastname`, `contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `status`) VALUES
-(1, 'Kevin ', 'Kane', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 1),
-(2, 'Kane', 'Undertaker', '123123', 230, 'Houston', 'Death Valley', '78787', 51, 1),
-(3, 'Chris', 'Tomlin', '123', 230, 'asdasd', 'cebu', '451', 3, 1),
-(4, 'asdasd', 'asdasdasd', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, 1),
-(5, 'ghjghjhghgj', 'ghjghh', '123123213', 230, 'asdsad', 'fdfg', '5000', 6, 1);
+INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `status`) VALUES
+(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, '', '', '', 0, 1),
+(2, 'Kane', 'Undertaker', 'john.flashpark@gmail.com', '123123', 230, 'Houston', 'Death Valley', '78787', 51, '', '', '', 0, 1),
+(3, 'Chris', 'Tomlin', 'john.flashpark@gmail.com', '123', 230, 'asdasd', 'cebu', '451', 3, '', '', '', 0, 1),
+(4, 'asdasd', 'asdasdasd', 'john.flashpark@gmail.com', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, '', '', '', 0, 1),
+(5, 'ghjghjhghgj', 'ghjghh', 'john.flashpark@gmail.com', '123123213', 230, 'asdsad', 'fdfg', '5000', 6, '', '', '', 0, 1),
+(6, 'Test', 'Test', 'john.flashpark@gmail.com', '123123', 230, 'test address', 'test', '6000', 1, '', '', '', 0, 1),
+(7, 'khkjhjhkj', 'hkjhkjhjhk', 'john.flashpark@gmail.com', '234243243', 230, 'kjhkjhkhj', 'jkhkjhk', '6000', 5, '', '', '', 0, 1),
+(8, 'kari update', 'jobe update', 'john.flashpark@gmail.com', '565656', 212, 'update', 'asdasd update', '5656', 8, '', '', '', 0, 0),
+(9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, '', '', '', 0, 1),
+(10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', 230, 'asdsad', 'asd', '213231', 2, '', '', '', 0, 1),
+(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', 230, 'asdasd', 'asdsad', '123123', 5, '', '', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -350,6 +362,12 @@ CREATE TABLE `orders` (
   `shipping_fee` decimal(16,2) NOT NULL,
   `remarks` text NOT NULL,
   `notes` text NOT NULL,
+  `payment_method` tinyint(1) NOT NULL,
+  `prepared_by` int(11) NOT NULL,
+  `approved_by` int(11) NOT NULL,
+  `date_submitted` datetime NOT NULL,
+  `updated_by` int(11) NOT NULL,
+  `date_updated` datetime NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -357,12 +375,18 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `status`) VALUES
-(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 1),
-(2, 1478646000, 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0),
-(3, 1478646000, 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0),
-(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0),
-(5, 1478818800, 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0);
+INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `status`) VALUES
+(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 1),
+(2, 1478646000, 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(3, 1478646000, 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(5, 1478818800, 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(6, 1479078000, 6, '40.00', 1, '5.00', 'test remarks', 'test notes', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(7, 1479078000, 7, '15.00', 1, '5.00', 'jhgjhg', 'hjhgjgjh', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 1),
+(8, 1479078000, 9, '30.00', 1, '5.00', 'kevin kane test', 'kevin kane test', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(9, 1479078000, 1, '15.00', 1, '5.00', 'sad', 'asdassad', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(10, 1479078000, 10, '30.00', 1, '5.00', 'asdasd', 'asdsadasd', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(11, 1479164400, 1, '9.00', 1, '5.00', 'New Order', 'New Order', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -390,7 +414,15 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_pr
 (3, 2, 1, '2.00', '2.00', '4.00', 1),
 (4, 3, 1, '2.00', '2.00', '0.00', 1),
 (5, 4, 1, '5.00', '5.00', '25.00', 1),
-(6, 5, 3, '2.00', '5.00', '10.00', 1);
+(6, 5, 3, '2.00', '5.00', '10.00', 1),
+(7, 6, 2, '2.00', '5.00', '10.00', 1),
+(8, 6, 1, '5.00', '5.00', '25.00', 1),
+(9, 7, 1, '2.00', '5.00', '10.00', 1),
+(10, 8, 2, '5.00', '5.00', '25.00', 1),
+(11, 9, 3, '5.00', '2.00', '10.00', 1),
+(12, 10, 2, '5.00', '5.00', '25.00', 1),
+(13, 11, 2, '2.00', '1.00', '2.00', 1),
+(14, 11, 1, '2.00', '1.00', '2.00', 1);
 
 -- --------------------------------------------------------
 
@@ -412,7 +444,9 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `product_description`, `product_price`, `status`) VALUES
 (1, 'GC20 Vidalista 20mg', '1.00', 1),
 (2, 'GC5 Cialis 5mg', '1.00', 1),
-(3, 'Kirkland Vitamin B', '7.00', 1);
+(3, 'Kirkland Vitamin B', '7.00', 1),
+(4, 'test', '5.00', 1),
+(5, 'asdasdsad', '12.00', 1);
 
 -- --------------------------------------------------------
 
@@ -536,10 +570,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473717600, 1479078000, 1),
+(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473717600, 1479423600, 1),
 (2, 'Joaqui', 'Patino', 'patinoj@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473717600, 1477260000, 1),
 (3, 'Carlo', 'Jacaban', 'carloc@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 1, 1473890400, 0, 0),
-(4, 'John', 'Doe', 'jdoe@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 3, 1478732400, 0, 1);
+(4, 'John', 'Doe', 'jdoe@gmail.com', 'c3133997b31ce266fc0663b3a8912206', 3, 1478732400, 0, 1),
+(5, 'test', 'test', 'test@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 1, 1479423600, 1479423600, 1);
 
 -- --------------------------------------------------------
 
@@ -559,7 +594,8 @@ CREATE TABLE `usertypes` (
 INSERT INTO `usertypes` (`id`, `type`) VALUES
 (1, 'Admin'),
 (2, 'QA'),
-(3, 'Agent');
+(3, 'Agent'),
+(4, 'Team Lead');
 
 --
 -- Indexes for dumped tables
@@ -633,7 +669,7 @@ ALTER TABLE `usertypes`
 -- AUTO_INCREMENT for table `calendar_events`
 --
 ALTER TABLE `calendar_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -643,22 +679,22 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `shipping_method`
 --
@@ -673,12 +709,12 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `usertypes`
 --
 ALTER TABLE `usertypes`
-  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
