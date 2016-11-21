@@ -141,7 +141,7 @@
 						  								</option>
 						  							<?php endforeach; ?>
 													</select>
-													<label class="country">County</label>
+													<label class="country">Country</label>
 												</div>
 											</div>
 											<div class="col-sm-6">
@@ -189,11 +189,81 @@
 										</div>
 										<br />
 
+										<br/>
+										<div class="form-group">
+											<label><b>CUSTOMER BILLING DETAILS</b></label>
+										</div>
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<select name = "billing_country" class = "form-control" id = "billing_country" >
+													<option value="230">United States</option>
+													<?php 
+						  								foreach ($list_countries as $p ) : 
+						  								
+						  									$countries = new Countries();
+						  									$countries->setCountryId($p['country_id']);
+						  									$countries->setCountryName($p['country_name']);
+						  							?>
+							  							<option value ="<?php echo $countries->getCountryId(); ?>"
+														<?php echo ($countries->getCountryId() == $customer->getCountryId() ? "selected='selected'" : ""); ?>
+							  							>
+						  									<?php echo $countries->getCountryName(); ?>
+						  								</option>
+						  							<?php endforeach; ?>
+													</select>
+													<label class="billing_country">Billing Country</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<input type="text" name = "billing_address" class="form-control"  id="billing_address" value="<?php echo $customer->getShippingAddress(); ?>" required>
+													<label class="address">Billing Address</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<select name = "billing_state" class = "form-control" id = "billing_state" required>
+														<option></option>
+														<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
+														<?php
+															$state = new State();
+															$state->setId($s['id']);
+															$state->setCode($s['code']);
+														?>
+															<option value = "<?php echo $state->getId(); ?>"
+																<?php echo ($state->getId() == $customer->getStateId() ? "selected='selected'" : ""); ?>
+															>
+																<?php echo $state->getCode(); ?>
+															</option>
+														<?php endforeach; ?>
+													</select>
+													<label class="state">State</label>
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "billing_city" class="form-control" id="billing_city" required value="<?php echo $customer->getCity(); ?>">
+													<label class="city">City</label>
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "billing_zip" class="form-control" id="billing_zip" required value="<?php echo $customer->getZip(); ?>" >
+													<label class="zip">Zip</label>
+												</div>
+											</div>
+										</div>
+										<br />
+
 										<input type="hidden" name="customer_id_fm" value="<?php echo $customer->getCustomerId(); ?>">
 
 										<div class="row">
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-												
 												<button type="submit" name = "<?php echo $submit_name; ?>" class="btn btn-info"><?php echo $submit_caption; ?></button>
 												
 											</div>

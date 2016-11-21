@@ -15,12 +15,69 @@
         private $zip;
         private $state_id;
         private $status;
-    
-    /**
-     * Gets the value of customer_id.
-     *
-     * @return mixed
-     */
+
+        private $billing_country_id;
+        private $billing_address;
+        private $billing_city;
+        private $billing_zip;
+        private $billing_state_id;
+        
+        public function getBillingCountryId()
+        {
+            return $this->billing_country_id;
+        }
+        public function setBillingCountryId($billing_country_id)
+        {
+            $this->billing_country_id = $billing_country_id;
+            return $this;
+        }
+        public function getBillingAddess()
+        {
+            return $this->billing_address;
+        }
+
+        public function setBillingAddress($billing_address)
+        {
+            $this->billing_address = $billing_address;
+
+            return $this;
+        }
+
+        public function getBillingCity()
+        {
+            return $this->billing_city;
+        }
+
+        public function setBillingCity($billing_city)
+        {
+            $this->billing_city = $billing_city;
+
+            return $this;
+        }
+
+        public function getBillingZip()
+        {
+            return $this->billing_zip;
+        }
+
+        public function setBillingZip($billing_zip)
+        {
+            $this->billing_zip = $billing_zip;
+            return $this;
+        }
+
+        public function getBillingStateId()
+        {
+            return $this->billing_state_id;
+        }
+
+        public function setBillingStateId($billing_state_id)
+        {
+            $this->billing_state_id = $billing_state_id;
+            return $this;
+        }
+
+
         public function getCustomerId()
         {
             return $this->customer_id;
