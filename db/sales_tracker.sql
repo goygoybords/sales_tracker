@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2016 at 04:05 AM
+-- Generation Time: Nov 21, 2016 at 04:24 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -323,6 +323,7 @@ CREATE TABLE `customer` (
   `city` varchar(50) NOT NULL,
   `zip` varchar(8) NOT NULL,
   `state_id` int(11) NOT NULL,
+  `billing_country_id` int(11) NOT NULL,
   `billing_address` varchar(100) NOT NULL,
   `billing_city` varchar(50) NOT NULL,
   `billing_zip` varchar(8) NOT NULL,
@@ -334,18 +335,18 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `status`) VALUES
-(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, '', '', '', 0, 1),
-(2, 'Kane', 'Undertaker', 'john.flashpark@gmail.com', '123123', 230, 'Houston', 'Death Valley', '78787', 51, '', '', '', 0, 1),
-(3, 'Chris', 'Tomlin', 'john.flashpark@gmail.com', '123', 230, 'asdasd', 'cebu', '451', 3, '', '', '', 0, 1),
-(4, 'asdasd', 'asdasdasd', 'john.flashpark@gmail.com', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, '', '', '', 0, 1),
-(5, 'ghjghjhghgj', 'ghjghh', 'john.flashpark@gmail.com', '123123213', 230, 'asdsad', 'fdfg', '5000', 6, '', '', '', 0, 1),
-(6, 'Test', 'Test', 'john.flashpark@gmail.com', '123123', 230, 'test address', 'test', '6000', 1, '', '', '', 0, 1),
-(7, 'khkjhjhkj', 'hkjhkjhjhk', 'john.flashpark@gmail.com', '234243243', 230, 'kjhkjhkhj', 'jkhkjhk', '6000', 5, '', '', '', 0, 1),
-(8, 'kari update', 'jobe update', 'john.flashpark@gmail.com', '565656', 212, 'update', 'asdasd update', '5656', 8, '', '', '', 0, 0),
-(9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, '', '', '', 0, 1),
-(10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', 230, 'asdsad', 'asd', '213231', 2, '', '', '', 0, 1),
-(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', 230, 'asdasd', 'asdsad', '123123', 5, '', '', '', 0, 1);
+INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `status`) VALUES
+(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, '', '', '', 0, 1),
+(2, 'Kane', 'Undertaker', 'john.flashpark@gmail.com', '123123', 230, 'Houston', 'Death Valley', '78787', 51, 0, '', '', '', 0, 1),
+(3, 'Chris', 'Tomlin', 'john.flashpark@gmail.com', '123', 230, 'asdasd', 'cebu', '451', 3, 0, '', '', '', 0, 1),
+(4, 'asdasd', 'asdasdasd', 'john.flashpark@gmail.com', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, 0, '', '', '', 0, 1),
+(5, 'ghjghjhghgj', 'ghjghh', 'john.flashpark@gmail.com', '123123213', 230, 'asdsad', 'fdfg', '5000', 6, 0, '', '', '', 0, 1),
+(6, 'Test', 'Test', 'john.flashpark@gmail.com', '123123', 230, 'test address', 'test', '6000', 1, 0, '', '', '', 0, 1),
+(7, 'khkjhjhkj', 'hkjhkjhjhk', 'john.flashpark@gmail.com', '234243243', 230, 'kjhkjhkhj', 'jkhkjhk', '6000', 5, 0, '', '', '', 0, 1),
+(8, 'kari update', 'jobe update', 'john.flashpark@gmail.com', '565656', 212, 'update', 'asdasd update', '5656', 8, 0, '', '', '', 0, 0),
+(9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, '', '', '', 0, 1),
+(10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', 230, 'asdsad', 'asd', '213231', 2, 0, '', '', '', 0, 1),
+(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', 230, 'asdasd', 'asdsad', '123123', 5, 0, '', '', '', 0, 1);
 
 -- --------------------------------------------------------
 
