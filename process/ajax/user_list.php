@@ -30,11 +30,12 @@ $primaryKey = 'id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
-    array( 'db' => '`u`.`first_name`',   'dt' => 0, 'field' => 'first_name' ),
-    array( 'db' => '`u`.`lastname`',    'dt' => 1, 'field' => 'lastname' ),
-    array( 'db' => '`u`.`email`',       'dt' => 2, 'field' => 'email' ),
-    array( 'db' => '`ut`.`type`',       'dt' => 3, 'field' => 'type' ),
-    array( 'db' => '`u`.`id`',          'dt' => 4, 'formatter' => function( $d, $row )
+    array( 'db' => '`u`.`id`',   'dt' => 0, 'field' => 'id' ),
+    array( 'db' => '`u`.`first_name`',   'dt' => 1, 'field' => 'first_name' ),
+    array( 'db' => '`u`.`lastname`',    'dt' => 2, 'field' => 'lastname' ),
+    array( 'db' => '`u`.`email`',       'dt' => 3, 'field' => 'email' ),
+    array( 'db' => '`ut`.`type`',       'dt' => 4, 'field' => 'type' ),
+    array( 'db' => '`u`.`id`',          'dt' => 5, 'formatter' => function( $d, $row )
             {
                 return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">

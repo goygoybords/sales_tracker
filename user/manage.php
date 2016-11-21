@@ -39,6 +39,7 @@
 						$user->setFirstname($l['first_name']);
 						$user->setLastname($l['lastname']);
 						$user->setPassword($l['password']);
+						$user->setScreenName($l['screen_name']);
 						$user->setEmail($l['email']);
 						$user->setUsertypeid($l['usertypeid']);
 						$user->setStatus($l['status']);
@@ -135,6 +136,13 @@
 																	<option value = "3" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Agent</option>
 																	<option value = "4" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Team Leader</option>
 																</select>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="Password5" class="col-sm-2 control-label">Screen Name</label>
+															<div class="col-sm-10">
+																<input type="text" name = "screen_name" class="form-control" id="screen_name"
+																value = "<?php echo $user->getScreenName(); ?>" >
 															</div>
 														</div>
 														<br />

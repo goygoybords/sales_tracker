@@ -94,6 +94,11 @@
 							</a>
 						</li>
 						<li>
+							<a href="../user/teams.php">
+								<span class="title">Team Leader List</span>
+							</a>
+						</li>
+						<li>
 							<a href="../shipping/methods.php">
 								<span class="title">Shipping Methods</span>
 							</a>

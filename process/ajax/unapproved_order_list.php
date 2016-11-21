@@ -28,7 +28,7 @@ $primaryKey = 'id';
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
-session_start();
+
 $columns = array(
     array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
             {
@@ -47,14 +47,9 @@ $columns = array(
     array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-
     array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
             {
-                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
-                {
-                    if($_SESSION['status'] == 0)
-                    {
-                        return '<a href="manage.php?id='.$d.'" >
+                return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
@@ -66,27 +61,6 @@ $columns = array(
                             </span>
                         </a>
                         ';
-                    }
-                    else if($_SESSION['status'] == 1)
-                    {
-                        return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> ';
-                    }
-                }
-                else if($_SESSION['user_type'] == 3)
-                {
-                    return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> ';
-
-                }
-
-                
             },
             'field' => 'id' 
             )
@@ -115,7 +89,7 @@ $sql_details = array(
                   JOIN shipping_method s
                   ON s.id = o.shipping_method_id
                  ";
-    $extraWhere =  "o.status BETWEEN 0 AND 1" ;
+    $extraWhere =  "o.status = 0" ;
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

@@ -6,6 +6,19 @@
 	}
 	include '../include/start.html';
 	require('../include/header.php');
+
+	require '../class/database.php';
+	$db = new Database();
+	
+	 $sql = "SELECT t.id, CONCAT(u.first_name, ' ', u.lastname) AS 'TeamLeader',t.team_name
+				FROM teams t
+				JOIN users u
+				ON t.user_id = u.id
+				WHERE t.status = 1
+            ";
+    $cmd = $db->getDb()->prepare($sql);
+    $cmd->execute(array(1));
+    $teams = $cmd->fetchAll();
 ?>
 <!-- BEGIN BASE-->
 <div id="base">
@@ -47,7 +60,7 @@
 									<div class="card-body">
 										<div class="row">
 											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-												<a class="btn btn-success btn-block" href="manage.php" name="btnAddUser" id="btnAddUser">ADD NEW USER</a>
+												<a class="btn btn-success btn-block" href="manage_teams.php" name="btnAddUser" id="btnAddUser">ADD NEW TEAMS</a>
 											</div>
 										</div>
 										<br />
@@ -56,12 +69,32 @@
 												<table class = "display responsive nowrap" id = "user-tbl">
 													<thead>
 														<th>#</th>
-														<th>Firstname</th>
-														<th>Lastname</th>
-														<th>Email</th>
-														<th>User Type</th>
+														<th>Team Leader</th>
+														<th>Team Name</th>
 														<th>Action</th>
 													</thead>
+													<tbody>
+														<?php foreach ($teams as $t ) : ?>
+														<tr>
+															<td><?php echo $t['id'];  ?> </td>
+															<td><?php echo $t['TeamLeader'];  ?></td>
+															<td><?php echo $t['team_name'];  ?></td>
+															<td>
+										                        <a href="manage_teams.php?id=<?php echo $t['id']; ?>" >
+										                            <span class="label label-inverse" style = "color:black;">
+										                                <i class="fa fa-edit"></i> Edit
+										                            </span>
+										                        </a> &nbsp;
+										                        <a href="../process/team_manage.php?id=<?php echo $t['id']; ?>&del" 
+										                        onclick="return confirm('Are you sure you want to delete this record?')" >
+										                            <span class="label label-inverse" style = "color:black;">
+										                                <i class="fa fa-remove"></i> Delete
+										                            </span>
+										                        </a>
+									                        </td>
+														</tr>
+														<?php endforeach; ?>
+													</tbody>
 												</table>
 											</div>
 										</div>
@@ -87,15 +120,15 @@
 	{
 	    $('#user-tbl').DataTable(
 	    {
-			"bProcessing": true,
-			"bServerSide": true,
-			"responsive": true,
-	        "sPaginationType": "full_numbers",
-	        "order": [0,'asc'],
-	            "ajax":{
-	                url :"../process/ajax/user_list.php", // json datasource
-	                type: "get",  // method  , by default get
-	            }
+			// "bProcessing": true,
+			// "bServerSide": true,
+			// "responsive": true,
+	  //       "sPaginationType": "full_numbers",
+	  //       "order": [0,'asc'],
+	  //           "ajax":{
+	  //               url :"../process/ajax/user_list.php", // json datasource
+	  //               type: "get",  // method  , by default get
+	  //           }
 	    } );
 	} );
 </script>

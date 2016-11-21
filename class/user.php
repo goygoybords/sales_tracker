@@ -10,6 +10,7 @@
 		private $usertypeid;
 		private $datecreated;
 		private $datelastlogin;
+		private $screen_name;
 
 		public function getId()
 		{
@@ -99,6 +100,18 @@
 		{
 			$this->datelastlogin = $datelastlogin;
 		}
+
+		public function setScreenName($screen_name)
+		{
+			$this->screen_name = $screen_name;
+		}
+
+		public function getScreenName()
+		{
+			return $this->screen_name;
+		}
+
+	
 	}
 
 ?>
