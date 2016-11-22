@@ -19,6 +19,7 @@
  */
 
 // DB table to use
+session_start();
 $table = 'products';
 
 // Table's primary key
@@ -34,7 +35,9 @@ $columns = array(
     array( 'db' => '`p`.`product_price`',         'dt' => 2, 'field' => 'product_price' ),
     array( 'db' => '`p`.`id`',                    'dt' => 3, 'formatter' => function( $d, $row )
             {
-                return '<a href="manage.php?id='.$d.'" >
+                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+                {
+                    return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
@@ -45,6 +48,14 @@ $columns = array(
                             </span>
                         </a>
                         ';
+                }
+                else
+                    return '<a href="manage.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> View Product
+                            </span>
+                        </a> &nbsp;';
+                
             },
             'field' => 'id' )
     );
