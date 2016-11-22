@@ -21,21 +21,36 @@
 		$customer->setStateId(intval($state));
 		$customer->setCity(htmlentities($city));
 		$customer->setZip(htmlentities($zip));
+		
+		$customer->setSame($same);
+		$customer->setBillingCountryId(intval($billing_country));
+		$customer->setBillingStateId(intval($billing_state));
+		$customer->setBillingAddress(htmlentities($billing_address));
+		$customer->setBillingCity(htmlentities($billing_city));
+		$customer->setBillingZip(htmlentities($billing_zip));
 		$customer->setStatus(1);
+
+
 
 		if(isset($_POST['save_customer']))
 		{
 		
 			$data = [
 						'firstname' 	   => $customer->getFirstName(),
-						'lastname' 		   => $customer->getLastname() ,
+						'lastname' 		   => $customer->getLastname(),
 						'email'			   => $customer->getEmail(),
 						'contact_number'   => $customer->getContactNumber() ,
 						'country_id'  	   => $customer->getCountryId()   ,
-						'shipping_address' => $customer->getShippingAddress()      ,
+						'shipping_address' => $customer->getShippingAddress() ,
 						'city'  		   => $customer->getCity()   ,
 						'zip' 			   => $customer->getZip() ,
 						'state_id' 		   => $customer->getStateId() ,
+						'same'			   => $customer->getSame(),
+						'billing_country_id' => $customer->getBillingCountryId(),
+						'billing_address'    => $customer->getBillingAddress(),
+						'billing_city' 		 => $customer->getBillingCity(),
+						'billing_zip'  		 => $customer->getBillingZip(),
+						'billing_state_id'   => $customer->getBillingStateId() ,
 						'status' 		   => $customer->getStatus() ,
 					];
 
@@ -47,7 +62,8 @@
 		{
 			$customer->setCustomerId($customer_id_fm);
 
-			$fields = array('firstname' ,'lastname','email' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id');
+			$fields = array('firstname' ,'lastname','email' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id', 
+				'same' , 'billing_country_id' , 'billing_address' , 'billing_city' , 'billing_zip' , 'billing_state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
 						$customer->getFirstname(),
@@ -59,6 +75,12 @@
 						$customer->getCity(),
 						$customer->getZip(),
 						$customer->getStateId(),
+						$customer->getSame(), 
+						$customer->getBillingCountryId(), 
+						$customer->getBillingAddress(), 
+						$customer->getBillingCity(), 
+						$customer->getBillingZip(), 
+						$customer->getBillingStateId(),
 						$customer->getCustomerId()
 						);
 

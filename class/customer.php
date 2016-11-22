@@ -16,11 +16,22 @@
         private $state_id;
         private $status;
 
+        private $same;
         private $billing_country_id;
         private $billing_address;
         private $billing_city;
         private $billing_zip;
         private $billing_state_id;
+
+        public function getSame()
+        {
+            return $this->same;
+        }
+        public function setSame($same)
+        {
+            $this->same = $same;
+            return $this;
+        }
         
         public function getBillingCountryId()
         {
@@ -31,7 +42,7 @@
             $this->billing_country_id = $billing_country_id;
             return $this;
         }
-        public function getBillingAddess()
+        public function getBillingAddress()
         {
             return $this->billing_address;
         }
@@ -42,6 +53,7 @@
 
             return $this;
         }
+
 
         public function getBillingCity()
         {
