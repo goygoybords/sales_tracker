@@ -19,6 +19,7 @@
  */
 
 // DB table to use
+session_start();
 $table = 'orders';
 
 // Table's primary key
@@ -28,7 +29,7 @@ $primaryKey = 'id';
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
-session_start();
+
 $columns = array(
     array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
             {
@@ -42,20 +43,27 @@ $columns = array(
             }, 'field' => 'order_date' 
         ),
 
-    array( 'db' => '`c`.`firstname`',   'dt' => 2, 'field' => 'firstname' ),
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
+
     array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
     array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
+    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
+    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
-                  return '<a href="../process/order_manage.php?id='.$d.'&mail" >
+                return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Send Mail
+                                <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> &nbsp;';
-                
-                
+                        </a> &nbsp;
+
+                        <a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-remove"></i> Approve This Record
+                            </span>
+                        </a>
+                        ';
             },
             'field' => 'id' 
             )
@@ -77,14 +85,47 @@ $sql_details = array(
 
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
-    
-    $joinQuery = "FROM orders o
-                  JOIN customer c 
+    $extraWhere = "";
+    $joinQuery = "";
+    if($_SESSION['user_type'] == 3)
+    {
+        $joinQuery = "FROM orders o
+                    JOIN customer c 
                   ON o.customer_id = c.id 
                   JOIN shipping_method s
                   ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
                  ";
-    $extraWhere =  "o.status = 1" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 1" ;
+    }
+    else if($_SESSION['user_type'] == 4)
+    {
+        $joinQuery = "FROM orders o
+                    JOIN customer c 
+                  ON o.customer_id = c.id 
+                  JOIN shipping_method s
+                  ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
+                 ";
+                  // WHERE u.team_id = 3
+
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 1" ;
+    }
+    else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+    {
+        $joinQuery = "FROM orders o
+                    JOIN customer c 
+                  ON o.customer_id = c.id 
+                  JOIN shipping_method s
+                  ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
+                 ";
+        $extraWhere =  "o.status = 1" ;
+    }
+    
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

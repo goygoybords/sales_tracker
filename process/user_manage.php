@@ -18,6 +18,7 @@
 		$user->setUsertypeid($user_type);
 		$user->setScreenName($screen_name);
 		$user->setDatecreated(strtotime(date('Y-m-d')));
+		$user->setTeamId($team);
 		$user->setStatus(1);
 
 		$data = [
@@ -28,6 +29,7 @@
 					'usertypeid' => $user->getUsertypeid() ,
 					'screen_name' => $user->getScreenName(),
 					'datecreated' => $user->getDatecreated() ,
+					'team_id' => $user->getTeamId(),
 					'status' => $user->getStatus() ,
 				];
 
@@ -56,13 +58,14 @@
 		$user->setEmail(htmlentities($email));
 		$user->setScreenName($screen_name);
 		$user->setPassword(htmlentities(md5($password)));
+		$user->setTeamId($team);
 		$user->setUsertypeid($user_type);
 
 		$table  = "users";
-		$fields = array('first_name' ,'lastname' ,'email' , 'password' , 'usertypeid' , 'screen_name');
+		$fields = array('first_name' ,'lastname' ,'email' , 'password' , 'usertypeid' , 'screen_name' , 'team_id');
 		$where  = "WHERE id = ?";
 		$params = array($user->getFirstname(), $user->getLastname(), $user->getEmail(),
-				$user->getPassword(), $user->getUsertypeid(),  $user->getScreenName() , $user->getId() );
+				$user->getPassword(), $user->getUsertypeid(),  $user->getScreenName() , $user->getTeamId() ,$user->getId() );
 		
 		$result = $db->update($table, $fields, $where, $params);
 

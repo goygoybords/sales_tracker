@@ -63,6 +63,7 @@
 														<th>Shipping Method</th>
 														<th>Remarks</th>
 														<th>Notes</th>
+														<th>Prepared By/Salesperson</th>
 														<th>Action</th>
 													</thead>
 <!-- 													<tfoot>

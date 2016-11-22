@@ -60,6 +60,7 @@
 														<th>Lastname</th>
 														<th>Email</th>
 														<th>User Type</th>
+														<th>Sales Team</th>
 														<th>Action</th>
 													</thead>
 												</table>

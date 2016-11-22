@@ -86,6 +86,12 @@
 						$customer->setCity($c['city']);
 						$customer->setZip($c['zip']);
 						$customer->setStateId($c['state_id']);
+						$customer->setSame(intval($c['same']));
+						$customer->setBillingCountryId(intval($c['billing_country_id']));
+						$customer->setBillingStateId(intval($c['billing_state_id']));
+						$customer->setBillingAddress(htmlentities($c['billing_address']));
+						$customer->setBillingCity(htmlentities($c['billing_city']));
+						$customer->setBillingZip(htmlentities($c['billing_zip']));
 						$customer->setStatus($c['status']);
 
 					}
@@ -438,6 +444,12 @@
 										</div>
 
 										<div class="row">
+											<div class="col-sm-12">
+												<div class="form-group floating-label" >
+													<input type="checkbox" id="same" name = "same" value="1" <?php echo $disabled; ?> <?php echo ($customer->getSame() == 1 ? "checked" : ""); ?> />
+	  												<label for="test5">Same address as shipping</label>
+												</div>
+											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<select name = "billing_country" class = "form-control" id = "billing_country" <?php echo $disabled; ?> >
@@ -450,26 +462,26 @@
 						  									$countries->setCountryName($p['country_name']);
 						  							?>
 							  							<option value ="<?php echo $countries->getCountryId(); ?>"
-														<?php echo ($countries->getCountryId() == $customer->getCountryId() ? "selected='selected'" : ""); ?>
+														<?php echo ($countries->getCountryId() == $customer->getBillingCountryId() ? "selected='selected'" : ""); ?>
 							  							>
 						  									<?php echo $countries->getCountryName(); ?>
 						  								</option>
 						  							<?php endforeach; ?>
 													</select>
-													<label class="country">County</label>
+													<label class="billing_country">Billing Country</label>
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name = "billing_address" class="form-control" <?php echo $read_only; ?>  id="billing_address" value="<?php echo $customer->getShippingAddress(); ?>" required>
-													<label class="address">Address</label>
+													<input type="text" name = "billing_address" class="form-control"  id="billing_address" value="<?php echo $customer->getBillingAddress(); ?>" <?php echo $disabled; ?> required>
+													<label class="address">Billing Address</label>
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<select name = "billing_state" class = "form-control" id = "billing_state"  <?php echo $disabled; ?> >
+													<select name = "billing_state" class = "form-control" id = "billing_state" <?php echo $disabled; ?> required>
 														<option></option>
 														<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
 														<?php
@@ -478,7 +490,7 @@
 															$state->setCode($s['code']);
 														?>
 															<option value = "<?php echo $state->getId(); ?>"
-																<?php echo ($state->getId() == $customer->getStateId() ? "selected='selected'" : ""); ?>
+																<?php echo ($state->getId() == $customer->getBillingStateId() ? "selected='selected'" : ""); ?>
 															>
 																<?php echo $state->getCode(); ?>
 															</option>
@@ -490,14 +502,14 @@
 
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name = "billing_city" class="form-control" id="billing_city"  <?php echo $read_only; ?> value="<?php echo $customer->getCity(); ?>">
+													<input type="text" name = "billing_city" class="form-control" id="billing_city" <?php echo $disabled; ?> required value="<?php echo $customer->getBillingCity(); ?>">
 													<label class="city">City</label>
 												</div>
 											</div>
 
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name = "billing_zip" class="form-control" id="billing_zip"  <?php echo $read_only; ?> value="<?php echo $customer->getZip(); ?>" >
+													<input type="text" name = "billing_zip" class="form-control" id="billing_zip" <?php echo $disabled; ?> required value="<?php echo $customer->getBillingZip(); ?>" >
 													<label class="zip">Zip</label>
 												</div>
 											</div>
@@ -612,6 +624,26 @@
 							    	return ($(this).val() == data.state_id);
 								}).prop('selected', true);
 	                   			
+
+								$("#billing_address").val(parse[i].billing_address).addClass("dirty");
+								$("#billing_city").val(parse[i].billing_city).addClass("dirty");
+								$("#billing_zip").val(parse[i].billing_zip).addClass("dirty");
+
+
+								$('#billing_country').val(parse[i].billing_country_id);
+								$('#billing_country').trigger('change');
+								$('[name=billing_country] option').filter(function() 
+								{ 
+							    	return ($(this).val() == parse[i].billing_country_id);
+								}).prop('selected', true);
+
+								$('#billing_state').val(parse[i].billing_state_id);
+								$('#billing_state').trigger('change');
+								$('[name=billing_state] option').filter(function() 
+								{ 
+							    	return ($(this).val() == parse[i].billing_state_id);
+								}).prop('selected', true);
+
 	                   		} 	
 	                   }
 					}); 
@@ -638,14 +670,79 @@
 
 					$('#state').val(0);
 					$('#state').trigger('change');
-					// $('[name=state] option').filter(function() 
-					// { 
-				 //    	return ($(this).val() == data.state_id);
-					// }).prop('selected', true);
+
+
+					$("#billing_address").val("").removeClass("dirty");
+					$("#billing_city").val("").removeClass("dirty");
+					$("#billing_zip").val("").removeClass("dirty");
+
+					$('#billing_country').val(0);
+					$('#billing_country').trigger('change');
+					$('[name=billing_country] option').filter(function() 
+					{ 
+				 		return ($(this).val() == 230 );
+					}).prop('selected', true);
+					$("#billing_country").addClass("dirty");
+
+					$('#billing_state').val(0);
+					$('#billing_state').trigger('change');
+
+					$("#same").prop('checked', false); 
 
 	       		}
 	            
 		});//end of i
+
+		$('#same').click(function()
+		 {
+	  		if ($(this).is(':checked')) 
+	  		{
+	    		
+	       			var country = $('#country').val();
+	       			var state = $("#state").val();
+					var address = $("#address").val();
+					var city = $("#city").val();
+					var zip = $('#zip').val();
+
+					$("#billing_address").val(address).addClass("dirty");
+					$("#billing_city").val(city).addClass("dirty");
+					$("#billing_zip").val(zip).addClass("dirty");
+
+
+					$('#billing_country').val(country);
+					$('#billing_country').trigger('change');
+					$('[name=billing_country] option').filter(function() 
+					{ 
+				    	return ($(this).val() == country);
+					}).prop('selected', true);
+
+					$('#billing_state').val(state);
+					$('#billing_state').trigger('change');
+					$('[name=billing_state] option').filter(function() 
+					{ 
+				    	return ($(this).val() == state);
+					}).prop('selected', true);
+	  		} 
+	  		else 
+	  		{
+
+	  			$("#billing_address").val("").removeClass("dirty");
+				$("#billing_city").val("").removeClass("dirty");
+				$("#billing_zip").val("").removeClass("dirty");
+
+				$('#billing_country').val(0);
+					$('#billing_country').trigger('change');
+					$('[name=billing_country] option').filter(function() 
+					{ 
+				 		return ($(this).val() == 230 );
+					}).prop('selected', true);
+					$("#billing_country").addClass("dirty");
+
+					$('#billing_state').val(0);
+					$('#billing_state').trigger('change');
+	    		
+	  		}
+		});
 
 		  var counter = 0;
 		  var qty = 0;

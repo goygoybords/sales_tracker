@@ -31,6 +31,14 @@
 				$_SESSION['lastname'] = $l['lastname'];
 				$_SESSION['user_type'] = $l['usertypeid'];
 				$_SESSION['isLogin'] = true;
+				if($l['usertypeid'] == 4)
+				{
+					$teams = $db->select('teams' , array('id'), 'user_id = ?' , array($l['id']));
+					foreach ($teams as $t ) 
+					{
+						$_SESSION['team_id'] = $t['id'];
+					}
+				}
 				$db->update("users", array('datelastlogin'), "WHERE id = ?" , array($user->getDatelastlogin() , $l['id']));
 				header("location: ../orders/unapproved_orders.php");
 			}

@@ -11,6 +11,17 @@
 		private $datecreated;
 		private $datelastlogin;
 		private $screen_name;
+		private $team_id;
+
+		public function getTeamId()
+		{
+			return $this->team_id;
+		}
+
+		public function setTeamId($team_id)
+		{
+			$this->team_id = $team_id;
+		}
 
 		public function getId()
 		{

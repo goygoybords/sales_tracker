@@ -35,7 +35,8 @@ $columns = array(
     array( 'db' => '`u`.`lastname`',    'dt' => 2, 'field' => 'lastname' ),
     array( 'db' => '`u`.`email`',       'dt' => 3, 'field' => 'email' ),
     array( 'db' => '`ut`.`type`',       'dt' => 4, 'field' => 'type' ),
-    array( 'db' => '`u`.`id`',          'dt' => 5, 'formatter' => function( $d, $row )
+    array( 'db' => '`t`.`team_name`',   'dt' => 5, 'field' => 'team_name' ),
+    array( 'db' => '`u`.`id`',          'dt' => 6, 'formatter' => function( $d, $row )
             {
                 return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
@@ -72,6 +73,8 @@ $sql_details = array(
     $joinQuery = "FROM users u
                   JOIN usertypes ut
                   ON u.usertypeid = ut.id
+                  LEFT OUTER JOIN teams t
+                  ON u.team_id = t.id
                 ";
     $extraWhere =  "u.status = 1" ;
     echo json_encode(
