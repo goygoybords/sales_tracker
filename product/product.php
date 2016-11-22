@@ -47,11 +47,13 @@
 							<div class="col-lg-offset-0 col-md-12">
 								<div class="card-body style-default-bright">
 									<div class="card-body">
+										<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2): ?>
 										<div class="row">
 											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
 												<a class="btn btn-success btn-block" href="manage.php" name="btnAddLead" id="btnAddLead">ADD NEW PRODUCT</a>
 											</div>
 										</div>
+										<?php endif; ?>
 										<br />
 										<div class="col-lg-offset-0 col-md-12">
 												<br/>

@@ -71,6 +71,7 @@
 						$order->setShippingFee($o['shipping_fee']);
 						$order->setRemarks($o['remarks']);
 						$order->setNotes($o['notes']);
+						$order->setPreparedBy($o['prepared_by']);
 						$order->setStatus($o['status']);
 					}
 					$get_customer = $db->select('customer' , array("*"), "id = ?", array($order->getCustomerId() ) );
@@ -93,7 +94,6 @@
 						$customer->setBillingCity(htmlentities($c['billing_city']));
 						$customer->setBillingZip(htmlentities($c['billing_zip']));
 						$customer->setStatus($c['status']);
-
 					}
 					$get_orders = $db->select('order_detail' , array("*"), "order_id = ? AND status = 1" , array($order->getOrderId() ) );
 
@@ -535,6 +535,26 @@
 												<div class="form-group floating-label">
 														<textarea class ="form-control" name = "notes" <?php echo $read_only; ?> id = "notes" rows = "5"><?php echo $order->getNotes(); ?></textarea>
 													<label class="notes">Notes</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label><b>SALESPERSON</b></label>
+										</div>
+										<div class="row">
+
+											<div class="col-sm-6">
+											<div class="form-group floating-label">
+													<input type="text" name="agent_name" id = "agent_name" class="form-control" readonly value = "">
+													<label class="agent_name">Prepared By/Salesperson</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+														<input type="text" name="screen_name" id = "screen_name" class="form-control" readonly value = "">
+														<label class="screen_name">Agent Screen Name</label>
+													
 												</div>
 											</div>
 										</div>

@@ -1,7 +1,5 @@
 <?php 
-    /**
-    * 
-    */
+
     class Order 
     {
         private $order_id;
@@ -12,8 +10,82 @@
         private $remarks;
         private $shipping_fee;
         private $notes;
+
+        private $payment_method;
+        private $prepared_by;
+        private $approved_by;
+        private $date_submitted;
+        private $updated_by;
+        private $date_updated;
         private $status;
         
+        public function getPaymentMethod()
+        {
+            return $this->payment_method;
+        }
+
+        public function setPaymentMethod($payment_method)
+        {
+            $this->payment_method = $payment_method;
+
+            return $this;
+        }
+
+        public function getPreparedBy()
+        {
+            return $this->prepared_by;
+        }
+
+        public function setPreparedBy($prepared_by)
+        {
+            $this->prepared_by = $prepared_by;
+            return $this;
+        }
+
+        public function getApprovedBy()
+        {
+            return $this->approved_by;
+        }
+
+        public function setApprovedBy($approved_by)
+        {
+            $this->approved_by = $approved_by;
+            return $this;
+        }
+
+        public function getDateSubmitted()
+        {
+            return $this->date_submitted;
+        }
+
+        public function setDateSubmitted($date_submitted)
+        {
+            $this->date_submitted = $date_submitted;
+            return $this;
+        }
+
+        public function getUpdatedBy()
+        {
+            return $this->updated_by;
+        }
+
+        public function setUpdatedBy($updated_by)
+        {
+            $this->updated_by = $updated_by;
+            return $this;
+        }
+
+        public function getDateUpdated()
+        {
+            return $this->date_updated;
+        }
+
+        public function setDateUpdated($date_updated)
+        {
+            $this->date_updated = $date_updated;
+            return $this;
+        }
+
         /**
          * Gets the value of order_id.
          *
