@@ -11,22 +11,50 @@
         private $shipping_fee;
         private $notes;
 
-        private $payment_method;
+        private $payment_method_id;
         private $prepared_by;
         private $approved_by;
         private $date_submitted;
         private $updated_by;
         private $date_updated;
-        private $status;
         
-        public function getPaymentMethod()
+        private $status;
+
+        private $tracking_number;
+        private $merchant;
+
+        public function getTrackingNumber()
         {
-            return $this->payment_method;
+            return $this->tracking_number;
         }
 
-        public function setPaymentMethod($payment_method)
+        public function setTrackingNumber($tracking_number)
         {
-            $this->payment_method = $payment_method;
+            $this->tracking_number = $tracking_number;
+
+            return $this;
+        }
+
+        public function getMerchant()
+        {
+            return $this->merchant;
+        }
+
+        public function setMerchant($merchant)
+        {
+            $this->merchant = $merchant;
+            return $this;
+        }
+        
+        
+        public function getPaymentMethodId()
+        {
+            return $this->payment_method_id;
+        }
+
+        public function setPaymentMethodId($payment_method_id)
+        {
+            $this->payment_method_id = $payment_method_id;
 
             return $this;
         }

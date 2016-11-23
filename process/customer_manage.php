@@ -22,7 +22,14 @@
 		$customer->setCity(htmlentities($city));
 		$customer->setZip(htmlentities($zip));
 		
-		$customer->setSame($same);
+		$customer->setAlternateContactNumber(htmlentities($alternate_contact_num));
+		if(isset($_POST['same']) == 1)
+		{
+			$customer->setSame($same);
+		}
+		else
+			$customer->setSame(0);
+		
 		$customer->setBillingCountryId(intval($billing_country));
 		$customer->setBillingStateId(intval($billing_state));
 		$customer->setBillingAddress(htmlentities($billing_address));
@@ -31,15 +38,14 @@
 		$customer->setStatus(1);
 
 
-
 		if(isset($_POST['save_customer']))
 		{
-		
 			$data = [
 						'firstname' 	   => $customer->getFirstName(),
 						'lastname' 		   => $customer->getLastname(),
 						'email'			   => $customer->getEmail(),
 						'contact_number'   => $customer->getContactNumber() ,
+						'alternate_contact_number' => $customer->getAlternateContactNumber(),
 						'country_id'  	   => $customer->getCountryId()   ,
 						'shipping_address' => $customer->getShippingAddress() ,
 						'city'  		   => $customer->getCity()   ,
@@ -54,6 +60,7 @@
 						'status' 		   => $customer->getStatus() ,
 					];
 
+			
 
 			$customer_id = $db->insert("customer", $data);
 			header("location: ../customer/manage.php?msg=inserted");
@@ -62,7 +69,7 @@
 		{
 			$customer->setCustomerId($customer_id_fm);
 
-			$fields = array('firstname' ,'lastname','email' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id', 
+			$fields = array('firstname' ,'lastname','email' ,'contact_number','alternate_contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id', 
 				'same' , 'billing_country_id' , 'billing_address' , 'billing_city' , 'billing_zip' , 'billing_state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
@@ -70,6 +77,7 @@
 						$customer->getLastname(),
 						$customer->getEmail(),
 						$customer->getContactNumber(),
+						$customer->getAlternateContactNumber(),
 						$customer->getCountryId(),
 						$customer->getShippingAddress(),
 						$customer->getCity(),

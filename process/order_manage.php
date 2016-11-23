@@ -1,13 +1,17 @@
 <?php
+	session_start();
 	require '../class/database.php';
 	require '../class/customer.php';
 	require '../class/order.php';
 	require '../class/order_details.php';
+	require '../class/customer_payment.php';
+
 
 	$db = new Database();
 	$customer = new Customer();
 	$order = new Order();
 	$detail = new Order_Details();
+	$customer_payment = new Customer_Payment();
 
 	extract($_POST);
 	if(!isset($_GET['approve']))
@@ -21,7 +25,13 @@
 		$customer->setStateId(intval($state));
 		$customer->setCity(htmlentities($city));
 		$customer->setZip(htmlentities($zip));
-		$customer->setSame($same);
+		
+		if(isset($_POST['same']) == 1)
+			$customer->setSame($same);
+		else
+			$customer->setSame(0);
+
+		$customer->setAlternateContactNumber(htmlentities($alternate_contact_num));
 		$customer->setBillingCountryId(intval($billing_country));
 		$customer->setBillingStateId(intval($billing_state));
 		$customer->setBillingAddress(htmlentities($billing_address));
@@ -30,14 +40,17 @@
 		$customer->setStatus(1);
 
 
-
 		$order->setOrderDate(strtotime(date('Y-m-d')));
-			
 		$order->setTotal(doubleval($total));
 		$order->setShippingMethodId(intval($shipping_method));
 		$order->setShippingFee(doubleval($shipping));
 		$order->setRemarks(htmlentities($remarks));
 		$order->setNotes(htmlentities($notes));
+
+		$order->setPreparedBy(intval($_SESSION['id']));
+		$order->setMerchant(htmlentities($merchant));
+		$order->setDateSubmitted(date('Y-m-d H:i:s'));
+
 
 		if(isset($_POST['save_order']))
 		{
@@ -48,6 +61,7 @@
 						'lastname' 		   => $customer->getLastname(),
 						'email'			   => $customer->getEmail(),
 						'contact_number'   => $customer->getContactNumber() ,
+						'alternate_contact_number' => $customer->getAlternateContactNumber(),
 						'country_id'  	   => $customer->getCountryId()   ,
 						'shipping_address' => $customer->getShippingAddress() ,
 						'city'  		   => $customer->getCity()   ,
@@ -70,6 +84,36 @@
 				$order->setCustomerId($customer_id);
 				$order->setStatus(0);
 
+				$customer_payment->setCustomerId($customer_id);
+				$customer_payment->setPaymentMethod(intval($payment_method));
+				if($payment_method == 2)
+					$customer_payment->setCardType("");
+				else
+					$customer_payment->setCardType($card_type);
+				$customer_payment->setCardName($cardholder);
+				$customer_payment->setCardNumber($card_number);
+				$customer_payment->setExpiryDate($expiry_date);
+				$customer_payment->setCvv($cvv);
+				$customer_payment->setCheckNumber($check_number);
+				$customer_payment->setStatus(1);
+
+				$data = [
+							'customer_id' 	 => $customer_payment->getCustomerId(),
+							'payment_method' => $customer_payment->getPaymentMethod(),
+							'card_type' 	 => $customer_payment->getCardType(),
+							'card_number' 	 => $customer_payment->getCardNumber(),
+							'card_name' 	 => $customer_payment->getCardName(),
+							'expiry_date' 	 => $customer_payment->getExpiryDate(),
+							'cvv' 			 => $customer_payment->getCvv(),
+							'check_number'   => $customer_payment->getCheckNumber(),
+							'status' 		 => $customer_payment->getStatus()
+						];
+
+
+				$payment_id = $db->insert("customer_payment_methods", $data);
+			
+
+				$order->setPaymentMethodId($payment_id);
 				$data = [
 						'order_date' 	      => $order->getOrderDate(),
 						'customer_id' 		  => $order->getCustomerId() ,
@@ -78,6 +122,10 @@
 						'shipping_fee'  	  => $order->getShippingFee()   ,
 						'remarks' 			  => $order->getRemarks() ,
 						'notes' 		      => $order->getNotes() ,
+						'payment_method_id'   => $order->getPaymentMethodId(),
+						'merchant'			  => $order->getMerchant(),
+						'prepared_by'		  => $order->getPreparedBy(),
+						'date_submitted' 	  => $order->getDateSubmitted(),
 						'status' 		      => $order->getStatus() ,
 					];
 
@@ -102,9 +150,6 @@
 							'amount'  	  => $detail->getAmount()   ,
 							'status' 	  => $detail->getStatus() ,
 						];
-
-						
-
 						$order_details_id = $db->insert("order_detail", $data);
 			        }
 			        header("location: ../orders/manage.php?msg=inserted");

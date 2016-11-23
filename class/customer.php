@@ -16,12 +16,24 @@
         private $state_id;
         private $status;
 
+        private $alternate_contact_number;
         private $same;
         private $billing_country_id;
         private $billing_address;
         private $billing_city;
         private $billing_zip;
         private $billing_state_id;
+
+
+        public function getAlternateContactNumber()
+        {
+            return $this->alternate_contact_number;
+        }
+        public function setAlternateContactNumber($alternate_contact_number)
+        {
+            $this->alternate_contact_number = $alternate_contact_number;
+            return $this;
+        }
 
         public function getSame()
         {

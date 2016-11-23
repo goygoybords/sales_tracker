@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2016 at 04:49 AM
+-- Generation Time: Nov 23, 2016 at 04:29 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -318,12 +318,13 @@ CREATE TABLE `customer` (
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `contact_number` varchar(15) NOT NULL,
+  `alternate_contact_number` varchar(15) NOT NULL,
   `country_id` int(11) NOT NULL,
   `shipping_address` varchar(250) NOT NULL,
   `city` varchar(50) NOT NULL,
   `zip` varchar(8) NOT NULL,
   `state_id` int(11) NOT NULL,
-  `same` tinyint(1) NOT NULL,
+  `same` tinyint(1) NOT NULL DEFAULT '0',
   `billing_country_id` int(11) NOT NULL,
   `billing_address` varchar(100) NOT NULL,
   `billing_city` varchar(50) NOT NULL,
@@ -336,19 +337,50 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `same`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `status`) VALUES
-(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
-(2, 'Kane', 'Undertaker', 'john.flashpark@gmail.com', '123123', 230, 'Houston', 'Death Valley', '78787', 51, 0, 0, '', '', '', 0, 1),
-(3, 'Chris', 'Tomlin', 'john.flashpark@gmail.com', '123', 230, 'asdasd', 'cebu', '451', 3, 0, 0, '', '', '', 0, 1),
-(4, 'asdasd', 'asdasdasd', 'john.flashpark@gmail.com', '123123', 230, 'asdasdasd', 'asdasd', '123123', 2, 0, 0, '', '', '', 0, 1),
-(5, 'ghjghjhghgj', 'ghjghh', 'john.flashpark@gmail.com', '123123213', 230, 'asdsad', 'fdfg', '5000', 6, 0, 0, '', '', '', 0, 1),
-(6, 'Test', 'Test', 'john.flashpark@gmail.com', '123123', 230, 'test address', 'test', '6000', 1, 0, 0, '', '', '', 0, 1),
-(7, 'khkjhjhkj', 'hkjhkjhjhk', 'john.flashpark@gmail.com', '234243243', 230, 'kjhkjhkhj', 'jkhkjhk', '6000', 5, 0, 0, '', '', '', 0, 1),
-(8, 'kari update', 'jobe update', 'john.flashpark@gmail.com', '565656', 212, 'update', 'asdasd update', '5656', 8, 0, 0, '', '', '', 0, 0),
-(9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
-(10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', 230, 'asdsad', 'asd', '213231', 2, 0, 0, '', '', '', 0, 1),
-(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 1),
-(12, 'Paul ', 'Heyman', 'paulheyman@yahoo.com', '12354545', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 1);
+INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `alternate_contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `same`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `status`) VALUES
+(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
+(2, 'Kane', 'Undertaker', 'john.flashpark@gmail.com', '123123', '', 230, 'Houston', 'Death Valley', '78787', 51, 0, 0, '', '', '', 0, 1),
+(3, 'Chris', 'Tomlin', 'john.flashpark@gmail.com', '123', '', 230, 'asdasd', 'cebu', '451', 3, 0, 0, '', '', '', 0, 1),
+(4, 'asdasd', 'asdasdasd', 'john.flashpark@gmail.com', '123123', '', 230, 'asdasdasd', 'asdasd', '123123', 2, 0, 0, '', '', '', 0, 1),
+(5, 'ghjghjhghgj', 'ghjghh', 'john.flashpark@gmail.com', '123123213', '', 230, 'asdsad', 'fdfg', '5000', 6, 0, 0, '', '', '', 0, 1),
+(6, 'Test', 'Test', 'john.flashpark@gmail.com', '123123', '', 230, 'test address', 'test', '6000', 1, 0, 0, '', '', '', 0, 1),
+(7, 'khkjhjhkj', 'hkjhkjhjhk', 'john.flashpark@gmail.com', '234243243', '', 230, 'kjhkjhkhj', 'jkhkjhk', '6000', 5, 0, 0, '', '', '', 0, 1),
+(8, 'kari update', 'jobe update', 'john.flashpark@gmail.com', '565656', '', 212, 'update', 'asdasd update', '5656', 8, 0, 0, '', '', '', 0, 0),
+(9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
+(10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', '', 230, 'asdsad', 'asd', '213231', 2, 0, 0, '', '', '', 0, 1),
+(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 1),
+(12, 'Paul ', 'Heyman', 'paulheyman@yahoo.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 1),
+(13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 1, 230, 'ghjghj', 'ghjhgj', '45656', 2, 1),
+(14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_payment_methods`
+--
+
+CREATE TABLE `customer_payment_methods` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `payment_method` tinyint(1) NOT NULL,
+  `card_type` varchar(15) NOT NULL,
+  `card_number` varchar(30) NOT NULL,
+  `card_name` varchar(50) NOT NULL,
+  `expiry_date` varchar(6) NOT NULL,
+  `cvv` varchar(3) NOT NULL,
+  `check_number` varchar(15) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_payment_methods`
+--
+
+INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `card_type`, `card_number`, `card_name`, `expiry_date`, `cvv`, `check_number`, `status`) VALUES
+(1, 1, 1, '', '', '', '', '', '', 1),
+(2, 11, 1, 'Visa', '', '', '', '', '', 1),
+(3, 13, 1, 'MasterCard', '566565989456', 'DAvid D COOK', '4/20', '123', '', 1),
+(4, 1, 2, 'MasterCard', '', '', '', '', '123123123213', 1);
 
 -- --------------------------------------------------------
 
@@ -365,12 +397,14 @@ CREATE TABLE `orders` (
   `shipping_fee` decimal(16,2) NOT NULL,
   `remarks` text NOT NULL,
   `notes` text NOT NULL,
-  `payment_method` tinyint(1) NOT NULL,
+  `payment_method_id` int(11) NOT NULL,
+  `merchant` varchar(50) NOT NULL,
   `prepared_by` int(11) NOT NULL,
   `approved_by` int(11) NOT NULL,
   `date_submitted` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
   `date_updated` datetime NOT NULL,
+  `tracking_number` varchar(5) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -378,18 +412,23 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `status`) VALUES
-(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0, 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 1),
-(2, 1478646000, 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0, 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 1),
-(3, 1478646000, 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0, 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0, 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(5, 1478818800, 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0, 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(6, 1479078000, 6, '40.00', 1, '5.00', 'test remarks', 'test notes', 0, 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(7, 1479078000, 7, '15.00', 1, '5.00', 'jhgjhg', 'hjhgjgjh', 0, 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 1),
-(8, 1479078000, 9, '30.00', 1, '5.00', 'kevin kane test', 'kevin kane test', 0, 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(9, 1479078000, 1, '15.00', 1, '5.00', 'sad', 'asdassad', 0, 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(10, 1479078000, 10, '30.00', 1, '5.00', 'asdasd', 'asdsadasd', 0, 14, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(11, 1479164400, 1, '9.00', 1, '5.00', 'New Order', 'New Order', 0, 15, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method_id`, `merchant`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `tracking_number`, `status`) VALUES
+(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0, '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
+(2, 1478646000, 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
+(3, 1478646000, 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(5, 1478818800, 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(6, 1479078000, 6, '40.00', 1, '5.00', 'test remarks', 'test notes', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(7, 1479078000, 7, '15.00', 1, '5.00', 'jhgjhg', 'hjhgjgjh', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
+(8, 1479078000, 9, '30.00', 1, '5.00', 'kevin kane test', 'kevin kane test', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(9, 1479078000, 1, '15.00', 1, '5.00', 'sad', 'asdassad', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(10, 1479078000, 10, '30.00', 1, '5.00', 'asdasd', 'asdsadasd', 0, '', 14, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(11, 1479164400, 1, '9.00', 1, '5.00', 'New Order', 'New Order', 0, '', 15, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(12, 1479855600, 1, '29.00', 2, '5.00', 'REmarks', 'Notes', 0, 'Hillsong', 1, 0, '2016-11-23 03:11:32', 0, '0000-00-00 00:00:00', '', 0),
+(13, 1479855600, 1, '15.00', 1, '5.00', 'asdasda', 'asdasdasd', 1, 'asdsad', 1, 0, '2016-11-23 03:15:54', 0, '0000-00-00 00:00:00', '', 0),
+(14, 1479855600, 11, '34.00', 1, '5.00', 'fgfg', 'fgfgfgfgfgfg', 2, 'gdgfg', 1, 0, '2016-11-23 03:19:46', 0, '0000-00-00 00:00:00', '', 0),
+(15, 1479855600, 13, '0.00', 1, '5.00', 'asdas', 'asdasd', 3, '', 1, 0, '2016-11-23 03:24:13', 0, '0000-00-00 00:00:00', '', 0),
+(16, 1479855600, 1, '30.00', 1, '5.00', '', '', 4, 'asdasd', 1, 0, '2016-11-23 03:46:47', 0, '0000-00-00 00:00:00', '', 0);
 
 -- --------------------------------------------------------
 
@@ -425,7 +464,12 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_pr
 (11, 9, 3, '5.00', '2.00', '10.00', 1),
 (12, 10, 2, '5.00', '5.00', '25.00', 1),
 (13, 11, 2, '2.00', '1.00', '2.00', 1),
-(14, 11, 1, '2.00', '1.00', '2.00', 1);
+(14, 11, 1, '2.00', '1.00', '2.00', 1),
+(15, 12, 3, '3.00', '8.00', '24.00', 1),
+(16, 13, 1, '2.00', '5.00', '10.00', 1),
+(17, 14, 1, '2.00', '2.00', '4.00', 1),
+(18, 14, 2, '5.00', '5.00', '25.00', 1),
+(19, 16, 2, '5.00', '5.00', '25.00', 1);
 
 -- --------------------------------------------------------
 
@@ -597,7 +641,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 0, '', 1473717600, 1479769200, 1),
+(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 0, 'Chinese Mafia', 1473717600, 1479855600, 1),
 (6, 'QA', 'Kevin', 'qakevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 2, 0, '', 1479682800, 0, 1),
 (7, 'Team Leader', 'Kevin', 'teamleadkevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 4, 0, '', 1479682800, 0, 1),
 (8, 'agent', 'kevin', 'agentkevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 0, '', 1479682800, 0, 1),
@@ -650,6 +694,12 @@ ALTER TABLE `countries`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customer_payment_methods`
+--
+ALTER TABLE `customer_payment_methods`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -719,17 +769,22 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `customer_payment_methods`
+--
+ALTER TABLE `customer_payment_methods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `products`
 --

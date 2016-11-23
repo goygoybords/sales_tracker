@@ -16,6 +16,7 @@
 	require '../class/countries.php';
 	require '../class/shipping_method.php';
 	require '../class/order_details.php';
+	require '../class/customer_payment.php';
 
 	$db = new Database();
 	$order_id = (isset($_GET["id"]) ? $_GET["id"] : "");
@@ -34,6 +35,9 @@
 
 	$order = new Order();
 	$customer = new Customer();
+	$customer_payment = new Customer_Payment();
+
+
 	$order->setShippingFee(5.00);
 
 	if(isset($_GET['view']))
@@ -71,6 +75,8 @@
 						$order->setShippingFee($o['shipping_fee']);
 						$order->setRemarks($o['remarks']);
 						$order->setNotes($o['notes']);
+						$order->setPaymentMethodId($o['payment_method_id']);
+						$order->setMerchant($o['merchant']);
 						$order->setPreparedBy($o['prepared_by']);
 						$order->setStatus($o['status']);
 					}
@@ -82,6 +88,7 @@
 						$customer->setLastname($c['lastname']);
 						$customer->setEmail($c['email']);
 						$customer->setContactNumber($c['contact_number']);
+						$customer->setAlternateContactNumber($c['alternate_contact_number']);
 						$customer->setCountryId($c['country_id']);
 						$customer->setShippingAddress($c['shipping_address']);
 						$customer->setCity($c['city']);
@@ -94,6 +101,17 @@
 						$customer->setBillingCity(htmlentities($c['billing_city']));
 						$customer->setBillingZip(htmlentities($c['billing_zip']));
 						$customer->setStatus($c['status']);
+					}
+					$get_payment = $db->select('customer_payment_methods' , array("*"), "id = ?" , array($order->getPaymentMethodId() ) );
+					foreach ($get_payment as $p ) 
+					{
+						$customer_payment->setPaymentMethod($p['payment_method']);
+						$customer_payment->setCardType($p['card_type']);
+						$customer_payment->setCardNumber($p['card_number']);
+						$customer_payment->setCardName($p['card_name']);
+						$customer_payment->setExpiryDate($p['expiry_date']);
+						$customer_payment->setCvv($p['cvv']);
+						$customer_payment->setCheckNumber($p['check_number']);
 					}
 					$get_orders = $db->select('order_detail' , array("*"), "order_id = ? AND status = 1" , array($order->getOrderId() ) );
 
@@ -170,18 +188,26 @@
 													<label for="lastname">Last Name</label>
 												</div>
 											</div>
-											<div class="col-sm-6">
+											<div class="col-sm-4">
 												<div class="form-group floating-label">
 													<input type="email" name = "email" class="form-control" <?php echo $read_only; ?> id="email" value="<?php echo $customer->getEmail(); ?>" >
 													<label for="email">Email Address</label>
 												</div>
 											</div>
-											<div class="col-sm-6">
+											<div class="col-sm-4">
 												<div class="form-group floating-label">
 													<input type="text" name = "contact_num" class="form-control" <?php echo $read_only; ?> id="contact_num" value="<?php echo $customer->getContactNumber(); ?>" required >
 													<label for="lastname">Contact Number</label>
 												</div>
 											</div>
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "alternate_contact_num" class="form-control" <?php echo $read_only; ?> id="alternate_contact_num" 
+													value="<?php echo $customer->getAlternateContactNumber(); ?>"  >
+													<label for="lastname">Alternate Contact Number</label>
+												</div>
+											</div>
+
 										</div>
 										<br/>
 										<div class="form-group">
@@ -369,6 +395,18 @@
 										</div>
 
 										<div class="form-group">
+											<label><b>MERCHANT</b></label>
+										</div>
+										<div class="row" >
+											<div class="col-sm-12">
+												<div class="form-group floating-label">
+													<input type="text" name="merchant" id = "merchant" class = "form-control" <?php $readonly; ?>value = "<?php echo $order->getMerchant(); ?>">
+													<label class="merchant">Merchant</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
 											<label><b>SHIPPING METHOD</b></label>
 										</div>
 										<div class="row">
@@ -397,44 +435,67 @@
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
 													<select name = "payment_method" class = "form-control" <?php echo $disabled; ?> id = "payment_method" >
-														<option value = "1">Credit Card</option>
-														<option value = "2">Direct Debit</option>
-														<option value = "3">Check Payment</option>
+														<option value = "1" selected 
+															<?php echo ($customer_payment->getPaymentMethod() == 1 ? "selected='selected'" : ""); ?> >
+															Credit Card
+														</option>
+														<option value = "2" <?php echo ($customer_payment->getPaymentMethod() == 2 ? "selected='selected'" : ""); ?> >Check Payment</option>
 													</select>
 													<label class="method">Payment Method</label>
 												</div>
 											</div>
 										</div>
 
-										<div class="row">
+										<div class="row" id = "card_details_view">
     										<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<select name="card_type" class = "form-control" id = "card_type">
-												    	<option value="MasterCard">MasterCard</option>
-												      	<option value="American Express">American Express</option>
-												      	<option value="Carte Blanche">Carte Blanche</option>
-												      	<option value="Diners Club">Diners Club</option>
-													    <option value="Discover">Discover</option>
-													    <option value="Enroute">enRoute</option>
-													    <option value="JCB">JCB</option>
-													    <option value="Maestro">Maestro</option>
-													    <option value="MasterCard">MasterCard</option>
-													    <option value="Solo">Solo</option>
-													    <option value="Switch">Switch</option>
-													    <option value="Visa">Visa</option>
-													    <option value="Visa Electron">Visa Electron</option>
-													    <option value="LaserCard">Laser</option>
+												    	<option value="MasterCard" 
+												    	<?php echo ($customer_payment->getCardType() == "MasterCard" ? "selected='selected'" : ""); ?> >
+												    		MasterCard
+												    	</option>
+												      	<option value="American Express" 
+												      		<?php echo ($customer_payment->getCardType() == "American Express" ? "selected='selected'" : ""); ?>>American Express</option>
+													    <option value="Visa" <?php echo ($customer_payment->getCardType() == "Visa" ? "selected='selected'" : ""); ?> >Visa</option>
+													
 												    </select>
 													<label class="card_type">Card Type</label>
 												</div>
 											</div> 
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name="cardholder" class = "form-control">
+													<input type="text" name="cardholder" id = "cardholder" class = "form-control" value = "<?php echo $customer_payment->getCardName(); ?>">
 													<label class="card_holder">Card Holders Name</label>
 												</div>
 											</div>
-											
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name="card_number" id = "card_number" class = "form-control" value = "<?php echo $customer_payment->getCardNumber(); ?>">
+													<label class="card_number">Card Number</label>
+												</div>
+											</div>
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name="expiry_date" id = "expiry_date" class = "form-control" value = "<?php echo $customer_payment->getExpiryDate(); ?>">
+													<label class="expiry_date">Expiry Date</label>
+												</div>
+											</div> 
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name="cvv" id = "cvv" class = "form-control" value = "<?php echo $customer_payment->getCvv(); ?>">
+													<label class="cvv">CVV</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="row" id = "check_details_view">
+											<div class="col-sm-12">
+												<div class="form-group floating-label">
+													<input type="text" name="check_number" id = "check_number" class = "form-control" 
+													value = "<?php echo $customer_payment->getCheckNumber(); ?>">
+													<label class="check_number">Check Number</label>
+												</div>
+											</div>
 										</div>
 
 
@@ -546,13 +607,16 @@
 
 											<div class="col-sm-6">
 											<div class="form-group floating-label">
-													<input type="text" name="agent_name" id = "agent_name" class="form-control" readonly value = "">
+													<input type="text"  id = "agent_name" class="form-control" readonly 
+													value = "<?php echo $_SESSION['firstname']." ".$_SESSION['lastname']; ?>">
+
 													<label class="agent_name">Prepared By/Salesperson</label>
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-														<input type="text" name="screen_name" id = "screen_name" class="form-control" readonly value = "">
+														<input type="text" id = "screen_name" class="form-control" readonly 
+														value = "<?php echo $_SESSION['screen_name']; ?>">
 														<label class="screen_name">Agent Screen Name</label>
 													
 												</div>
@@ -605,6 +669,37 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
+		$("#card_details_view").hide();
+		$("#check_details_view").hide();
+		var payment = $( "#payment_method option:selected" ).val();
+
+		if(payment == 1)
+		{
+			$("#card_details_view").show();
+			$("#check_details_view").hide();
+		}
+		else if(payment == 2)
+		{
+			$("#card_details_view").hide();
+	       	$("#check_details_view").show();
+		} 
+		$('#payment_method').change(function()
+	       {
+	       		payment = $( "#payment_method option:selected" ).val();
+	       		if(payment == 1)
+	       		{
+	       			$("#card_details_view").show();
+	       			$("#check_details_view").hide();
+	       		}
+	       		if(payment == 2)
+	       		{
+	       			$("#card_details_view").hide();
+	       			$("#check_details_view").show();
+	       		}
+
+	       }
+	    );
+
 		 $('#customer_id').change(function()
 	       {
 	       		var customer = $( "#customer_id option:selected" ).val();
@@ -624,6 +719,7 @@
 	                   			$("#firstname").val(parse[i].firstname).addClass("dirty");
 	                   			$("#lastname").val(parse[i].lastname).addClass("dirty");
 	                   			$("#contact_num").val(parse[i].contact_number).addClass("dirty");
+	                   			$("#alternate_contact_num").val(parse[i].alternate_contact_number).addClass("dirty");
 	                   			$("#email").val(parse[i].email).addClass("dirty");
 	                   			$("#address").val(parse[i].shipping_address).addClass("dirty");
 	                   			$("#city").val(parse[i].city).addClass("dirty");
@@ -674,6 +770,7 @@
        				$("#firstname").val("").removeClass("dirty");
                    	$("#lastname").val("").removeClass("dirty");
                    	$("#contact_num").val("").removeClass("dirty");
+                   	$("#alternate_contact_num").val("").removeClass("dirty");
                    	$("#email").val("").removeClass("dirty");
                    	$("#address").val("").removeClass("dirty");
                    	$("#city").val("").removeClass("dirty");
@@ -800,67 +897,49 @@
 	                        }
 	                        $('.item_list'+counter).change(function()
 	                         {
-	                         	var item = $(".item_list"+counter+" option:selected").val();
-					       	  	$.ajax({
-				                        type: "POST",
-				                        url: '../process/ajax/get_specific_item.php',
-				                        data: { item: item },
-				                        success: function(data)
-				                        {   
-				                        	var parse = JSON.parse(data);
-				                            parseFloat($('.lblUprice'+counter).val(parse[0].product_price));
-				                            // // compute amount
-				                             $('.quantity'+counter).change(function()
-				                             {
-
-				                             	qty = parseInt($(".quantity"+counter).val());
-				                             	price = parseFloat($(".lblUprice"+counter).val());
+	                            	$('.quantity'+counter).change(function () 
+								  	{ 
+								  		qty = parseInt($(".quantity"+counter).val());
+								  		
+								  		 $('.lblUprice'+counter).change(function () 
+										  	{ 
+										  		price = parseFloat($(".lblUprice"+counter).val());
 										  		amount = parseFloat(qty * price);
 	                                                // compute total
 	                                                //total = parseFloat($('.displayTotal').val());
-	                                             grand = parseFloat( total + amount + shipping);
+	                                                grand = parseFloat( total + amount + shipping);
 	                                                // grand = parseFloat(total);
 										  		$(".lblAmount"+counter).val(amount.toFixed(2));
 										  		$(".displayTotal").val(grand.toFixed(2));
-				                            });
-				                        }
-				                    }); // end of ajax   
+										  	}
+										  );
+								  	}
+								  );
+	                            
 	                        });//end of item list
 	                    }
 	                }); // end of ajax                 
 		  });
-
-		  $('.item_list').change(function()
+		
+			$('.item_list').change(function()
 	       {
-	       		var item = $(".item_list option:selected").val();
-	       	  	$.ajax({
-                        type: "POST",
-                        url: '../process/ajax/get_specific_item.php',
-                        data: { item: item },
-                        success: function(data)
-                        {   
-                        	var parse = JSON.parse(data);
-                            parseFloat($('.lblUprice').val(parse[0].product_price));
-                            // // compute amount
-                             $('.quantity').change(function()
-                             {
-
-                             	qty = parseInt($(".quantity").val());
-                          		price = $(".lblUprice").val();
-                           
-                             	amount = parseFloat(qty * price);
-					  			total = parseFloat(amount);
-					  			grand = parseFloat(total + shipping);
+	            $('.quantity').change(function () 
+			  	{ 
+			  		qty = parseInt($(".quantity").val());
+			  		console.log(qty);
+			  		 $('.lblUprice').change(function () 
+					  	{ 
+					  		price = parseFloat($(".lblUprice").val());
+					  		amount = parseFloat(qty * price);
+					  		total = parseFloat(amount);
+					  		grand = parseFloat(total + shipping);
 					  	
-						  		$(".lblAmount").val(amount.toFixed(2));
-						  		$(".displayTotal").val(grand.toFixed(2) );
-                            });
-                        }
-                    }); // end of ajax   
-			});//end of item list	
-
-
-
-
+					  		$(".lblAmount").val(amount.toFixed(2));
+					  		$(".displayTotal").val(grand.toFixed(2) );
+					  	}
+					  );
+			  	}
+			  );
+			});//end of item list	   
 	} );
 </script>
