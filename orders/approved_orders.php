@@ -42,6 +42,8 @@
 										$error = 'Sorry, the record selected does not exist.';
 									else if($msg == 'approved')
 										$error = 'Record Approved';
+									else if($msg == 'sent')
+										$error = 'Mail Sent';
 									echo '<span>'.$error.'</span>';
 								}
 							?>
@@ -64,6 +66,7 @@
 														<th>Remarks</th>
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
+														<th>Tracking Number</th>
 														<th>Action</th>
 													</thead>
 <!-- 													<tfoot>

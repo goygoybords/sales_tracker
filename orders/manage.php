@@ -282,12 +282,24 @@
 
 										<input type="hidden" name="customer_id_fm" value="<?php echo $customer->getCustomerId(); ?>">
 										<input type="hidden" name="order_id_fm" value = "<?php echo $order->getOrderId(); ?>">
+										<input type="hidden" name="payment_method_id_fm" value = "<?php echo $order->getPaymentMethodId(); ?>">
+										
 	
 
 										<div class="form-group">
 											<label><b>ORDER DETAILS</b></label>
 										</div>
 										<div class = "row">
+											<div class="col-sm-12">
+														<div class="form-group">
+											                <div class='input-group date' id='datetimepicker1'>
+											                    <input type='text' id = "order_date" name = "order_date" placeholder="Order Date" class="form-control"   />
+											                    <span class="input-group-addon">
+											                        <span class="glyphicon glyphicon-calendar"></span>
+											                    </span>
+											                </div>
+											            </div>
+													</div>
 											<div class = "col-lg-12">
 												<a id = "add_more_button" class = "btn btn-info">Add More Items</a>
 									
@@ -418,7 +430,9 @@
 															$method->setId($m['id']);
 															$method->setDescription($m['description']);
 														?>
-															<option value = "<?php echo $method->getId(); ?>"> 
+															<option value = "<?php echo $method->getId(); ?>"
+															<?php echo ($order->getShippingMethodId() == $method->getId() ? "selected='selected'" : ""); ?>
+															> 
 																<?php echo $method->getDescription(); ?>
 															</option>
 														<?php endforeach ?>
@@ -477,7 +491,7 @@
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
 													<input type="text" name="expiry_date" id = "expiry_date" class = "form-control" value = "<?php echo $customer_payment->getExpiryDate(); ?>">
-													<label class="expiry_date">Expiry Date</label>
+													<label class="expiry_date">Expiry Date (MM/YY)</label>
 												</div>
 											</div> 
 											<div class="col-sm-4">
@@ -606,7 +620,7 @@
 										<div class="row">
 
 											<div class="col-sm-6">
-											<div class="form-group floating-label">
+												<div class="form-group floating-label">
 													<input type="text"  id = "agent_name" class="form-control" readonly 
 													value = "<?php echo $_SESSION['firstname']." ".$_SESSION['lastname']; ?>">
 
@@ -618,7 +632,6 @@
 														<input type="text" id = "screen_name" class="form-control" readonly 
 														value = "<?php echo $_SESSION['screen_name']; ?>">
 														<label class="screen_name">Agent Screen Name</label>
-													
 												</div>
 											</div>
 										</div>
@@ -668,7 +681,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function()
-	{
+	{	
+	
+		$('#order_date').datepicker({
+    		
+		});
+
 		$("#card_details_view").hide();
 		$("#check_details_view").hide();
 		var payment = $( "#payment_method option:selected" ).val();

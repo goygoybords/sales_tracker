@@ -14,9 +14,8 @@
 	$customer_payment = new Customer_Payment();
 
 	extract($_POST);
-	if(!isset($_GET['approve']))
+	if(!isset($_GET['approve']) && !isset($_GET['send_mail']))
 	{
-	
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
 		$customer->setContactNumber(htmlentities($contact_num));
@@ -40,7 +39,7 @@
 		$customer->setStatus(1);
 
 
-		$order->setOrderDate(strtotime(date('Y-m-d')));
+		$order->setOrderDate(strtotime(date('Y-m-d',strtotime($order_date))));
 		$order->setTotal(doubleval($total));
 		$order->setShippingMethodId(intval($shipping_method));
 		$order->setShippingFee(doubleval($shipping));
@@ -161,6 +160,8 @@
 		{
 			$customer->setCustomerId($customer_id_fm);
 			$order->setOrderId($order_id_fm);
+			$order->setDateUpdated(date('Y-m-d H:i:s'));
+			$order->setUpdatedBy($_SESSION['id']);
 
 			$fields = array('firstname' ,'lastname' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id');
 				$where  = "WHERE id = ?";
@@ -178,7 +179,7 @@
 
 			$customer_update = $db->update("customer", $fields , $where, $params);
 
-			$fields = array("total", "shipping_method_id" , "shipping_fee" , "remarks", "notes");
+			$fields = array("total", "shipping_method_id" , "shipping_fee" , "remarks", "notes" ,'merchant' , 'updated_by' ,'date_updated');
 			$where  = "WHERE id = ?";
 				$params = array(
 						$order->getTotal(),
@@ -186,32 +187,122 @@
 						$order->getShippingFee(),
 						$order->getRemarks(),
 						$order->getNotes(),
+						$order->getMerchant(),
+						$order->getUpdatedBy(),
+						$order->getDateUpdated(),
 						$order->getOrderId()
 						);
 
 			$order_update = $db->update("orders", $fields , $where, $params);
 
+
+				$customer_payment->setId($payment_method_id_fm);
+				$customer_payment->setPaymentMethod(intval($payment_method));
+				if($payment_method == 2)
+				{
+					$customer_payment->setCardType("");
+					$customer_payment->setCardName("");
+					$customer_payment->setCardNumber("");
+					$customer_payment->setExpiryDate("");
+					$customer_payment->setCvv("");
+					$customer_payment->setCheckNumber($check_number);
+				}
+				else
+				{
+					$customer_payment->setCardType($card_type);
+					$customer_payment->setCardName($cardholder);
+					$customer_payment->setCardNumber($card_number);
+					$customer_payment->setExpiryDate($expiry_date);
+					$customer_payment->setCvv($cvv);
+					$customer_payment->setCheckNumber("");
+				}
+				
+
+			$fields = array('payment_method' , 'card_type' , 'card_number' , 'card_name', 'expiry_date' , 'cvv' , 'check_number');
+			$where = "WHERE id = ?";
+				$params = array(
+						$customer_payment->getPaymentMethod(),
+						$customer_payment->getCardType(),
+						$customer_payment->getCardNumber(),
+						$customer_payment->getCardName(),
+						$customer_payment->getExpiryDate(),
+						$customer_payment->getCvv(),
+						$customer_payment->getCheckNumber(),
+						$customer_payment->getId()
+						);
+			
+			$payment_update = $db->update("customer_payment_methods", $fields , $where, $params);
 			header("location: ../orders/manage.php?id=".$order->getOrderId()."&msg=updated");
 		}
 
 	}
 		
-	else if(isset($_GET['approve']))
+	if(isset($_GET['approve']))
 	{
 
 		$order_id = $_GET['id'];
 		$order->setOrderId($order_id);
+		$order->setApprovedBy($_SESSION['id']);
 		$order->setStatus(1);
 			
-			$fields = array("status");
+		$fields = array("approved_by", "status");
+		$where  = "WHERE id = ?";
+		$params = array(
+				$order->getApprovedBy(),
+				$order->getStatus(),
+				$order->getOrderId()
+				);
+
+		$order_update = $db->update("orders", $fields , $where, $params);
+
+		header("location: ../orders/approved_orders.php?msg=approved");
+	}
+
+	if(isset($_GET['send_mail']))
+	{
+		require '../class/phpmailer/PHPMailerAutoload.php';
+		$order_id = $_GET['id'];
+		$order->setOrderId($order_id);
+		
+		$get_customer_id = $db->select('orders' , array("customer_id" , "tracking_number"), "id = ?" , array($order->getOrderId() ) );
+		$get_email = $db->select('customer' , array('firstname','lastname','email') , 
+			'id = ?' , array($get_customer_id[0]['customer_id']) );
+
+			$tracking_number = $get_customer_id[0][1] + 1;
+		
+		
+
+			$fields = array("tracking_number");
 			$where  = "WHERE id = ?";
-			$params = array(
-					$order->getStatus(),
-					$order->getOrderId()
-					);
+			$params = array($tracking_number , $order->getOrderId());
+			$db->update("orders", $fields , $where, $params);
 
-			$order_update = $db->update("orders", $fields , $where, $params);
+		$mail = new PHPMailer;
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->SMTPAuth = true;  // authentication enabled
+		$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
+		$mail->Host = 'smtp.gmail.com';
+		$mail->Port = 465; 
+		$mail->Username = "john.flashpark@gmail.com";  
+		$mail->Password = "goygoy08";
 
-			header("location: ../orders/orders.php?msg=approved");
+		$mail->setFrom('salestracker@no-reply.com', 'Mailer');
+		$mail->addAddress($get_email[0][2], $get_email[0][0]." ".$get_email[0][1]);     // Add a recipient
+		// $mail->addAddress('ellen@example.com');               // Name is optional
+		//mail->addReplyTo('info@example.com', 'Information');
+		
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = 'Order Process';
+		$mail->Body    = 'Hi. Good Day. <br> We have processed your order. <br> Your Tracking Number is:'.$tracking_number.' ';
+
+		if(!$mail->send()) {
+		    echo 'Message could not be sent.';
+		    echo 'Mailer Error: ' . $mail->ErrorInfo;
+		} 
+		else 
+		{
+		    header("location: ../orders/approved_orders.php?msg=sent");
+		}
 	}
 ?>
