@@ -73,11 +73,13 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								<h4 class="modal-title" id="myModalLabel">Event Details</h4>
 							</div>
+							<form method = "POST" action = "../process/events_manage.php">
 							<div class="modal-body">
 								<div class="row">
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-11">
 										
 											<div class="card-body" id="div-add-lead">
+												<input type="hidden" name="event_id" id = "cal_event_id" value = "" readonly>
 												<div class="form-group">
 													<label for="event_title" class="col-sm-2 control-label">Event:</label>
 													<div class="col-sm-10">
@@ -113,9 +115,11 @@
 													
 							</div>
 							<div class="modal-footer">
+								<input type = "submit" class = "btn btn-warning" name = "delete_event" value = "Finish Event">
 								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-								<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
 							</div>
+							</form>
+
 						</div>
 					</div>
 				</div>

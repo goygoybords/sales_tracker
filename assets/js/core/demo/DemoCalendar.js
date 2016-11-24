@@ -144,6 +144,7 @@
 				        //     window.open(event.url);
 				        //     return false;
 				        // }
+				         $("#cal_event_id").val(event.id);
 				         $("#cal_event_title").val(event.title);
 				         $("#cal_description").val(event.description);
 				         $("#cal_start").val(event.start);

@@ -80,8 +80,8 @@
 														<?php
 															$events = new CalendarEvents();
 															$events->setEventName($e['event_name']);
-															$events->setStartDate(date('Y-m-d' , $e['start_date']));
-															$events->setEndDate(date('Y-m-d' , $e['end_date']));
+															$events->setStartDate(date('Y-m-d' , strtotime($e['start_date'])));
+															$events->setEndDate(date('Y-m-d' , strtotime($e['end_date'])));
 															$events->setId($e['id']);
 														?>
 															<tr>

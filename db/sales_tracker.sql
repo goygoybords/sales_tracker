@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2016 at 04:29 AM
+-- Generation Time: Nov 24, 2016 at 10:52 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -30,8 +30,8 @@ CREATE TABLE `calendar_events` (
   `id` int(11) NOT NULL,
   `event_name` varchar(35) NOT NULL,
   `description` varchar(50) NOT NULL,
-  `start_date` int(16) NOT NULL,
-  `end_date` int(16) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -40,8 +40,8 @@ CREATE TABLE `calendar_events` (
 --
 
 INSERT INTO `calendar_events` (`id`, `event_name`, `description`, `start_date`, `end_date`, `status`) VALUES
-(1, 'Order List', 'Test', 1479337200, 1479423600, 1),
-(2, 'Undertaker Returns', 'the return of the deadman', 1480028400, 1480201200, 1);
+(1, 'Order List', 'Test', '2016-11-17', '2016-11-18', 0),
+(2, 'Undertaker Returns', 'the return of the deadman', '2016-11-24', '2016-11-26', 1);
 
 -- --------------------------------------------------------
 
@@ -349,7 +349,7 @@ INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`
 (9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
 (10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', '', 230, 'asdsad', 'asd', '213231', 2, 0, 0, '', '', '', 0, 1),
 (11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 1),
-(12, 'Paul ', 'Heyman', 'paulheyman@yahoo.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 1),
+(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 1),
 (13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 1, 230, 'ghjghj', 'ghjhgj', '45656', 2, 1),
 (14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1);
 
@@ -380,7 +380,11 @@ INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `
 (1, 1, 1, '', '', '', '', '', '', 1),
 (2, 11, 1, 'Visa', '', '', '', '', '', 1),
 (3, 13, 1, 'MasterCard', '566565989456', 'DAvid D COOK', '4/20', '123', '', 1),
-(4, 1, 2, 'MasterCard', '', '', '', '', '123123123213', 1);
+(4, 1, 2, 'MasterCard', '', '', '', '', '123123123213', 1),
+(5, 10, 1, 'MasterCard', '123123123213123', 'Kevin', '4/20', '111', '', 1),
+(6, 1, 1, 'MasterCard', '', '', '', '', '', 1),
+(7, 12, 1, 'MasterCard', '123123', 'asdsad', '4/12', '111', '', 1),
+(8, 13, 1, 'MasterCard', '123123', 'asdasd', '4/20', '11', '', 1);
 
 -- --------------------------------------------------------
 
@@ -404,7 +408,7 @@ CREATE TABLE `orders` (
   `date_submitted` datetime NOT NULL,
   `updated_by` int(11) NOT NULL,
   `date_updated` datetime NOT NULL,
-  `tracking_number` varchar(5) NOT NULL,
+  `tracking_number` varchar(5) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -428,7 +432,11 @@ INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_meth
 (13, 1479855600, 1, '15.00', 1, '5.00', 'asdasda', 'asdasdasd', 1, 'asdsad', 1, 0, '2016-11-23 03:15:54', 0, '0000-00-00 00:00:00', '', 0),
 (14, 1479855600, 11, '34.00', 1, '5.00', 'fgfg', 'fgfgfgfgfgfg', 2, 'gdgfg', 1, 0, '2016-11-23 03:19:46', 0, '0000-00-00 00:00:00', '', 0),
 (15, 1479855600, 13, '0.00', 1, '5.00', 'asdas', 'asdasd', 3, '', 1, 0, '2016-11-23 03:24:13', 0, '0000-00-00 00:00:00', '', 0),
-(16, 1479855600, 1, '30.00', 1, '5.00', '', '', 4, 'asdasd', 1, 0, '2016-11-23 03:46:47', 0, '0000-00-00 00:00:00', '', 0);
+(16, 1479855600, 1, '30.00', 1, '5.00', '', '', 4, 'asdasd', 1, 0, '2016-11-23 03:46:47', 0, '0000-00-00 00:00:00', '', 0),
+(17, -28800, 10, '40.00', 2, '5.00', 'asd', 'asd', 5, 'Journey', 1, 0, '2016-11-24 08:39:25', 0, '0000-00-00 00:00:00', '', 0),
+(18, 1478534400, 1, '9.00', 2, '5.00', 'dfsdfdsfsdf', '', 6, 'asdasd', 1, 1, '2016-11-24 08:45:53', 1, '2016-11-24 08:52:02', '', 1),
+(19, 1479312000, 12, '9.00', 2, '5.00', 'sad', 'asdsad', 7, 'asdasdasd', 1, 1, '2016-11-24 08:53:11', 1, '2016-11-24 09:18:31', '1', 1),
+(20, 1478102400, 13, '9.00', 1, '5.00', 'asd', 'asd', 8, 'asdasdsadsadsadsadasdsada', 1, 0, '2016-11-24 09:26:30', 1, '2016-11-24 09:26:58', '', 0);
 
 -- --------------------------------------------------------
 
@@ -469,7 +477,12 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_pr
 (16, 13, 1, '2.00', '5.00', '10.00', 1),
 (17, 14, 1, '2.00', '2.00', '4.00', 1),
 (18, 14, 2, '5.00', '5.00', '25.00', 1),
-(19, 16, 2, '5.00', '5.00', '25.00', 1);
+(19, 16, 2, '5.00', '5.00', '25.00', 1),
+(20, 17, 1, '2.00', '5.00', '10.00', 1),
+(21, 17, 3, '5.00', '5.00', '25.00', 1),
+(22, 18, 1, '2.00', '2.00', '4.00', 1),
+(23, 19, 4, '2.00', '2.00', '4.00', 1),
+(24, 20, 1, '2.00', '2.00', '4.00', 1);
 
 -- --------------------------------------------------------
 
@@ -641,14 +654,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 0, 'Chinese Mafia', 1473717600, 1479855600, 1),
+(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 0, 'Chinese Mafia', 1473717600, 1479916800, 1),
 (6, 'QA', 'Kevin', 'qakevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 2, 0, '', 1479682800, 0, 1),
 (7, 'Team Leader', 'Kevin', 'teamleadkevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 4, 0, '', 1479682800, 0, 1),
 (8, 'agent', 'kevin', 'agentkevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 0, '', 1479682800, 0, 1),
 (9, 'kobe test', 'test', 'test@gmail.com', '1f32aa4c9a1d2ea010adcf2348166a04', 2, 0, 'black mamba', 1479682800, 0, 1),
 (10, 'Team Lead 2', 'Kobe', 'kbryant@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 4, 2, '', 1479769200, 1479769200, 1),
 (11, 'Team Leader 3', 'Lebron', 'team_lebro@gmail.com', '1f32aa4c9a1d2ea010adcf2348166a04', 4, 3, '', 1479769200, 0, 1),
-(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 2, 'Jordan ', 1479769200, 1479769200, 1),
+(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 2, 'Jordan ', 1479769200, 1479942000, 1),
 (13, 'Kyrie', 'Irving', 'kyrieirving@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 3, 'Uncle Drew', 1479769200, 0, 1),
 (14, 'D'' Angelo', 'Russell', 'druss@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 2, 'D Russ', 1479769200, 0, 1),
 (15, 'Tristan', 'Thompson', 'tristan@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 3, 'tristan', 1479769200, 0, 1);
@@ -759,7 +772,7 @@ ALTER TABLE `usertypes`
 -- AUTO_INCREMENT for table `calendar_events`
 --
 ALTER TABLE `calendar_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -774,17 +787,17 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `customer_payment_methods`
 --
 ALTER TABLE `customer_payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `products`
 --
