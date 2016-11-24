@@ -7,6 +7,15 @@
 	
 	$table = "users";
 	extract($_POST);
+	
+	function encryptIt( $q ) 
+	{
+	    $cryptKey  = 'qJB0rGtIn5UB1xG03efyCp';
+	    $qEncoded      = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $q, MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+	    return( $qEncoded );
+	}
+
+
 	if(isset($_POST['register_user']))
 	{
 
@@ -14,7 +23,7 @@
 		$user->setFirstname(htmlentities($firstname));
 		$user->setLastname(htmlentities($lastname));
 		$user->setEmail(htmlentities($email));
-		$user->setPassword(htmlentities(md5($password)));
+		$user->setPassword(encryptIt($password));
 		$user->setUsertypeid($user_type);
 		$user->setScreenName($screen_name);
 		$user->setDatecreated(strtotime(date('Y-m-d')));
@@ -57,7 +66,7 @@
 		$user->setLastname(htmlentities($lastname));
 		$user->setEmail(htmlentities($email));
 		$user->setScreenName($screen_name);
-		$user->setPassword(htmlentities(md5($password)));
+		$user->setPassword(encryptIt($password));
 		$user->setTeamId($team);
 		$user->setUsertypeid($user_type);
 

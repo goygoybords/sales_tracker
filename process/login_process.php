@@ -8,18 +8,27 @@
 	
 
 	extract($_POST);
+
+	function encryptIt( $q ) 
+	{
+	    $cryptKey  = 'qJB0rGtIn5UB1xG03efyCp';
+	    $qEncoded      = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $q, MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+	    return( $qEncoded );
+	}
 	
 	if(isset($_POST['login']))
 	{
+
 		$user->setEmail(htmlentities($email));
-		$user->setPassword(htmlentities($password));
+		$user->setPassword(htmlentities(encryptIt($password)));
 
 		$user->setDatelastlogin(strtotime(date('Y-m-d')));
 
+	
 		$table = "users";
 		$fields = array('id','first_name' , 'lastname', 'usertypeid', 'screen_name');
 		$where = "email = ? AND password = ? AND status = 1";
-		$params = array($user->getEmail(), md5($user->getPassword()) );
+		$params = array($user->getEmail(), $user->getPassword() );
 
 		$login = $db->select($table, $fields, $where, $params);
 		if(count($login) > 0)
@@ -50,4 +59,6 @@
 			header("location: ../index.php?error=invalid");
 		}
 	}
+
+
 ?>

@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 	if(isset($_SESSION['isLogin']) == true)
-		header("location: dashboard/main.php");
+		header("location: orders/unapproved_orders.php");
 ?>
 <?php include('common/header.php'); ?>
 		<!-- BEGIN LOGIN SECTION -->
