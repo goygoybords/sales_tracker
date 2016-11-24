@@ -52,18 +52,23 @@ $columns = array(
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
     array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
-                return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> &nbsp;
-
-                        <a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
+            	if($_SESSION['user_type'] == 1)
+            	{
+            		return '<a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Approve This Record
                             </span>
-                        </a>
-                        ';
+                        </a>';
+            	}
+            	else
+            	{
+            		return '<a href="manage.php?id='.$d.'&view_record" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> View Record
+                            </span>
+                        </a> &nbsp;';
+            	}
+                
             },
             'field' => 'id' 
             )

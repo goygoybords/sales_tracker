@@ -52,7 +52,9 @@ $columns = array(
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
     array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
-                return '<a href="manage.php?id='.$d.'" >
+                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+                {
+                    return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
@@ -64,6 +66,16 @@ $columns = array(
                             </span>
                         </a>
                         ';
+                }
+                else if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4)
+                {
+                  return '<a href="manage.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> Edit
+                            </span>
+                        </a> &nbsp;';
+                }
+                
             },
             'field' => 'id' 
             )
