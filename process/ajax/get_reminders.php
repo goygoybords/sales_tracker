@@ -4,7 +4,7 @@
 
 
 	$table = "calendar_events";
-	$fields = array("event_name","description" ,"FROM_UNIXTIME(start_date , '%Y-%m-%d') AS 'start' " , "FROM_UNIXTIME(end_date , '%Y-%m-%d') AS 'end'" );
+	$fields = array("event_name","description" ,"start_date AS 'start' " , "end_date AS 'end'" );
 	$where = "status = 1";
 
 	$reminders = $db->select($table, $fields, $where);

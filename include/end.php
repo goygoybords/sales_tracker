@@ -38,12 +38,7 @@
 		<!-- END JAVASCRIPT -->
 			
 		<script type="text/javascript">
-				// $.removeCookie('msg', 'str'); 
-			// $( document ).ready(function() 
-			// {	 
-				if($.cookie('msg') == null)
-		        {
-		            $.ajax({
+				$.ajax({
 	                    type: "GET",
 	                    url: '../process/ajax/get_reminders.php',
 	                    success: function(data)
@@ -54,20 +49,18 @@
 	                    	{
 	                    		if(parse[i].start == today)
 	                    		{
-	                    			$("#head_eventname").val(parse[i].event_name);
-	                    			$("#head_des").val(parse[i].description);
-	                    			$('#reminderModal').modal('show') ;
+	                    			var alerted = localStorage.getItem('alerted') || '';
+								    if (alerted != 'yes') 
+								    {
+								    	$("#head_eventname").val(parse[i].event_name);
+	                    				$("#head_des").val(parse[i].description);
+	                    				$('#reminderModal').modal('show') ;
+								     	localStorage.setItem('alerted','yes');
+								    }
 	                    		}
 	                    	}     
 	                    }
 	                }); // end of ajax 
-	                $.cookie('msg', 'str');    
-		       }
-		       else
-		       {
-		       		$.cookie('msg', 'str');    
-		       }
-			// });
 		</script>
 	</body>
 </html>

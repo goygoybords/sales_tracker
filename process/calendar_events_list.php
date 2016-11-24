@@ -19,8 +19,8 @@
 		 $e = array();
 	     $e['id'] = $r['id'];
 	     $e['title'] = $r['event_name'];
-	     $e['start'] = date('Y-m-d', $r['start_date']);
-	     $e['end'] = date('Y-m-d', $r['end_date']);
+	     $e['start'] = date('Y-m-d', strtotime($r['start_date']));
+	     $e['end'] = date('Y-m-d', strtotime($r['end_date']));
 	     $e['description'] = $r['description'];
 	     //$e['url'] = "specific_event.php?id=".$r['id'];
 	     array_push($events_array, $e);
