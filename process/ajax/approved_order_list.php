@@ -39,7 +39,7 @@ $columns = array(
 
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', strotime($d));
+                return date('Y-m-d', strtotime( $d));
             }, 'field' => 'order_date' 
         ),
 
@@ -53,26 +53,27 @@ $columns = array(
     array( 'db' => '`o`.`tracking_number`',       'dt' => 8, 'field' => 'tracking_number' ),
     array( 'db' => '`o`.`id`',          'dt' => 9, 'formatter' => function( $d, $row )
             {
-            	if($_SESSION['user_type'] == 1)
-            	{
-            		return '<a href="../process/order_manage.php?id='.$d.'&send_mail">
+              if($_SESSION['user_type'] == 1)
+              {
+                return '<a href="../process/order_manage.php?id='.$d.'&send_mail">
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Send Mail
                             </span>
                         </a>';
-            	}
-            	else
-            	{
-            		return '<a href="manage.php?id='.$d.'&view_record" >
+              }
+              else
+              {
+                return '<a href="manage.php?id='.$d.'&view_record" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> View Record
                             </span>
                         </a> &nbsp;';
-            	}
+              }
                 
             },
             'field' => 'id' 
             )
+   
     );
 
 // SQL server connection information
@@ -91,7 +92,8 @@ $sql_details = array(
 
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
-    $extraWhere = "";
+    
+      $extraWhere = "";
     $joinQuery = "";
     if($_SESSION['user_type'] == 3)
     {
@@ -131,6 +133,7 @@ $sql_details = array(
                  ";
         $extraWhere =  "o.status = 1" ;
     }
+    
     
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )

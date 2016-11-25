@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2016 at 10:52 AM
+-- Generation Time: Nov 25, 2016 at 10:45 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -350,7 +350,7 @@ INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`
 (10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', '', 230, 'asdsad', 'asd', '213231', 2, 0, 0, '', '', '', 0, 1),
 (11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 1),
 (12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 1),
-(13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 1, 230, 'ghjghj', 'ghjhgj', '45656', 2, 1),
+(13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 0, 230, 'asdasd', 'ghjhgj', '2313', 59, 1),
 (14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1);
 
 -- --------------------------------------------------------
@@ -394,7 +394,7 @@ INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `order_date` int(16) NOT NULL,
+  `order_date` date NOT NULL,
   `customer_id` int(11) NOT NULL,
   `total` decimal(16,2) NOT NULL,
   `shipping_method_id` int(11) NOT NULL,
@@ -417,26 +417,26 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method_id`, `merchant`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `tracking_number`, `status`) VALUES
-(1, 1478646000, 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0, '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
-(2, 1478646000, 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
-(3, 1478646000, 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(4, 1478646000, 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(5, 1478818800, 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(6, 1479078000, 6, '40.00', 1, '5.00', 'test remarks', 'test notes', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(7, 1479078000, 7, '15.00', 1, '5.00', 'jhgjhg', 'hjhgjgjh', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
-(8, 1479078000, 9, '30.00', 1, '5.00', 'kevin kane test', 'kevin kane test', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(9, 1479078000, 1, '15.00', 1, '5.00', 'sad', 'asdassad', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(10, 1479078000, 10, '30.00', 1, '5.00', 'asdasd', 'asdsadasd', 0, '', 14, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(11, 1479164400, 1, '9.00', 1, '5.00', 'New Order', 'New Order', 0, '', 15, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(12, 1479855600, 1, '29.00', 2, '5.00', 'REmarks', 'Notes', 0, 'Hillsong', 1, 0, '2016-11-23 03:11:32', 0, '0000-00-00 00:00:00', '', 0),
-(13, 1479855600, 1, '15.00', 1, '5.00', 'asdasda', 'asdasdasd', 1, 'asdsad', 1, 0, '2016-11-23 03:15:54', 0, '0000-00-00 00:00:00', '', 0),
-(14, 1479855600, 11, '34.00', 1, '5.00', 'fgfg', 'fgfgfgfgfgfg', 2, 'gdgfg', 1, 0, '2016-11-23 03:19:46', 0, '0000-00-00 00:00:00', '', 0),
-(15, 1479855600, 13, '0.00', 1, '5.00', 'asdas', 'asdasd', 3, '', 1, 0, '2016-11-23 03:24:13', 0, '0000-00-00 00:00:00', '', 0),
-(16, 1479855600, 1, '30.00', 1, '5.00', '', '', 4, 'asdasd', 1, 0, '2016-11-23 03:46:47', 0, '0000-00-00 00:00:00', '', 0),
-(17, -28800, 10, '40.00', 2, '5.00', 'asd', 'asd', 5, 'Journey', 1, 0, '2016-11-24 08:39:25', 0, '0000-00-00 00:00:00', '', 0),
-(18, 1478534400, 1, '9.00', 2, '5.00', 'dfsdfdsfsdf', '', 6, 'asdasd', 1, 1, '2016-11-24 08:45:53', 1, '2016-11-24 08:52:02', '', 1),
-(19, 1479312000, 12, '9.00', 2, '5.00', 'sad', 'asdsad', 7, 'asdasdasd', 1, 1, '2016-11-24 08:53:11', 1, '2016-11-24 09:18:31', '1', 1),
-(20, 1478102400, 13, '9.00', 1, '5.00', 'asd', 'asd', 8, 'asdasdsadsadsadsadasdsada', 1, 0, '2016-11-24 09:26:30', 1, '2016-11-24 09:26:58', '', 0);
+(1, '2016-11-01', 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0, '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
+(2, '2016-11-02', 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
+(3, '2016-11-03', 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(4, '2016-11-04', 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(5, '2016-11-05', 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(6, '2016-11-06', 6, '40.00', 1, '5.00', 'test remarks', 'test notes', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(7, '2016-11-07', 7, '15.00', 1, '5.00', 'jhgjhg', 'hjhgjgjh', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
+(8, '2016-11-08', 9, '30.00', 1, '5.00', 'kevin kane test', 'kevin kane test', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(9, '2016-11-09', 1, '15.00', 1, '5.00', 'sad', 'asdassad', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(10, '2016-11-03', 10, '30.00', 1, '5.00', 'asdasd', 'asdsadasd', 0, '', 14, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(11, '2016-11-04', 1, '9.00', 1, '5.00', 'New Order', 'New Order', 0, '', 15, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
+(12, '2016-11-12', 1, '29.00', 2, '5.00', 'REmarks', 'Notes', 0, 'Hillsong', 1, 0, '2016-11-23 03:11:32', 0, '0000-00-00 00:00:00', '', 0),
+(13, '2016-11-15', 1, '15.00', 1, '5.00', 'asdasda', 'asdasdasd', 1, 'asdsad', 1, 0, '2016-11-23 03:15:54', 0, '0000-00-00 00:00:00', '', 0),
+(14, '2016-11-20', 11, '34.00', 1, '5.00', 'fgfg', 'fgfgfgfgfgfg', 2, 'gdgfg', 1, 0, '2016-11-23 03:19:46', 0, '0000-00-00 00:00:00', '', 0),
+(15, '2016-11-20', 13, '0.00', 1, '5.00', 'asdas', 'asdasd', 3, '', 1, 0, '2016-11-23 03:24:13', 0, '0000-00-00 00:00:00', '', 0),
+(16, '2016-11-22', 1, '30.00', 1, '5.00', '', '', 4, 'asdasd', 1, 0, '2016-11-23 03:46:47', 0, '0000-00-00 00:00:00', '', 0),
+(17, '2016-11-23', 10, '40.00', 2, '5.00', 'asd', 'asd', 5, 'Journey', 1, 0, '2016-11-24 08:39:25', 0, '0000-00-00 00:00:00', '', 0),
+(18, '2016-11-24', 1, '9.00', 2, '5.00', 'dfsdfdsfsdf', '', 6, 'asdasd', 1, 1, '2016-11-24 08:45:53', 1, '2016-11-24 08:52:02', '', 1),
+(19, '2016-11-24', 12, '9.00', 2, '5.00', 'sad', 'asdsad', 7, 'asdasdasd', 1, 1, '2016-11-24 08:53:11', 1, '2016-11-24 09:18:31', '1', 1),
+(20, '2016-11-01', 13, '9.00', 1, '5.00', 'asd', 'asd', 8, 'asdasdsadsadsadsadasdsada', 1, 0, '2016-11-24 09:26:30', 1, '2016-11-25 09:39:49', '', 0);
 
 -- --------------------------------------------------------
 
@@ -654,17 +654,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'c3133997b31ce266fc0663b3a8912206', 1, 0, 'Chinese Mafia', 1473717600, 1479916800, 1),
-(6, 'QA', 'Kevin', 'qakevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 2, 0, '', 1479682800, 0, 1),
-(7, 'Team Leader', 'Kevin', 'teamleadkevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 4, 0, '', 1479682800, 0, 1),
-(8, 'agent', 'kevin', 'agentkevin@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 0, '', 1479682800, 0, 1),
-(9, 'kobe test', 'test', 'test@gmail.com', '1f32aa4c9a1d2ea010adcf2348166a04', 2, 0, 'black mamba', 1479682800, 0, 1),
-(10, 'Team Lead 2', 'Kobe', 'kbryant@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 4, 2, '', 1479769200, 1479769200, 1),
-(11, 'Team Leader 3', 'Lebron', 'team_lebro@gmail.com', '1f32aa4c9a1d2ea010adcf2348166a04', 4, 3, '', 1479769200, 0, 1),
-(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 2, 'Jordan ', 1479769200, 1479942000, 1),
-(13, 'Kyrie', 'Irving', 'kyrieirving@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 3, 'Uncle Drew', 1479769200, 0, 1),
-(14, 'D'' Angelo', 'Russell', 'druss@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 2, 'D Russ', 1479769200, 0, 1),
-(15, 'Tristan', 'Thompson', 'tristan@yahoo.com', '827ccb0eea8a706c4c34a16891f84e7b', 3, 3, 'tristan', 1479769200, 0, 1);
+(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Chinese Mafia', 1473717600, 1480003200, 1),
+(6, 'QA', 'Kevin', 'qakevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 0, '', 1479682800, 0, 1),
+(7, 'Team Leader', 'Kevin', 'teamleadkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 0, '', 1479682800, 0, 1),
+(8, 'agent', 'kevin', 'agentkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 0, '', 1479682800, 0, 1),
+(9, 'kobe test', 'test', 'test@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 0, 'black mamba', 1479682800, 0, 1),
+(10, 'Team Lead 2', 'Kobe', 'kbryant@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 2, '', 1479769200, 1479769200, 1),
+(11, 'Team Leader 3', 'Lebron', 'team_lebro@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 3, '', 1479769200, 0, 1),
+(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'Jordan ', 1479769200, 1479942000, 1),
+(13, 'Kyrie', 'Irving', 'kyrieirving@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'Uncle Drew', 1479769200, 0, 1),
+(14, 'D'' Angelo', 'Russell', 'druss@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'D Russ', 1479769200, 0, 1),
+(15, 'Tristan', 'Thompson', 'tristan@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'tristan', 1479769200, 0, 1),
+(16, 'Admin', 'Admin', 'admin@salestracker.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Administrator', 1479916800, 0, 1),
+(17, 'test', 'test', 'test2@gmail.com', 'KxKRPT21Kq6z/XezHQ+zwxxz5GRWiN5Z55U4lJNBbRo=', 1, 0, 'test', 1479916800, 1479916800, 1);
 
 -- --------------------------------------------------------
 
@@ -772,7 +774,7 @@ ALTER TABLE `usertypes`
 -- AUTO_INCREMENT for table `calendar_events`
 --
 ALTER TABLE `calendar_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -822,7 +824,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `usertypes`
 --
