@@ -115,6 +115,8 @@
 					}
 					$get_orders = $db->select('order_detail' , array("*"), "order_id = ? AND status = 1" , array($order->getOrderId() ) );
 
+					$get_preparedby = $db->select('users' , array("CONCAT(first_name , ' ' , lastname) AS 'fullname' " , 'screen_name'), 'id = ?', array($order->getPreparedBy()));
+
 					$form_state = 2;
 					$form_header = "Edit Order Details";
 					$submit_caption = "Save Changes";
@@ -622,15 +624,17 @@
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
 													<input type="text"  id = "agent_name" class="form-control" readonly 
-													value = "<?php echo $_SESSION['firstname']." ".$_SESSION['lastname']; ?>">
+													value = "<?php echo ($form_state == 2 ? $get_preparedby[0][0] : $_SESSION['firstname']." ".$_SESSION['lastname']); ?>">
 
+											
 													<label class="agent_name">Prepared By/Salesperson</label>
 												</div>
 											</div>
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
 														<input type="text" id = "screen_name" class="form-control" readonly 
-														value = "<?php echo $_SESSION['screen_name']; ?>">
+														value = "<?php echo ($form_state == 2 ? $get_preparedby[0][1] : $_SESSION['screen_name']); ?>">
+														
 														<label class="screen_name">Agent Screen Name</label>
 												</div>
 											</div>
