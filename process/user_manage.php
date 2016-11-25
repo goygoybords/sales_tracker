@@ -1,21 +1,15 @@
 <?php
 	require '../class/database.php';
 	require '../class/user.php';
+	require '../class/password_encrypt.php';
 	
 	$db = new Database();
 	$user = new User();
+	$encrpytion = new Password_Encrypt();
 	
 	$table = "users";
 	extract($_POST);
 	
-	function encryptIt( $q ) 
-	{
-	    $cryptKey  = 'qJB0rGtIn5UB1xG03efyCp';
-	    $qEncoded      = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $q, MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
-	    return( $qEncoded );
-	}
-
-
 	if(isset($_POST['register_user']))
 	{
 
@@ -23,7 +17,7 @@
 		$user->setFirstname(htmlentities($firstname));
 		$user->setLastname(htmlentities($lastname));
 		$user->setEmail(htmlentities($email));
-		$user->setPassword(encryptIt($password));
+		$user->setPassword($encrpytion->encryptIt($password));
 		$user->setUsertypeid($user_type);
 		$user->setScreenName($screen_name);
 		$user->setDatecreated(strtotime(date('Y-m-d')));
@@ -66,7 +60,7 @@
 		$user->setLastname(htmlentities($lastname));
 		$user->setEmail(htmlentities($email));
 		$user->setScreenName($screen_name);
-		$user->setPassword(encryptIt($password));
+		$user->setPassword($encrpytion->encryptIt($password));
 		$user->setTeamId($team);
 		$user->setUsertypeid($user_type);
 

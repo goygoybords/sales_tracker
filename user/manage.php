@@ -10,10 +10,12 @@
 	require '../class/database.php';
 	require '../class/user.php';
 	require '../class/team.php';
+	require '../class/password_encrypt.php';
 
 	$user_id = (isset($_GET["id"]) ? $_GET["id"] : "");
 	$db = new Database();
 	$user = new User();
+	$encrpytion = new Password_Encrypt();
 
 	$form_state = 1;
 	$form_header = "Add User";
@@ -40,7 +42,7 @@
 						$user->setId($l['id']);
 						$user->setFirstname($l['first_name']);
 						$user->setLastname($l['lastname']);
-						$user->setPassword(decryptIt($l['password']));
+						$user->setPassword($encrpytion->decryptIt($l['password']));
 						$user->setScreenName($l['screen_name']);
 						$user->setEmail($l['email']);
 						$user->setUsertypeid($l['usertypeid']);
@@ -67,12 +69,7 @@
 			}
 	}
 
-	function decryptIt( $q ) 
-	{
-	    $cryptKey  = 'qJB0rGtIn5UB1xG03efyCp';
-	    $qDecoded      = rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), base64_decode( $q ), MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ), "\0");
-	    return( $qDecoded );
-	}
+	
 
 ?>
 <!-- BEGIN BASE-->
