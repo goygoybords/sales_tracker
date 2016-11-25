@@ -93,7 +93,7 @@
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
 														<th>Tracking Number</th>
-														<th>Action</th>
+														<th>Status</th>		
 													</thead>
 <!-- 									
 												</table>
@@ -128,9 +128,9 @@
 			"bServerSide": true,
 				"responsive": true,
 	        "sPaginationType": "full_numbers",
-	        "order": [0,'desc'],
+	        "order": [1,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/approved_order_list.php", // json datasource
+	                url :"../process/ajax/report_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
 
@@ -141,7 +141,7 @@
 		{
 			var min = $("#min").val();
 			var max = $("#max").val();
-			var data = dataTable.ajax.url( "../process/ajax/order_list_filter.php?min="+min+"&max="+max).load();
+			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max).load();
 		});
 
 	   //  $("#employee-grid_filter").css("display","none");

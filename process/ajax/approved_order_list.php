@@ -39,7 +39,7 @@ $columns = array(
 
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', $d);
+                return date('Y-m-d', strotime($d));
             }, 'field' => 'order_date' 
         ),
 

@@ -39,7 +39,7 @@
 		$customer->setStatus(1);
 
 
-		$order->setOrderDate(strtotime(date('Y-m-d',strtotime($order_date))));
+		$order->setOrderDate(date('Y-m-d',strtotime($order_date)));
 		$order->setTotal(doubleval($total));
 		$order->setShippingMethodId(intval($shipping_method));
 		$order->setShippingFee(doubleval($shipping));
@@ -163,7 +163,8 @@
 			$order->setDateUpdated(date('Y-m-d H:i:s'));
 			$order->setUpdatedBy($_SESSION['id']);
 
-			$fields = array('firstname' ,'lastname' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id');
+			$fields = array('firstname' ,'lastname' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id' , 
+				'same' , 'billing_country_id','billing_address' , 'billing_zip' , 'billing_zip' , 'billing_state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
 						$customer->getFirstname(),
@@ -174,14 +175,21 @@
 						$customer->getCity(),
 						$customer->getZip(),
 						$customer->getStateId(),
+						$customer->getSame(),
+						$customer->getBillingCountryId(),
+						$customer->getBillingAddress(),
+						$customer->getBillingCity(),
+						$customer->getBillingZip(),
+						$customer->getBillingStateId() ,
 						$customer->getCustomerId()
 						);
 
 			$customer_update = $db->update("customer", $fields , $where, $params);
 
-			$fields = array("total", "shipping_method_id" , "shipping_fee" , "remarks", "notes" ,'merchant' , 'updated_by' ,'date_updated');
+			$fields = array("order_date","total", "shipping_method_id" , "shipping_fee" , "remarks", "notes" ,'merchant' , 'updated_by' ,'date_updated');
 			$where  = "WHERE id = ?";
 				$params = array(
+						$order->getOrderDate(),
 						$order->getTotal(),
 						$order->getShippingMethodId(),
 						$order->getShippingFee(),

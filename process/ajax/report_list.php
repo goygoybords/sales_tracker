@@ -39,7 +39,7 @@ $columns = array(
 
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', strtotime($d));
+                return date('Y-m-d', strtotime( $d));
             }, 'field' => 'order_date' 
         ),
 
@@ -50,35 +50,21 @@ $columns = array(
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
-    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`tracking_number`',       'dt' => 8, 'field' => 'tracking_number' ),
+     array( 'db' => '`o`.`status`', 'dt' => 9, 'formatter' => function( $d, $row )
             {
-                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+                if($d == 0)
                 {
-                    return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> &nbsp;
+                  return "Order Pending";
+                }
+                else if ($d == 1)
+                {
+                  return "Order Billed";
 
-                        <a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Approve This Record
-                            </span>
-                        </a>
-                        ';
                 }
-                else if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4)
-                {
-                  return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> &nbsp;';
-                }
-                
-            },
-            'field' => 'id' 
-            )
+            }, 'field' => 'status' 
+        ),
+   
     );
 
 // SQL server connection information
@@ -109,7 +95,7 @@ $sql_details = array(
                   JOIN users u 
                   ON o.prepared_by = u.id
                  ";
-        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 0" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status BETWEEN 0 AND 1" ;
     }
     else if($_SESSION['user_type'] == 4)
     {
@@ -123,7 +109,7 @@ $sql_details = array(
                  ";
                   // WHERE u.team_id = 3
 
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 0" ;
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status BETWEEN 0 AND 1" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
     {
@@ -135,8 +121,9 @@ $sql_details = array(
                   JOIN users u 
                   ON o.prepared_by = u.id
                  ";
-        $extraWhere =  "o.status = 0" ;
+        $extraWhere =  "o.status BETWEEN 0 AND 1" ;
     }
+    
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

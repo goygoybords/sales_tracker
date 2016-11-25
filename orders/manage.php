@@ -68,7 +68,7 @@
 					foreach ($orders as $o)
 					{
 						$order->setOrderId($order_id);
-						$order->setOrderDate(date('Y-m-d', $o['order_date']));
+						$order->setOrderDate(date('m/d/Y', strtotime($o['order_date'])));
 						$order->setCustomerId($o['customer_id']);
 						$order->setTotal($o['total']);
 						$order->setShippingMethodId($o['shipping_method_id']);
@@ -293,7 +293,7 @@
 											<div class="col-sm-12">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker1'>
-											                    <input type='text' id = "order_date" name = "order_date" placeholder="Order Date" class="form-control"   />
+											                    <input type='text' id = "order_date" name = "order_date" value = "<?php echo $order->getOrderDate(); ?>" placeholder="Order Date" class="form-control"   />
 											                    <span class="input-group-addon">
 											                        <span class="glyphicon glyphicon-calendar"></span>
 											                    </span>

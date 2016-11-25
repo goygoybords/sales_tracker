@@ -19,7 +19,7 @@
             JOIN shipping_method ship
             ON o.shipping_method_id = ship.id
             WHERE o.status BETWEEN 0 AND 1
-            ORDER BY 1
+            ORDER BY 2 DESC
             ";
     $cmd = $db->getDb()->prepare($sql);
     $cmd->execute(array());
@@ -35,17 +35,19 @@
 
   // Set document properties
   $objPHPExcel->getProperties()
-      ->setCreator("CRM")
+      ->setCreator("sales tracker")
       ->setTitle("Order List")
       ->setSubject("My Excel Sheet")
       ->setDescription("Excel Sheet")
       ->setKeywords("Excel Sheet")
       ->setCategory("Me");
 
+
+
   // Set active sheet index to the first sheet, so Excel opens this as the first sheet
   $objPHPExcel->setActiveSheetIndex(0)
    ->getPageSetup()
-    ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+   ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 
   // Add column headers
 
@@ -89,9 +91,8 @@
         ->setCellValue('J5', 'Remarks')
         ->setCellValue('K5', 'Notes')
         ->setCellValue('L5', 'Status')
-        ->setCellValue('M5', 'Shipping Fee')
-        ->setCellValue('N5', 'Total')      
-        ->getStyle("A5:N5")->applyFromArray($style)
+        ->setCellValue('M5', 'Total')      
+        ->getStyle("A5:M5")->applyFromArray($style)
         ;
 
   //Put each record in a new cell
@@ -99,7 +100,7 @@
   {
       $ii = $i+6;
       $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, "INV-".$excelData[$i][0]);
-      $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , $excelData[$i][1]) );
+      $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($excelData[$i][1])) );
       $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i][2]);
       $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i][3]);
       $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i][4]);
@@ -112,30 +113,143 @@
 
       if($excelData[$i][11] == 0)
        {
-          $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, "For Approval");
+          $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, "Pending Order");
        }
        else
-          $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, "Approved");
+          $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, "Billed Order");
 
       // $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $excelData[$i][11]);
-      $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $excelData[$i][12])
-      ->getStyle('M'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
-      $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
+   
+      $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][12])
       ->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
      
   }
 
-  $iii = $ii + 3;
-
-
-  $objPHPExcel->getActiveSheet() 
-            ->setCellValue('A'.$iii , 'Prepared By: ');
-
-  $objPHPExcel->getActiveSheet()
-            ->setCellValue('B'.$iii , $_SESSION['firstname']." ".$_SESSION['lastname']);
+  // $iii = $ii + 3;
+  // $objPHPExcel->getActiveSheet() 
+  //           ->setCellValue('A'.$iii , 'Prepared By: ');
+  // $objPHPExcel->getActiveSheet()
+  //           ->setCellValue('B'.$iii , $_SESSION['firstname']." ".$_SESSION['lastname']);
   
   // Set worksheet title
-  $objPHPExcel->getActiveSheet()->setTitle($fileName);
+  $objPHPExcel->getActiveSheet()->setTitle("Admin");
+
+
+    $newsheet = $objPHPExcel->createSheet();
+    $newsheet->setTitle("Agent");
+
+    $newsheet
+            ->mergeCells('A1:U1')
+            ->setCellValue('A1' , 'Sales Tracker ')
+            ->getStyle("A1:U1")->applyFromArray($style)->getFont()->setSize(16);
+
+    $newsheet
+            ->mergeCells('A2:U2')
+            ->setCellValue('A2' , 'List of Orders')
+            ->getStyle("A2:U2")->applyFromArray($style)->getFont()->setSize(16);
+
+    $newsheet
+            ->mergeCells('A3:U3')
+            ->setCellValue('A3' , 'As of '.date('Y-m-d'))
+            ->getStyle("A3:U3")->applyFromArray($style)->getFont()->setSize(16);
+
+    foreach(range('A','U') as $columnID) 
+    {
+        $newsheet->getColumnDimension($columnID)
+        ->setAutoSize(true);
+    }
+
+    $newsheet
+        ->setCellValue('A5', 'Agent')
+        ->setCellValue('B5', 'Screen name')
+        ->setCellValue('C5', 'Order Date')
+        ->setCellValue('D5', 'Customer')
+        ->setCellValue('E5', 'Phone Number')
+        ->setCellValue('F5', 'Email Address')
+        ->setCellValue('G5', 'Shipping Address')
+        ->setCellValue('H5', 'Billing Address')
+        ->setCellValue('I5', 'Order')
+        ->setCellValue('J5', 'Price')
+        ->setCellValue('K5', 'Card Holder Name')
+        ->setCellValue('L5', 'Card Number')
+        ->setCellValue('M5', 'CVV')  
+        ->setCellValue('N5', 'Card Type')   
+        ->setCellValue('O5', 'Status')   
+        ->setCellValue('P5', 'Invoice Number') 
+        ->setCellValue('Q5', 'Remarks') 
+        ->setCellValue('R5', 'Tracking Number')      
+        ->setCellValue('S5', 'Reshipment Tracking Number')   
+        ->setCellValue('T5', 'Shipping')   
+        ->setCellValue('U5', 'Merchant')   
+        ->getStyle("A5:U5")->applyFromArray($style);
+
+        $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
+            o.order_date,
+            CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
+            p.product_description, od.amount,
+            cp.card_name, cp.card_number, cp.cvv, cp.card_type,
+            o.status, o.id, o.remarks, o.tracking_number , s.description, o.merchant
+            FROM orders o
+            JOIN users u
+            ON o.prepared_by = u.id
+            JOIN customer c
+            ON o.customer_id = c.id
+            JOIN order_detail od
+            ON o.id = od.order_id
+            JOIN products p
+            ON od.product_id = p.id 
+            JOIN customer_payment_methods cp
+            ON o.payment_method_id = cp.id
+            JOIN shipping_method s
+            ON o.shipping_method_id = s.id
+            WHERE o.status BETWEEN 0 AND 1
+            ORDER BY 3 DESC";
+
+      $cmd = $db->getDb()->prepare($sql);
+      $cmd->execute(array());
+      $agent = $cmd->fetchAll();
+
+
+      for($i=0; $i<count($agent); $i++)
+      {
+          $ii = $i+6;
+          $newsheet->setCellValue('A'.$ii, $agent[$i][0]);
+          $newsheet->setCellValue('B'.$ii, $agent[$i][1]);
+           $newsheet->setCellValue('C'.$ii, date('Y-m-d', strtotime($agent[$i][2])) );
+          $newsheet->setCellValue('D'.$ii, $agent[$i][3]);
+          $newsheet->setCellValue('E'.$ii, $agent[$i][4]);
+          $newsheet->setCellValue('F'.$ii, $agent[$i][5]);
+          $newsheet->setCellValue('G'.$ii, $agent[$i][6]);
+          $newsheet->setCellValue('H'.$ii, $agent[$i][7]);
+          $newsheet->setCellValue('I'.$ii, $agent[$i][8]);
+          
+          $newsheet->setCellValue('J'.$ii, $agent[$i][9])
+          ->getStyle('J'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+
+          $newsheet->setCellValue('K'.$ii, $agent[$i][10]);
+          $newsheet->setCellValue('L'.$ii, $agent[$i][11]);
+          $newsheet->setCellValue('M'.$ii, $agent[$i][12]);
+          $newsheet->setCellValue('N'.$ii, $agent[$i][13]);
+          
+           if($agent[$i][14] == 0)
+              $newsheet->setCellValue('O'.$ii, "Pending Order");
+           else
+              $newsheet->setCellValue('O'.$ii, "Billed Order");
+         
+          
+          $newsheet->setCellValue('P'.$ii, $agent[$i][15]);
+          $newsheet->setCellValue('Q'.$ii, $agent[$i][16]);
+          $newsheet->setCellValue('R'.$ii, $agent[$i][17]);
+          $newsheet->setCellValue('S'.$ii, "");
+          $newsheet->setCellValue('T'.$ii, $agent[$i][18]);
+          $newsheet->setCellValue('U'.$ii, $agent[$i][19]);
+
+         
+      }
+
+
+ $objPHPExcel->setActiveSheetIndex(0);
+
 
   header('Content-Type: application/vnd.ms-excel');
   header('Content-Disposition: attachment;filename="' . $fileName . '.xls"');
