@@ -67,7 +67,7 @@
 														<th>Remarks</th>
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
-
+														<th>Updated By</th>
 														<th>Action</th>
 													</thead>
 <!-- 													<tfoot>

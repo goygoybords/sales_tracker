@@ -23,7 +23,14 @@
 require '../../class/database.php';
 $db = new Database();
 session_start();
-$table = 'orders';
+
+
+ $sql = "SELECT first_name, lastname from users WHERE id = ?";
+ $cmd = $db->getDb()->prepare($sql);
+ $cmd->execute(array(1));
+ $users = $cmd->fetchAll();
+
+  $table = 'orders';
 
 // Table's primary key
 $primaryKey = 'id';
@@ -60,10 +67,10 @@ $columns = array(
     array( 'db' => '`o`.`remarks`',     'dt' => 6, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 8, "field" => "full_name", "as" => "full_name" ),
-      
-    
-     
-    array( 'db' => '`o`.`id`',          'dt' => 9, 'formatter' => function( $d, $row )
+       
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 9, "field" => "updated_by", "as" => "updated_by" ),
+         
+    array( 'db' => '`o`.`id`',          'dt' => 10, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
                 {
@@ -147,6 +154,8 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  LEFT JOIN users up
+                  ON o.updated_by = up.id
                  ";
         $extraWhere =  "o.status = 0" ;
     }
