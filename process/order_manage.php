@@ -87,15 +87,51 @@
 
 				$customer_payment->setCustomerId($customer_id);
 				$customer_payment->setPaymentMethod(intval($payment_method));
-				if($payment_method == 2)
+				if($payment_method == 2 )
+				{
 					$customer_payment->setCardType("");
+					$customer_payment->setCardName("");
+					$customer_payment->setCardNumber("");
+					$customer_payment->setExpiryDate("");
+					$customer_payment->setCvv("");
+					$customer_payment->setAccountNumber($check_account_number);
+					$customer_payment->setBankName($check_bank_name);
+					$customer_payment->setRoutingNumber($check_routing_number);
+					$customer_payment->setCheckNumber($check_number);
+				}
+				else if($payment_method == 3)
+				{
+					$customer_payment->setCardType("");
+					$customer_payment->setCardName("");
+					$customer_payment->setCardNumber("");
+					$customer_payment->setExpiryDate("");
+					$customer_payment->setCvv("");
+					$customer_payment->setAccountNumber($account_number);
+					$customer_payment->setBankName($bank_name);
+					$customer_payment->setRoutingNumber($routing_number);
+					$customer_payment->setCheckNumber($check_number);
+				}
 				else
+				{
 					$customer_payment->setCardType($card_type);
-				$customer_payment->setCardName($cardholder);
-				$customer_payment->setCardNumber($card_number);
-				$customer_payment->setExpiryDate($expiry_date);
-				$customer_payment->setCvv($cvv);
-				$customer_payment->setCheckNumber($check_number);
+					$customer_payment->setCardName($cardholder);
+					$customer_payment->setCardNumber($card_number);
+					$customer_payment->setExpiryDate($expiry_date);
+					$customer_payment->setCvv($cvv);
+					$customer_payment->setCheckNumber("");
+					$customer_payment->setAccountNumber(0);
+					$customer_payment->setBankName("");
+					$customer_payment->setRoutingNumber(0);
+
+				}
+				// $customer_payment->setCardName($cardholder);
+				// $customer_payment->setCardNumber($card_number);
+				// $customer_payment->setExpiryDate($expiry_date);
+				// $customer_payment->setCvv($cvv);
+				// $customer_payment->setCheckNumber($check_number);
+				// $customer_payment->setAccountNumber($account_number);
+				// $customer_payment->setBankName($bank_name);
+				// $customer_payment->setRoutingNumber($routing_number);
 				$customer_payment->setStatus(1);
 
 				$data = [
@@ -107,6 +143,9 @@
 							'expiry_date' 	 => $customer_payment->getExpiryDate(),
 							'cvv' 			 => $customer_payment->getCvv(),
 							'check_number'   => $customer_payment->getCheckNumber(),
+							'account_number' => $customer_payment->getAccountNumber(),
+							'bank_name'		 => $customer_payment->getBankName(),
+							'routing_number' => $customer_payment->getRoutingNumber(),
 							'status' 		 => $customer_payment->getStatus()
 						];
 
@@ -208,14 +247,30 @@
 
 				$customer_payment->setId($payment_method_id_fm);
 				$customer_payment->setPaymentMethod(intval($payment_method));
-				if($payment_method == 2)
+				if($payment_method == 2 )
 				{
 					$customer_payment->setCardType("");
 					$customer_payment->setCardName("");
 					$customer_payment->setCardNumber("");
 					$customer_payment->setExpiryDate("");
 					$customer_payment->setCvv("");
+					$customer_payment->setAccountNumber($check_account_number);
+					$customer_payment->setBankName($check_bank_name);
+					$customer_payment->setRoutingNumber($check_routing_number);
 					$customer_payment->setCheckNumber($check_number);
+				}
+				else if($payment_method == 3)
+				{
+					$customer_payment->setCardType("");
+					$customer_payment->setCardName("");
+					$customer_payment->setCardNumber("");
+					$customer_payment->setExpiryDate("");
+					$customer_payment->setCvv("");
+					$customer_payment->setAccountNumber($account_number);
+					$customer_payment->setBankName($bank_name);
+					$customer_payment->setRoutingNumber($routing_number);
+					$customer_payment->setCheckNumber($check_number);
+
 				}
 				else
 				{
@@ -225,10 +280,16 @@
 					$customer_payment->setExpiryDate($expiry_date);
 					$customer_payment->setCvv($cvv);
 					$customer_payment->setCheckNumber("");
+					$customer_payment->setAccountNumber(0);
+					$customer_payment->setBankName("");
+					$customer_payment->setRoutingNumber(0);
 				}
-				
 
-			$fields = array('payment_method' , 'card_type' , 'card_number' , 'card_name', 'expiry_date' , 'cvv' , 'check_number');
+			
+
+			$fields = array('payment_method' , 'card_type' , 'card_number' , 'card_name', 'expiry_date' , 'cvv' , 'check_number',
+				'account_number','bank_name' ,'routing_number');
+			
 			$where = "WHERE id = ?";
 				$params = array(
 						$customer_payment->getPaymentMethod(),
@@ -238,6 +299,9 @@
 						$customer_payment->getExpiryDate(),
 						$customer_payment->getCvv(),
 						$customer_payment->getCheckNumber(),
+						$customer_payment->getAccountNumber(),
+						$customer_payment->getBankName(),
+						$customer_payment->getRoutingNumber(),
 						$customer_payment->getId()
 						);
 			

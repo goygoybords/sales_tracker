@@ -14,8 +14,68 @@
         private $expiry_date;
         private $cvv;
         private $check_number;
+        private $account_number;
+        private $bank_name;
+        private $routing_number;
         private $status;
 
+
+        public function getRoutingNumber()
+        {
+            return $this->routing_number;
+        }
+
+        /**
+         * Sets the value of id.
+         *
+         * @param mixed $id the id
+         *
+         * @return self
+         */
+        public function setRoutingNumber($routing_number)
+        {
+            $this->routing_number = $routing_number;
+
+            return $this;
+        }
+
+        public function getBankName()
+        {
+            return $this->bank_name;
+        }
+
+        /**
+         * Sets the value of id.
+         *
+         * @param mixed $id the id
+         *
+         * @return self
+         */
+        public function setBankName($bank_name)
+        {
+            $this->bank_name = $bank_name;
+
+            return $this;
+        }
+
+        public function getAccountNumber()
+        {
+            return $this->account_number;
+        }
+
+        /**
+         * Sets the value of id.
+         *
+         * @param mixed $id the id
+         *
+         * @return self
+         */
+        public function setAccountNumber($account_number)
+        {
+            $this->account_number = $account_number;
+
+            return $this;
+        }
         
         /**
          * Gets the value of id.

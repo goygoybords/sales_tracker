@@ -121,6 +121,9 @@
 						$customer_payment->setExpiryDate($p['expiry_date']);
 						$customer_payment->setCvv($p['cvv']);
 						$customer_payment->setCheckNumber($p['check_number']);
+						$customer_payment->setAccountNumber($p['account_number']);
+						$customer_payment->setBankName($p['bank_name']);
+						$customer_payment->setRoutingNumber($p['routing_number']);
 					}
 					$get_orders = $db->select('order_detail' , array("*"), "order_id = ? AND status = 1" , array($order->getOrderId() ) );
 
@@ -464,7 +467,12 @@
 															<?php echo ($customer_payment->getPaymentMethod() == 1 ? "selected='selected'" : ""); ?> >
 															Credit Card
 														</option>
-														<option value = "2" <?php echo ($customer_payment->getPaymentMethod() == 2 ? "selected='selected'" : ""); ?> >Check Payment</option>
+														<option value = "2" <?php echo ($customer_payment->getPaymentMethod() == 2 ? "selected='selected'" : ""); ?> >
+															Checking Account
+														</option>
+														<option value = "3" <?php echo ($customer_payment->getPaymentMethod() == 3 ? "selected='selected'" : ""); ?> >
+															Savings Account
+														</option>
 													</select>
 													<label class="method">Payment Method</label>
 												</div>
@@ -517,9 +525,48 @@
 										<div class="row" id = "check_details_view">
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
+													<input type="text" name="check_account_number" id = "account_number" class = "form-control" 
+													value = "<?php echo $customer_payment->getAccountNumber(); ?>">
+													<label class="account_number">Account Number</label>
+												</div>
+
+												<div class="form-group floating-label">
 													<input type="text" name="check_number" id = "check_number" class = "form-control" 
 													value = "<?php echo $customer_payment->getCheckNumber(); ?>">
 													<label class="check_number">Check Number</label>
+												</div>
+												<div class="form-group floating-label">
+													<input type="text" name="check_bank_name" id = "bank_name" class = "form-control" 
+													value = "<?php echo $customer_payment->getBankName(); ?>">
+													<label class="bank_name">Bank Name </label>
+												</div>
+
+												<div class="form-group floating-label">
+													<input type="text" name="check_routing_number" id = "routing_number" class = "form-control" 
+													value = "<?php echo $customer_payment->getRoutingNumber(); ?>">
+													<label class="routing_number">Routing Number</label>
+												</div>
+											</div>
+										</div>
+
+										<div class="row" id = "savings_details_view">
+											<div class="col-sm-12">
+												<div class="form-group floating-label">
+													<input type="text" name="account_number" id = "account_number" class = "form-control" 
+													value = "<?php echo $customer_payment->getAccountNumber(); ?>">
+													<label class="account_number">Account Number</label>
+												</div>
+
+												<div class="form-group floating-label">
+													<input type="text" name="bank_name" id = "bank_name" class = "form-control" 
+													value = "<?php echo $customer_payment->getBankName(); ?>">
+													<label class="bank_name">Bank Name </label>
+												</div>
+
+												<div class="form-group floating-label">
+													<input type="text" name="routing_number" id = "routing_number" class = "form-control" 
+													value = "<?php echo $customer_payment->getRoutingNumber(); ?>">
+													<label class="routing_number">Routing Number</label>
 												</div>
 											</div>
 										</div>
@@ -703,18 +750,28 @@
 
 		$("#card_details_view").hide();
 		$("#check_details_view").hide();
+		$("#savings_details_view").hide();
 		var payment = $( "#payment_method option:selected" ).val();
 
 		if(payment == 1)
 		{
 			$("#card_details_view").show();
 			$("#check_details_view").hide();
+			$("#savings_details_view").hide();
 		}
 		else if(payment == 2)
 		{
 			$("#card_details_view").hide();
 	       	$("#check_details_view").show();
+	       	$("#savings_details_view").hide();
 		} 
+		else if(payment == 3)
+		{
+			$("#card_details_view").hide();
+	       	$("#check_details_view").hide();
+	       	$("#savings_details_view").show();
+
+		}
 		$('#payment_method').change(function()
 	       {
 	       		payment = $( "#payment_method option:selected" ).val();
@@ -722,11 +779,19 @@
 	       		{
 	       			$("#card_details_view").show();
 	       			$("#check_details_view").hide();
+	       			$("#savings_details_view").hide();
 	       		}
 	       		if(payment == 2)
 	       		{
 	       			$("#card_details_view").hide();
-	       			$("#check_details_view").show();
+			       	$("#check_details_view").show();
+			       	$("#savings_details_view").hide();
+	       		}
+	       		else if(payment == 3)
+	       		{
+	       			$("#card_details_view").hide();
+			       	$("#check_details_view").hide();
+			       	$("#savings_details_view").show();
 	       		}
 
 	       }
@@ -920,6 +985,7 @@
 	                    success: function(data)
 	                    {
 	                       	var datas = JSON.parse(data);
+
 							
 	                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
 	                        for (var i = 0; i < datas.length; i++) 
@@ -928,7 +994,7 @@
 	                            
 	                        }
 	                        $('.item_list'+counter).change(function()
-	                         {
+	                         {	
 	                            	$('.quantity'+counter).change(function () 
 								  	{ 
 								  		qty = parseInt($(".quantity"+counter).val());
