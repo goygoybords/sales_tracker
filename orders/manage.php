@@ -339,9 +339,10 @@
 												  									$product = new Product();
 												  									$product->setProductId($p['id']);
 												  									$product->setProductDescription($p['product_description']);
+												  									$product->setQuantity($p['quantity']);
 												  							?>
 												  								<option value ="<?php echo $product->getProductId(); ?>" >
-												  									<?php echo $product->getProductDescription(); ?>
+												  									<?php echo $product->getProductDescription()." --- Stock On Hand: ".$product->getQuantity(); ?>
 												  										
 												  									</option>
 												  							<?php endforeach;  ?>
@@ -990,7 +991,7 @@
 	                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
 	                        for (var i = 0; i < datas.length; i++) 
 	                        {
-	                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+'</option>');
+	                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
 	                            
 	                        }
 	                        $('.item_list'+counter).change(function()
