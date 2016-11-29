@@ -315,8 +315,9 @@
 											            </div>
 													</div>
 											<div class = "col-lg-12">
+												<?php if ($form_state == 1) : ?>
 												<a id = "add_more_button" class = "btn btn-info">Add More Items</a>
-									
+												<?php endif; ?>
 												<br>
 												<br>
 												<table class = "table order-table" border="1">

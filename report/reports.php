@@ -7,6 +7,11 @@
 
 	include '../include/start.html';
 	require('../include/header.php');
+	require '../class/database.php';
+	$db = new Database();
+
+	$list_agents = $db->select("users" , array('id', 'first_name', 'lastname') , "usertypeid = 3");
+	$list_teams = $db->select("teams" , array('id, team_name'), 'status = 1' );
 
 ?>
 <!-- BEGIN BASE-->
@@ -55,7 +60,31 @@
 												<div class="row">
 													
 													<!-- date filters -->
-													<div class="col-sm-4">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<select name = "agents" class = "form-control dirty" id = "agents"  >
+																<option></option>
+																<?php foreach ($list_agents as $l ) :?>
+																	<option value="<?php echo $l['id']; ?>"><?php echo $l['first_name']." ".$l['lastname'];?></option>
+																<?php endforeach; ?>
+															</select>
+															<label class="Agent">Agent</label>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="form-group ">
+															<select name = "teams" class = "form-control dirty" id = "teams"  >
+															<option></option>
+																<?php foreach ($list_teams as $l ) :?>
+																	<option value="<?php echo $l['id']; ?>">
+																		<?php echo $l['team_name']; ?>
+																	</option>
+																<?php endforeach; ?>
+															</select>
+															<label class="Team/Group">Team/Group</label>
+														</div>
+													</div>
+													<div class="col-sm-6">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker1'>
 											                    <input type='text' id = "min" class="form-control" placeholder="From" />
@@ -65,7 +94,7 @@
 											                </div>
 											            </div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-6">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker2'>
 											                    <input type='text' id = "max" class="form-control" placeholder="To" />
@@ -141,7 +170,10 @@
 		{
 			var min = $("#min").val();
 			var max = $("#max").val();
-			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max).load();
+			var agent = $( "#agents option:selected" ).val();
+			var team = $( "#teams option:selected" ).val();
+		
+			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent).load();
 		});
 
 	   //  $("#employee-grid_filter").css("display","none");

@@ -126,14 +126,7 @@
 					$customer_payment->setRoutingNumber(0);
 
 				}
-				// $customer_payment->setCardName($cardholder);
-				// $customer_payment->setCardNumber($card_number);
-				// $customer_payment->setExpiryDate($expiry_date);
-				// $customer_payment->setCvv($cvv);
-				// $customer_payment->setCheckNumber($check_number);
-				// $customer_payment->setAccountNumber($account_number);
-				// $customer_payment->setBankName($bank_name);
-				// $customer_payment->setRoutingNumber($routing_number);
+				
 				$customer_payment->setStatus(1);
 
 				$data = [

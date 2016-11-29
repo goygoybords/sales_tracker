@@ -88,10 +88,19 @@ $sql_details = array(
                 
         $min =  date('Y-m-d', strtotime($_GET['min']));
         $max =  date('Y-m-d', strtotime($_GET['max']));
+        $agent = intval($_GET['agent']);
   
-    if ($_GET['min'] != 0 && $_GET['max'] != 0) //search by date
+    if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0) //search by date
     {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  ";
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' ";
+    }
+    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0)
+    {
+        $extraWhere = " o.prepared_by = '$agent' ";
+    }
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0)
+    {
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
     }
    
     else
