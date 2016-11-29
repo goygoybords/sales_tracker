@@ -347,9 +347,6 @@
 			'id = ?' , array($get_customer_id[0]['customer_id']) );
 
 			$tracking_number = $get_customer_id[0][1] + 1;
-		
-		
-
 			$fields = array("tracking_number");
 			$where  = "WHERE id = ?";
 			$params = array($tracking_number , $order->getOrderId());

@@ -173,17 +173,9 @@
 			var agent = $( "#agents option:selected" ).val();
 			var team = $( "#teams option:selected" ).val();
 
-			$("#export").attr("href", "http://www.google.com/")
+			$("#export").attr("href", "../process/export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team);
 		
-			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent).load();
+			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team).load();
 		});
-
-	   //  $("#employee-grid_filter").css("display","none");
-
-	   //  $('.search-input-text').on( 'keyup click', function () {   // for text boxes
-				// 	var i =$(this).attr('data-column');  // getting column index
-				// 	var v =$(this).val();  // getting search input value
-				// 	dataTable.columns(i).search(v).draw();
-				// } );
 	} );
 </script>
