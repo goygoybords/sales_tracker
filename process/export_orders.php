@@ -6,9 +6,9 @@
     session_start();
 
     $db = new Database();
-    $sql = "SELECT o.id , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
+    $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
             c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description,
-            o.remarks, o.notes, o.status, o.shipping_fee, o.total
+            o.remarks, o.notes, o.status, o.total
             FROM orders o
             JOIN customer c
             ON o.customer_id = c.id
@@ -81,27 +81,30 @@
   $objPHPExcel->getActiveSheet()
         ->setCellValue('A5', 'Invoice Number')
         ->setCellValue('B5', 'Order Date')
-        ->setCellValue('C5', 'Customer')
-        ->setCellValue('D5', 'Shipping Address')
-        ->setCellValue('E5', 'City')
-        ->setCellValue('F5', 'Zip')
-        ->setCellValue('G5', 'State')
-        ->setCellValue('H5', 'Country')
-        ->setCellValue('I5', 'Shipping Method')
-        ->setCellValue('J5', 'Remarks')
-        ->setCellValue('K5', 'Notes')
-        ->setCellValue('L5', 'Status')
-        ->setCellValue('M5', 'Total')      
-        ->getStyle("A5:M5")->applyFromArray($style)
+        ->setCellValue('C5', 'Date Processed')
+        ->setCellValue('D5', 'Customer')
+        ->setCellValue('E5', 'Shipping Address')
+        ->setCellValue('F5', 'City')
+        ->setCellValue('G5', 'Zip')
+        ->setCellValue('H5', 'State')
+        ->setCellValue('I5', 'Country')
+        ->setCellValue('J5', 'Shipping Method')
+        ->setCellValue('K5', 'Remarks')
+        ->setCellValue('L5', 'Notes')
+        ->setCellValue('M5', 'Status')
+        ->setCellValue('N5', 'Total')      
+        ->getStyle("A5:N5")->applyFromArray($style)
         ;
 
   //Put each record in a new cell
+    
   for($i=0; $i<count($excelData); $i++)
   {
+
       $ii = $i+6;
       $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, "INV-".$excelData[$i][0]);
       $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($excelData[$i][1])) );
-      $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i][2]);
+      $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, date('Y-m-d' , strtotime($excelData[$i][2])) );
       $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i][3]);
       $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i][4]);
       $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i][5]);
@@ -110,17 +113,18 @@
       $objPHPExcel->getActiveSheet()->setCellValue('I'.$ii, $excelData[$i][8]);
       $objPHPExcel->getActiveSheet()->setCellValue('J'.$ii, $excelData[$i][9]);
       $objPHPExcel->getActiveSheet()->setCellValue('K'.$ii, $excelData[$i][10]);
+      $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $excelData[$i][11]);
 
-      if($excelData[$i][11] == 0)
+      if($excelData[$i][12] == 0)
        {
-          $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, "Pending Order");
+          $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, "Pending Order");
        }
        else
-          $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, "Billed Order");
+          $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, "Billed Order");
 
       // $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $excelData[$i][11]);
    
-      $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][12])
+      $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
       ->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
      
   }
@@ -163,28 +167,29 @@
         ->setCellValue('A5', 'Agent')
         ->setCellValue('B5', 'Screen name')
         ->setCellValue('C5', 'Order Date')
-        ->setCellValue('D5', 'Customer')
-        ->setCellValue('E5', 'Phone Number')
-        ->setCellValue('F5', 'Email Address')
-        ->setCellValue('G5', 'Shipping Address')
-        ->setCellValue('H5', 'Billing Address')
-        ->setCellValue('I5', 'Order')
-        ->setCellValue('J5', 'Price')
-        ->setCellValue('K5', 'Card Holder Name')
-        ->setCellValue('L5', 'Card Number')
-        ->setCellValue('M5', 'CVV')  
-        ->setCellValue('N5', 'Card Type')   
-        ->setCellValue('O5', 'Status')   
-        ->setCellValue('P5', 'Invoice Number') 
-        ->setCellValue('Q5', 'Remarks') 
-        ->setCellValue('R5', 'Tracking Number')      
-        ->setCellValue('S5', 'Reshipment Tracking Number')   
-        ->setCellValue('T5', 'Shipping')   
-        ->setCellValue('U5', 'Merchant')   
-        ->getStyle("A5:U5")->applyFromArray($style);
+        ->setCellValue('D5', 'Date Processed')
+        ->setCellValue('E5', 'Customer')
+        ->setCellValue('F5', 'Phone Number')
+        ->setCellValue('G5', 'Email Address')
+        ->setCellValue('H5', 'Shipping Address')
+        ->setCellValue('I5', 'Billing Address')
+        ->setCellValue('J5', 'Order')
+        ->setCellValue('K5', 'Price')
+        ->setCellValue('L5', 'Card Holder Name')
+        ->setCellValue('M5', 'Card Number')
+        ->setCellValue('N5', 'CVV')  
+        ->setCellValue('O5', 'Card Type')   
+        ->setCellValue('P5', 'Status')   
+        ->setCellValue('Q5', 'Invoice Number') 
+        ->setCellValue('R5', 'Remarks') 
+        ->setCellValue('S5', 'Tracking Number')      
+        ->setCellValue('T5', 'Reshipment Tracking Number')   
+        ->setCellValue('U5', 'Shipping')   
+        ->setCellValue('V5', 'Merchant')   
+        ->getStyle("A5:V5")->applyFromArray($style);
 
         $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
-            o.order_date,
+            o.order_date, o.date_submitted,
             CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
             p.product_description, od.amount,
             cp.card_name, cp.card_number, cp.cvv, cp.card_type,
@@ -215,34 +220,35 @@
           $ii = $i+6;
           $newsheet->setCellValue('A'.$ii, $agent[$i][0]);
           $newsheet->setCellValue('B'.$ii, $agent[$i][1]);
-           $newsheet->setCellValue('C'.$ii, date('Y-m-d', strtotime($agent[$i][2])) );
-          $newsheet->setCellValue('D'.$ii, $agent[$i][3]);
+          $newsheet->setCellValue('C'.$ii, date('Y-m-d', strtotime($agent[$i][2])) );
+          $newsheet->setCellValue('D'.$ii, date('Y-m-d', strtotime($agent[$i][3])) );
           $newsheet->setCellValue('E'.$ii, $agent[$i][4]);
           $newsheet->setCellValue('F'.$ii, $agent[$i][5]);
           $newsheet->setCellValue('G'.$ii, $agent[$i][6]);
           $newsheet->setCellValue('H'.$ii, $agent[$i][7]);
           $newsheet->setCellValue('I'.$ii, $agent[$i][8]);
+          $newsheet->setCellValue('J'.$ii, $agent[$i][9]);
           
-          $newsheet->setCellValue('J'.$ii, $agent[$i][9])
-          ->getStyle('J'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+          $newsheet->setCellValue('K'.$ii, $agent[$i][10])
+          ->getStyle('K'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
 
-          $newsheet->setCellValue('K'.$ii, $agent[$i][10]);
           $newsheet->setCellValue('L'.$ii, $agent[$i][11]);
           $newsheet->setCellValue('M'.$ii, $agent[$i][12]);
           $newsheet->setCellValue('N'.$ii, $agent[$i][13]);
+          $newsheet->setCellValue('O'.$ii, $agent[$i][14]);
           
-           if($agent[$i][14] == 0)
-              $newsheet->setCellValue('O'.$ii, "Pending Order");
+           if($agent[$i][15] == 0)
+              $newsheet->setCellValue('P'.$ii, "Pending Order");
            else
-              $newsheet->setCellValue('O'.$ii, "Billed Order");
+              $newsheet->setCellValue('P'.$ii, "Billed Order");
          
           
-          $newsheet->setCellValue('P'.$ii, $agent[$i][15]);
           $newsheet->setCellValue('Q'.$ii, $agent[$i][16]);
           $newsheet->setCellValue('R'.$ii, $agent[$i][17]);
-          $newsheet->setCellValue('S'.$ii, "");
-          $newsheet->setCellValue('T'.$ii, $agent[$i][18]);
+          $newsheet->setCellValue('S'.$ii, $agent[$i][18]);
+          $newsheet->setCellValue('T'.$ii, "");
           $newsheet->setCellValue('U'.$ii, $agent[$i][19]);
+          $newsheet->setCellValue('V'.$ii, $agent[$i][20]);
 
          
       }

@@ -4,6 +4,7 @@
 	require '../class/customer.php';
 	require '../class/order.php';
 	require '../class/order_details.php';
+	require '../class/product.php';
 	require '../class/customer_payment.php';
 
 
@@ -12,6 +13,7 @@
 	$order = new Order();
 	$detail = new Order_Details();
 	$customer_payment = new Customer_Payment();
+	$product_class = new Product();
 
 	extract($_POST);
 	if(!isset($_GET['approve']) && !isset($_GET['send_mail']))
@@ -190,6 +192,15 @@
 							'amount'  	  => $detail->getAmount()   ,
 							'status' 	  => $detail->getStatus() ,
 						];
+						$get_product =	$db->select('products', array('quantity'), "id = ?", array($product[$i]) );
+						foreach ($get_product as $p ) 
+						{
+							$total_qty = $p['quantity'] - $quantity[$i];
+							$product_class->setQuantity($total_qty);
+							$db->update("products", array('quantity') , "WHERE id = ?", array($product_class->getQuantity(), $product[$i])) ;
+
+						}
+
 						$order_details_id = $db->insert("order_detail", $data);
 			        }
 			        header("location: ../orders/manage.php?msg=inserted");
