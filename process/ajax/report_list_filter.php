@@ -91,11 +91,12 @@ $sql_details = array(
         $agent = intval($_GET['agent']);
         $team = intval($_GET['team'])
   
-    if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0) //search by date
+    if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by date
     {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' ";
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' ";
     }
-    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0)
+
+    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0)
     {
         $extraWhere = " o.prepared_by = '$agent' ";
     }
@@ -103,7 +104,10 @@ $sql_details = array(
     {
         $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
     }
-   
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 )
+    {
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
+    }
     else
     {
         $extraWhere =  "o.status BETWEEN 0 AND 1" ;
