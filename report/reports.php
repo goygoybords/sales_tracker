@@ -172,6 +172,8 @@
 			var max = $("#max").val();
 			var agent = $( "#agents option:selected" ).val();
 			var team = $( "#teams option:selected" ).val();
+
+			$("#export").attr("href", "http://www.google.com/")
 		
 			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent).load();
 		});

@@ -128,6 +128,8 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  LEFT JOIN users up
+                  ON o.updated_by = up.id
                  ";
         $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 0" ;
     }
@@ -140,6 +142,8 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  LEFT JOIN users up
+                  ON o.updated_by = up.id
                  ";
                   // WHERE u.team_id = 3
 
