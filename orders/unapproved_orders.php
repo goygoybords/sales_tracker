@@ -59,14 +59,15 @@
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
 														<th>Invoice Number</th>
-														<th>Date</th>
+														<th>Order Date</th>
+														<th>Date Processed</th>
 														<th>Customer</th>
 														<th>Total</th>
 														<th>Shipping Method</th>
 														<th>Remarks</th>
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
-														
+
 														<th>Action</th>
 													</thead>
 <!-- 													<tfoot>
