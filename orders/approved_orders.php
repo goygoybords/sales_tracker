@@ -66,6 +66,7 @@
 														<th>Remarks</th>
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
+														<th>Approved By</th>
 														<th>Tracking Number</th>
 														<th>Action</th>
 													</thead>

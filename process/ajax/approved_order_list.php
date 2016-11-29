@@ -50,8 +50,10 @@ $columns = array(
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
-    array( 'db' => '`o`.`tracking_number`',       'dt' => 8, 'field' => 'tracking_number' ),
-    array( 'db' => '`o`.`id`',          'dt' => 9, 'formatter' => function( $d, $row )
+
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 8, "field" => "approved_by", "as" => "approved_by" ),
+    array( 'db' => '`o`.`tracking_number`',       'dt' => 9, 'field' => 'tracking_number' ),
+    array( 'db' => '`o`.`id`',          'dt' => 10, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
@@ -116,6 +118,8 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  JOIN users up
+                  ON o.approved_by = up.id
                  ";
         $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 1" ;
     }
@@ -128,6 +132,8 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  JOIN users up
+                  ON o.approved_by = up.id
                  ";
                   // WHERE u.team_id = 3
 
@@ -142,6 +148,8 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  JOIN users up
+                  ON o.approved_by = up.id
                  ";
         $extraWhere =  "o.status = 1" ;
     }
