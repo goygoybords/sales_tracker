@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2016 at 10:45 AM
+-- Generation Time: Nov 29, 2016 at 04:00 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -330,6 +330,7 @@ CREATE TABLE `customer` (
   `billing_city` varchar(50) NOT NULL,
   `billing_zip` varchar(8) NOT NULL,
   `billing_state_id` int(11) NOT NULL,
+  `created_by` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -337,21 +338,15 @@ CREATE TABLE `customer` (
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `alternate_contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `same`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `status`) VALUES
-(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
-(2, 'Kane', 'Undertaker', 'john.flashpark@gmail.com', '123123', '', 230, 'Houston', 'Death Valley', '78787', 51, 0, 0, '', '', '', 0, 1),
-(3, 'Chris', 'Tomlin', 'john.flashpark@gmail.com', '123', '', 230, 'asdasd', 'cebu', '451', 3, 0, 0, '', '', '', 0, 1),
-(4, 'asdasd', 'asdasdasd', 'john.flashpark@gmail.com', '123123', '', 230, 'asdasdasd', 'asdasd', '123123', 2, 0, 0, '', '', '', 0, 1),
-(5, 'ghjghjhghgj', 'ghjghh', 'john.flashpark@gmail.com', '123123213', '', 230, 'asdsad', 'fdfg', '5000', 6, 0, 0, '', '', '', 0, 1),
-(6, 'Test', 'Test', 'john.flashpark@gmail.com', '123123', '', 230, 'test address', 'test', '6000', 1, 0, 0, '', '', '', 0, 1),
-(7, 'khkjhjhkj', 'hkjhkjhjhk', 'john.flashpark@gmail.com', '234243243', '', 230, 'kjhkjhkhj', 'jkhkjhk', '6000', 5, 0, 0, '', '', '', 0, 1),
-(8, 'kari update', 'jobe update', 'john.flashpark@gmail.com', '565656', '', 212, 'update', 'asdasd update', '5656', 8, 0, 0, '', '', '', 0, 0),
-(9, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 1),
-(10, 'Bill', 'Goldberg', 'john.flashpark@gmail.com', '123123231', '', 230, 'asdsad', 'asd', '213231', 2, 0, 0, '', '', '', 0, 1),
-(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 1),
-(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 1),
-(13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 0, 230, 'asdasd', 'ghjhgj', '2313', 59, 1),
-(14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1);
+INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `alternate_contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `same`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `created_by`, `status`) VALUES
+(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 12, 1),
+(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 12, 1),
+(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 13, 1),
+(13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 0, 230, 'asdasd', 'ghjhgj', '2313', 59, 15, 1),
+(14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 15, 1),
+(15, 'bruce', 'lee', 'brucelee@gmail.com', '12312', '123', 230, 'asdasd', 'asd', '123123', 5, 1, 230, 'asdasd', 'asd', '123123', 5, 15, 1),
+(16, 'asdasdas', 'asdsad', 'asd@gmail.com', '123123', '', 230, 'asd', 'asd', '123213', 2, 1, 230, 'asd', 'asd', '123213', 2, 1, 1),
+(17, 'CCF', 'CCF', 'ccf@gmail.com', '123213', '', 230, 'asdsad', 'sad', '123213', 4, 1, 230, 'asdsad', 'sad', '123213', 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -369,6 +364,9 @@ CREATE TABLE `customer_payment_methods` (
   `expiry_date` varchar(6) NOT NULL,
   `cvv` varchar(3) NOT NULL,
   `check_number` varchar(15) NOT NULL,
+  `account_number` int(3) NOT NULL,
+  `bank_name` varchar(30) NOT NULL,
+  `routing_number` int(3) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -376,15 +374,9 @@ CREATE TABLE `customer_payment_methods` (
 -- Dumping data for table `customer_payment_methods`
 --
 
-INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `card_type`, `card_number`, `card_name`, `expiry_date`, `cvv`, `check_number`, `status`) VALUES
-(1, 1, 1, '', '', '', '', '', '', 1),
-(2, 11, 1, 'Visa', '', '', '', '', '', 1),
-(3, 13, 1, 'MasterCard', '566565989456', 'DAvid D COOK', '4/20', '123', '', 1),
-(4, 1, 2, 'MasterCard', '', '', '', '', '123123123213', 1),
-(5, 10, 1, 'MasterCard', '123123123213123', 'Kevin', '4/20', '111', '', 1),
-(6, 1, 1, 'MasterCard', '', '', '', '', '', 1),
-(7, 12, 1, 'MasterCard', '123123', 'asdsad', '4/12', '111', '', 1),
-(8, 13, 1, 'MasterCard', '123123', 'asdasd', '4/20', '11', '', 1);
+INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `card_type`, `card_number`, `card_name`, `expiry_date`, `cvv`, `check_number`, `account_number`, `bank_name`, `routing_number`, `status`) VALUES
+(1, 17, 1, 'MasterCard', '123123', 'CCF', '3/19', '111', '', 0, '', 0, 1),
+(2, 15, 1, 'American Expres', '123124123', 'test', '5/19', '111', '', 0, '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -417,26 +409,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method_id`, `merchant`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `tracking_number`, `status`) VALUES
-(1, '2016-11-01', 1, '50.00', 1, '5.00', 'Remarks updated', 'NOtes updated', 0, '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
-(2, '2016-11-02', 2, '9.00', 1, '5.00', 'Remarks', 'Notes\r\n', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
-(3, '2016-11-03', 3, '0.00', 2, '5.00', 'sadasd', 'asdasdasd', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(4, '2016-11-04', 4, '30.00', 2, '5.00', 'asdasdsad', 'asdasdasdsadad', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(5, '2016-11-05', 5, '15.00', 1, '5.00', 'vbvbvbnbvn', 'vbnbvbnb', 0, '', 12, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(6, '2016-11-06', 6, '40.00', 1, '5.00', 'test remarks', 'test notes', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(7, '2016-11-07', 7, '15.00', 1, '5.00', 'jhgjhg', 'hjhgjgjh', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 1),
-(8, '2016-11-08', 9, '30.00', 1, '5.00', 'kevin kane test', 'kevin kane test', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(9, '2016-11-09', 1, '15.00', 1, '5.00', 'sad', 'asdassad', 0, '', 13, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(10, '2016-11-03', 10, '30.00', 1, '5.00', 'asdasd', 'asdsadasd', 0, '', 14, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(11, '2016-11-04', 1, '9.00', 1, '5.00', 'New Order', 'New Order', 0, '', 15, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', '', 0),
-(12, '2016-11-12', 1, '29.00', 2, '5.00', 'REmarks', 'Notes', 0, 'Hillsong', 1, 0, '2016-11-23 03:11:32', 0, '0000-00-00 00:00:00', '', 0),
-(13, '2016-11-15', 1, '15.00', 1, '5.00', 'asdasda', 'asdasdasd', 1, 'asdsad', 1, 0, '2016-11-23 03:15:54', 0, '0000-00-00 00:00:00', '', 0),
-(14, '2016-11-20', 11, '34.00', 1, '5.00', 'fgfg', 'fgfgfgfgfgfg', 2, 'gdgfg', 1, 0, '2016-11-23 03:19:46', 0, '0000-00-00 00:00:00', '', 0),
-(15, '2016-11-20', 13, '0.00', 1, '5.00', 'asdas', 'asdasd', 3, '', 1, 0, '2016-11-23 03:24:13', 0, '0000-00-00 00:00:00', '', 0),
-(16, '2016-11-22', 1, '30.00', 1, '5.00', '', '', 4, 'asdasd', 1, 0, '2016-11-23 03:46:47', 0, '0000-00-00 00:00:00', '', 0),
-(17, '2016-11-23', 10, '40.00', 2, '5.00', 'asd', 'asd', 5, 'Journey', 1, 0, '2016-11-24 08:39:25', 0, '0000-00-00 00:00:00', '', 0),
-(18, '2016-11-24', 1, '9.00', 2, '5.00', 'dfsdfdsfsdf', '', 6, 'asdasd', 1, 1, '2016-11-24 08:45:53', 1, '2016-11-24 08:52:02', '', 1),
-(19, '2016-11-24', 12, '9.00', 2, '5.00', 'sad', 'asdsad', 7, 'asdasdasd', 1, 1, '2016-11-24 08:53:11', 1, '2016-11-24 09:18:31', '1', 1),
-(20, '2016-11-01', 13, '9.00', 1, '5.00', 'asd', 'asd', 8, 'asdasdsadsadsadsadasdsada', 1, 0, '2016-11-24 09:26:30', 1, '2016-11-25 09:39:49', '', 0);
+(1, '2016-11-30', 17, '25.00', 1, '5.00', 'remarks', 'good', 1, 'salesman', 12, 1, '2016-11-29 14:24:23', 1, '2016-11-29 14:24:54', '1', 1),
+(2, '2016-11-30', 15, '30.00', 1, '5.00', '', '', 2, 'kane', 13, 0, '2016-11-29 14:25:49', 0, '0000-00-00 00:00:00', '0', 0);
 
 -- --------------------------------------------------------
 
@@ -459,30 +433,9 @@ CREATE TABLE `order_detail` (
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_price`, `amount`, `status`) VALUES
-(1, 1, 2, '5.00', '5.00', '25.00', 1),
-(2, 1, 1, '5.00', '5.00', '25.00', 1),
-(3, 2, 1, '2.00', '2.00', '4.00', 1),
-(4, 3, 1, '2.00', '2.00', '0.00', 1),
-(5, 4, 1, '5.00', '5.00', '25.00', 1),
-(6, 5, 3, '2.00', '5.00', '10.00', 1),
-(7, 6, 2, '2.00', '5.00', '10.00', 1),
-(8, 6, 1, '5.00', '5.00', '25.00', 1),
-(9, 7, 1, '2.00', '5.00', '10.00', 1),
-(10, 8, 2, '5.00', '5.00', '25.00', 1),
-(11, 9, 3, '5.00', '2.00', '10.00', 1),
-(12, 10, 2, '5.00', '5.00', '25.00', 1),
-(13, 11, 2, '2.00', '1.00', '2.00', 1),
-(14, 11, 1, '2.00', '1.00', '2.00', 1),
-(15, 12, 3, '3.00', '8.00', '24.00', 1),
-(16, 13, 1, '2.00', '5.00', '10.00', 1),
-(17, 14, 1, '2.00', '2.00', '4.00', 1),
-(18, 14, 2, '5.00', '5.00', '25.00', 1),
-(19, 16, 2, '5.00', '5.00', '25.00', 1),
-(20, 17, 1, '2.00', '5.00', '10.00', 1),
-(21, 17, 3, '5.00', '5.00', '25.00', 1),
-(22, 18, 1, '2.00', '2.00', '4.00', 1),
-(23, 19, 4, '2.00', '2.00', '4.00', 1),
-(24, 20, 1, '2.00', '2.00', '4.00', 1);
+(1, 1, 2, '2.00', '5.00', '10.00', 1),
+(2, 1, 1, '2.00', '5.00', '10.00', 1),
+(3, 2, 1, '5.00', '5.00', '25.00', 1);
 
 -- --------------------------------------------------------
 
@@ -494,6 +447,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `product_description` varchar(100) NOT NULL,
   `product_price` decimal(16,2) NOT NULL,
+  `quantity` decimal(10,2) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -501,12 +455,12 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_description`, `product_price`, `status`) VALUES
-(1, 'GC20 Vidalista 20mg', '1.00', 1),
-(2, 'GC5 Cialis 5mg', '1.00', 1),
-(3, 'Kirkland Vitamin B', '7.00', 1),
-(4, 'test', '5.00', 1),
-(5, 'asdasdsad', '12.00', 1);
+INSERT INTO `products` (`id`, `product_description`, `product_price`, `quantity`, `status`) VALUES
+(1, 'GC20 Vidalista 20mg', '1.00', '91.00', 1),
+(2, 'GC5 Cialis 5mg', '1.00', '98.00', 1),
+(3, 'Kirkland Vitamin B', '7.00', '100.00', 1),
+(4, 'test', '5.00', '45.00', 1),
+(5, 'asdasdsad', '12.00', '100.00', 1);
 
 -- --------------------------------------------------------
 
@@ -627,7 +581,8 @@ CREATE TABLE `teams` (
 INSERT INTO `teams` (`id`, `user_id`, `team_name`, `status`) VALUES
 (1, 7, 'Degeneration X', 1),
 (2, 10, 'LA Lakers', 1),
-(3, 11, 'Cleveland Cavs', 1);
+(3, 11, 'Cleveland Cavs', 1),
+(4, 18, 'team lead 4', 1);
 
 -- --------------------------------------------------------
 
@@ -654,19 +609,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Chinese Mafia', 1473717600, 1480003200, 1),
+(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Chinese Mafia', 1473717600, 1480348800, 1),
 (6, 'QA', 'Kevin', 'qakevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 0, '', 1479682800, 0, 1),
 (7, 'Team Leader', 'Kevin', 'teamleadkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 0, '', 1479682800, 0, 1),
-(8, 'agent', 'kevin', 'agentkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 0, '', 1479682800, 0, 1),
+(8, 'agent', 'kevin', 'agentkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 4, '', 1479682800, 0, 1),
 (9, 'kobe test', 'test', 'test@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 0, 'black mamba', 1479682800, 0, 1),
 (10, 'Team Lead 2', 'Kobe', 'kbryant@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 2, '', 1479769200, 1479769200, 1),
-(11, 'Team Leader 3', 'Lebron', 'team_lebro@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 3, '', 1479769200, 0, 1),
-(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'Jordan ', 1479769200, 1479942000, 1),
-(13, 'Kyrie', 'Irving', 'kyrieirving@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'Uncle Drew', 1479769200, 0, 1),
+(11, 'Team Leader 3', 'Lebron', 'team_lebro@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 3, '', 1479769200, 1480348800, 1),
+(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'Jordan ', 1479769200, 1480348800, 1),
+(13, 'Kyrie', 'Irving', 'kyrieirving@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'Uncle Drew', 1479769200, 1480348800, 1),
 (14, 'D'' Angelo', 'Russell', 'druss@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'D Russ', 1479769200, 0, 1),
 (15, 'Tristan', 'Thompson', 'tristan@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'tristan', 1479769200, 0, 1),
-(16, 'Admin', 'Admin', 'admin@salestracker.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Administrator', 1479916800, 0, 1),
-(17, 'test', 'test', 'test2@gmail.com', 'KxKRPT21Kq6z/XezHQ+zwxxz5GRWiN5Z55U4lJNBbRo=', 1, 0, 'test', 1479916800, 1479916800, 1);
+(16, 'Admin', '', 'admin@salestracker.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Administrator', 1479916800, 0, 1),
+(17, 'test', 'test', 'test2@gmail.com', 'KxKRPT21Kq6z/XezHQ+zwxxz5GRWiN5Z55U4lJNBbRo=', 1, 0, 'test', 1479916800, 1479916800, 1),
+(18, 'team leader', '4', 'teamleader4@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 0, 'team leader 4', 1480003200, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -709,7 +665,8 @@ ALTER TABLE `countries`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `customer_payment_methods`
@@ -784,22 +741,22 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `customer_payment_methods`
 --
 ALTER TABLE `customer_payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `products`
 --
@@ -819,12 +776,12 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `usertypes`
 --
