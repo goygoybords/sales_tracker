@@ -19,6 +19,7 @@
  */
 
 // DB table to use
+session_start();
 $table = 'customer';
 
 // Table's primary key
@@ -76,10 +77,16 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-    $joinQuery = "FROM customer c
-                
-                 ";
-    $extraWhere =  "c.status = 1" ;
+    $joinQuery = "FROM customer c";
+    $extraWhere =  "" ;
+    if($_SESSION['user_type'] == 3)
+    {
+        $extraWhere =  "c.created_by =".$_SESSION['id']." AND  c.status = 1" ;
+    }
+    else
+    {
+         $extraWhere =  "c.status = 1" ;
+    }
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

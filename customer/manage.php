@@ -300,6 +300,8 @@
 													$error = 'Record was deleted previously';
 												else if($msg == 'none')
 													$error = 'Sorry, the record selected does not exist.';
+												else if($msg = 'customer_exist')
+													$error = 'Customer Exist Already';
 												echo '<span>'.$error.'</span>';
 											}
 										?>

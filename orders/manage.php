@@ -29,7 +29,16 @@
 	$list_product = $db->select("products", array("*"), "status = ?" , array(1));
 	$list_countries = $db->select("countries" , array("*"));
 	$list_methods = $db->select("shipping_method", array("*") , "status = 1");
-	$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
+
+	if($_SESSION['user_type'] == 3)
+	{
+		$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "created_by = ? AND status = ?", array($_SESSION['id'] , 1));
+	}
+	else
+	{
+		$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
+	}
+	
 	
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 

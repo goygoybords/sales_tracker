@@ -4,6 +4,7 @@
 	require '../class/order.php';
 	require '../class/order_details.php';
 
+	session_start();
 	$db = new Database();
 	$customer = new Customer();
 	$order = new Order();
@@ -21,6 +22,7 @@
 		$customer->setStateId(intval($state));
 		$customer->setCity(htmlentities($city));
 		$customer->setZip(htmlentities($zip));
+
 		
 		$customer->setAlternateContactNumber(htmlentities($alternate_contact_num));
 		if(isset($_POST['same']) == 1)
@@ -35,8 +37,8 @@
 		$customer->setBillingAddress(htmlentities($billing_address));
 		$customer->setBillingCity(htmlentities($billing_city));
 		$customer->setBillingZip(htmlentities($billing_zip));
+		$customer->setCreatedBy($_SESSION['id']);
 		$customer->setStatus(1);
-
 
 		if(isset($_POST['save_customer']))
 		{
@@ -57,13 +59,23 @@
 						'billing_city' 		 => $customer->getBillingCity(),
 						'billing_zip'  		 => $customer->getBillingZip(),
 						'billing_state_id'   => $customer->getBillingStateId() ,
+						'created_by'		=> $customer->getCreatedBy(),
 						'status' 		   => $customer->getStatus() ,
 					];
 
 			
 
-			$customer_id = $db->insert("customer", $data);
-			header("location: ../customer/manage.php?msg=inserted");
+			$check = $db->select("customer", array("email"), "email = ?" , array($customer->getEmail() )  );
+			if(count($check) == 1)
+			{
+				header("location: ../customer/manage.php?msg=customer_exist");
+			}
+			else
+			{
+				$customer_id = $db->insert("customer", $data);
+				header("location: ../customer/manage.php?msg=inserted");
+			}
+			
 		}
 		if(isset($_POST['update_customer']))
 		{

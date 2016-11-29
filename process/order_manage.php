@@ -36,6 +36,7 @@
 		$customer->setBillingAddress(htmlentities($billing_address));
 		$customer->setBillingCity(htmlentities($billing_city));
 		$customer->setBillingZip(htmlentities($billing_zip));
+		$customer->setCreatedBy($_SESSION['id']);
 		$customer->setStatus(1);
 
 
@@ -71,7 +72,8 @@
 						'billing_address'    => $customer->getBillingAddress(),
 						'billing_city' 		 => $customer->getBillingCity(),
 						'billing_zip'  		 => $customer->getBillingZip(),
-						'billing_state_id'   => $customer->getBillingStateId() ,
+						'billing_state_id'   => $customer->getBillingStateId(),
+						'created_by'		=> $customer->getCreatedBy(),
 						'status' 		   => $customer->getStatus() ,
 					];
 

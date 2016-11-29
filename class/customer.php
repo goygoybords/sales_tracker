@@ -23,7 +23,17 @@
         private $billing_city;
         private $billing_zip;
         private $billing_state_id;
+        private $created_by;
 
+        public function getCreatedBy()
+        {
+            return $this->created_by;
+        }
+
+        public function setCreatedBy($created_by)
+        {
+            return $this->created_by = $created_by;
+        }
 
         public function getAlternateContactNumber()
         {

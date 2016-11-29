@@ -19,11 +19,15 @@
  */
 
 // DB table to use
+
+require '../../class/database.php';
+$db = new Database();
 session_start();
 $table = 'orders';
 
 // Table's primary key
 $primaryKey = 'id';
+
 
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`
@@ -50,6 +54,9 @@ $columns = array(
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
+      
+    
+     
     array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
