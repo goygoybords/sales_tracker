@@ -43,6 +43,8 @@
 						$product->setProductId($product_id);
 						$product->setProductDescription($p['product_description']);
 						$product->setProductPrice(doubleval($p['product_price']));
+						$product->setQuantity(doubleval($p['quantity']));
+
 						$product->setStatus($p['status']);					
 					}
 
@@ -106,6 +108,14 @@
 															<div class="col-sm-10">
 																<input type="text" name = "price" class="form-control"  
 																value = "<?php echo $product->getProductPrice();  ?>" <?php echo $disabled; ?> required>
+															</div>
+														</div>
+
+														<div class="form-group">
+															<label for="Email5" class="col-sm-2 control-label">Quantity</label>
+															<div class="col-sm-10">
+																<input type="text" name = "quantity" class="form-control"  
+																value = "<?php echo $product->getQuantity();  ?>" <?php echo $disabled; ?> required>
 															</div>
 														</div>
 														

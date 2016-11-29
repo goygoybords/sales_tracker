@@ -33,7 +33,8 @@ $columns = array(
     array( 'db' => '`p`.`id`', 'dt' => 0, 'field' => 'id' ),
     array( 'db' => '`p`.`product_description`',   'dt' => 1, 'field' => 'product_description' ),
     array( 'db' => '`p`.`product_price`',         'dt' => 2, 'field' => 'product_price' ),
-    array( 'db' => '`p`.`id`',                    'dt' => 3, 'formatter' => function( $d, $row )
+    array( 'db' => '`p`.`quantity`',            'dt' => 3, 'field' => 'quantity' ),
+    array( 'db' => '`p`.`id`',                    'dt' => 4, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
                 {

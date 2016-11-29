@@ -7,9 +7,29 @@
 		private $product_id;
 		private $product_description;
 		private $product_price;
+        private $quantity;
 		private $status;
 
-	
+	   
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Sets the value of product_id.
+     *
+     * @param mixed $product_id the product id
+     *
+     * @return self
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
     /**
      * Gets the value of product_id.
      *

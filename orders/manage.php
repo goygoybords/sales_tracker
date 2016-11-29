@@ -482,6 +482,7 @@
 												      	<option value="American Express" 
 												      		<?php echo ($customer_payment->getCardType() == "American Express" ? "selected='selected'" : ""); ?>>American Express</option>
 													    <option value="Visa" <?php echo ($customer_payment->getCardType() == "Visa" ? "selected='selected'" : ""); ?> >Visa</option>
+													    <option value="Discover" <?php echo ($customer_payment->getCardType() == "Discover" ? "selected='selected'" : ""); ?> >Discover</option>
 													
 												    </select>
 													<label class="card_type">Card Type</label>
