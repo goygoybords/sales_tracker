@@ -6,7 +6,98 @@
     session_start();
 
     $db = new Database();
-    $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
+   
+    if(isset($_GET['min']) && isset($_GET['max']) && isset($_GET['agent']) && isset($_GET['team']))
+    {
+        if ($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] != 0 && $_GET['team'] != 0) //search by date
+        {
+          $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
+                c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description,
+                o.remarks, o.notes, o.status, o.total
+                FROM orders o
+                JOIN customer c
+                ON o.customer_id = c.id
+                JOIN state s
+                ON c.state_id = s.id
+                JOIN countries coun
+                ON c.country_id = coun.country_id
+                JOIN shipping_method ship
+                ON o.shipping_method_id = ship.id
+                WHERE o.order_date BETWEEN ? AND ?  AND o.prepared_by = ? AND u.team_id = ? 
+                ORDER BY 2 DESC
+                ";
+          $cmd = $db->getDb()->prepare($sql);
+          $cmd->execute(array($_GET['min'], $_GET['max'], $_GET['agent'], $_GET['team']));
+          
+        }
+
+        else if($_GET['agent'] !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['team'] == 0)
+        {
+          $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
+                c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description,
+                o.remarks, o.notes, o.status, o.total
+                FROM orders o
+                JOIN customer c
+                ON o.customer_id = c.id
+                JOIN state s
+                ON c.state_id = s.id
+                JOIN countries coun
+                ON c.country_id = coun.country_id
+                JOIN shipping_method ship
+                ON o.shipping_method_id = ship.id
+                WHERE o.prepared_by = ?
+                ORDER BY 2 DESC
+                ";
+          $cmd = $db->getDb()->prepare($sql);
+          $cmd->execute(array($_GET['agent']));
+            
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0)
+        {
+            $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
+                  c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description,
+                  o.remarks, o.notes, o.status, o.total
+                  FROM orders o
+                  JOIN customer c
+                  ON o.customer_id = c.id
+                  JOIN state s
+                  ON c.state_id = s.id
+                  JOIN countries coun
+                  ON c.country_id = coun.country_id
+                  JOIN shipping_method ship
+                  ON o.shipping_method_id = ship.id
+                  WHERE o.order_date BETWEEN ? AND ?
+                  ORDER BY 2 DESC
+                  ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($_GET['min'], $_GET['max']));
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] != 0 )
+        {
+          $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
+                  c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description,
+                  o.remarks, o.notes, o.status, o.total
+                  FROM orders o
+                  JOIN customer c
+                  ON o.customer_id = c.id
+                  JOIN state s
+                  ON c.state_id = s.id
+                  JOIN countries coun
+                  ON c.country_id = coun.country_id
+                  JOIN shipping_method ship
+                  ON o.shipping_method_id = ship.id
+                  WHERE o.order_date BETWEEN ? AND ? AND u.team_id = ?
+                  ORDER BY 2 DESC
+                  ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($_GET['min'], $_GET['max'], $_GET['team']));
+        }
+
+    }
+
+    else
+    {
+         $sql = "SELECT o.id , o.order_date, o.date_submitted, CONCAT(c.firstname, ' ', c.lastname) AS 'Fullname', 
             c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description,
             o.remarks, o.notes, o.status, o.total
             FROM orders o
@@ -21,8 +112,9 @@
             WHERE o.status BETWEEN 0 AND 1
             ORDER BY 2 DESC
             ";
-    $cmd = $db->getDb()->prepare($sql);
-    $cmd->execute(array());
+        $cmd = $db->getDb()->prepare($sql);
+        $cmd->execute(array());
+    }
     $orders = $cmd->fetchAll();
    
   $fileName = 'list_order'.date('Y-m-d');
@@ -188,7 +280,11 @@
         ->setCellValue('V5', 'Merchant')   
         ->getStyle("A5:V5")->applyFromArray($style);
 
-        $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
+        
+
+       if ($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] != 0 && $_GET['team'] != 0) //search by date
+        {
+            $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
             o.order_date, o.date_submitted,
             CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
             p.product_description, od.amount,
@@ -207,11 +303,123 @@
             ON o.payment_method_id = cp.id
             JOIN shipping_method s
             ON o.shipping_method_id = s.id
-            WHERE o.status BETWEEN 0 AND 1
+            WHERE o.order_date BETWEEN ? AND ?  AND o.prepared_by = ? AND u.team_id = ?
             ORDER BY 3 DESC";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($_GET['min'], $_GET['max'], $_GET['agent'], $_GET['team']));
 
-      $cmd = $db->getDb()->prepare($sql);
-      $cmd->execute(array());
+        }
+
+        else if($_GET['agent'] !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['team'] == 0)
+        {
+            $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
+              o.order_date, o.date_submitted,
+              CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
+              p.product_description, od.amount,
+              cp.card_name, cp.card_number, cp.cvv, cp.card_type,
+              o.status, o.id, o.remarks, o.tracking_number , s.description, o.merchant
+              FROM orders o
+              JOIN users u
+              ON o.prepared_by = u.id
+              JOIN customer c
+              ON o.customer_id = c.id
+              JOIN order_detail od
+              ON o.id = od.order_id
+              JOIN products p
+              ON od.product_id = p.id 
+              JOIN customer_payment_methods cp
+              ON o.payment_method_id = cp.id
+              JOIN shipping_method s
+              ON o.shipping_method_id = s.id
+              WHERE o.prepared_by = ?
+              ORDER BY 3 DESC";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array( $_GET['agent']));
+            
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0)
+        {
+             $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
+                o.order_date, o.date_submitted,
+                CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
+                p.product_description, od.amount,
+                cp.card_name, cp.card_number, cp.cvv, cp.card_type,
+                o.status, o.id, o.remarks, o.tracking_number , s.description, o.merchant
+                FROM orders o
+                JOIN users u
+                ON o.prepared_by = u.id
+                JOIN customer c
+                ON o.customer_id = c.id
+                JOIN order_detail od
+                ON o.id = od.order_id
+                JOIN products p
+                ON od.product_id = p.id 
+                JOIN customer_payment_methods cp
+                ON o.payment_method_id = cp.id
+                JOIN shipping_method s
+                ON o.shipping_method_id = s.id
+                WHERE o.order_date BETWEEN ? AND ?
+                ORDER BY 3 DESC";
+
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array( $_GET['min']), $_GET['max']);
+         
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] != 0 )
+        {
+          $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
+                o.order_date, o.date_submitted,
+                CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
+                p.product_description, od.amount,
+                cp.card_name, cp.card_number, cp.cvv, cp.card_type,
+                o.status, o.id, o.remarks, o.tracking_number , s.description, o.merchant
+                FROM orders o
+                JOIN users u
+                ON o.prepared_by = u.id
+                JOIN customer c
+                ON o.customer_id = c.id
+                JOIN order_detail od
+                ON o.id = od.order_id
+                JOIN products p
+                ON od.product_id = p.id 
+                JOIN customer_payment_methods cp
+                ON o.payment_method_id = cp.id
+                JOIN shipping_method s
+                ON o.shipping_method_id = s.id
+                WHERE o.order_date BETWEEN ? AND ? AND u.team_id = ?
+                ORDER BY 3 DESC";
+
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array( $_GET['min'], $_GET['max'], $_GET['team']));
+        }
+        else
+        {
+             $sql = "SELECT CONCAT(u.first_name, ' ', u.lastname) AS 'salesman', u.screen_name,
+              o.order_date, o.date_submitted,
+              CONCAT(c.firstname, ' ',c.lastname) AS 'customer' , c.contact_number, c.email, c.shipping_address, c.billing_address,
+              p.product_description, od.amount,
+              cp.card_name, cp.card_number, cp.cvv, cp.card_type,
+              o.status, o.id, o.remarks, o.tracking_number , s.description, o.merchant
+              FROM orders o
+              JOIN users u
+              ON o.prepared_by = u.id
+              JOIN customer c
+              ON o.customer_id = c.id
+              JOIN order_detail od
+              ON o.id = od.order_id
+              JOIN products p
+              ON od.product_id = p.id 
+              JOIN customer_payment_methods cp
+              ON o.payment_method_id = cp.id
+              JOIN shipping_method s
+              ON o.shipping_method_id = s.id
+              WHERE o.status BETWEEN 0 AND 1
+              ORDER BY 3 DESC";
+
+              $cmd = $db->getDb()->prepare($sql);
+              $cmd->execute(array());
+        }
+
       $agent = $cmd->fetchAll();
 
 
@@ -243,7 +451,7 @@
               $newsheet->setCellValue('P'.$ii, "Billed Order");
          
           
-          $newsheet->setCellValue('Q'.$ii, $agent[$i][16]);
+          $newsheet->setCellValue('Q'.$ii, "INV-".$agent[$i][16]);
           $newsheet->setCellValue('R'.$ii, $agent[$i][17]);
           $newsheet->setCellValue('S'.$ii, $agent[$i][18]);
           $newsheet->setCellValue('T'.$ii, "");

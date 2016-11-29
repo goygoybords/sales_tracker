@@ -89,7 +89,7 @@ $sql_details = array(
         $min =  date('Y-m-d', strtotime($_GET['min']));
         $max =  date('Y-m-d', strtotime($_GET['max']));
         $agent = intval($_GET['agent']);
-        $team = intval($_GET['team'])
+        $team = intval($_GET['team']);
   
     if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by date
     {
