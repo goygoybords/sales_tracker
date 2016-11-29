@@ -77,14 +77,23 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-    $joinQuery = "FROM customer c";
+    $joinQuery = "";
     $extraWhere =  "" ;
     if($_SESSION['user_type'] == 3)
     {
+        $joinQuery = "FROM customer c";
         $extraWhere =  "c.created_by =".$_SESSION['id']." AND  c.status = 1" ;
+    }
+    else if($_SESSION['user_type'] == 4)
+    {
+        $joinQuery = "FROM customer c
+                        JOIN users u
+                        ON c.created_by = u.id";
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  c.status = 1" ;
     }
     else
     {
+
          $extraWhere =  "c.status = 1" ;
     }
     echo json_encode(
