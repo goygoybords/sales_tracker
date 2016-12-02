@@ -21,18 +21,22 @@
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
 		$customer->setContactNumber(htmlentities($contact_num));
+		$customer->setEmail(htmlentities($email));
 		$customer->setCountryId(intval($country));
 		$customer->setShippingAddress(htmlentities($address));
 		$customer->setStateId(intval($state));
 		$customer->setCity(htmlentities($city));
 		$customer->setZip(htmlentities($zip));
+
 		
+		$customer->setAlternateContactNumber(htmlentities($alternate_contact_num));
 		if(isset($_POST['same']) == 1)
+		{
 			$customer->setSame($same);
+		}
 		else
 			$customer->setSame(0);
-
-		$customer->setAlternateContactNumber(htmlentities($alternate_contact_num));
+		
 		$customer->setBillingCountryId(intval($billing_country));
 		$customer->setBillingStateId(intval($billing_state));
 		$customer->setBillingAddress(htmlentities($billing_address));
@@ -40,6 +44,7 @@
 		$customer->setBillingZip(htmlentities($billing_zip));
 		$customer->setCreatedBy($_SESSION['id']);
 		$customer->setStatus(1);
+
 
 
 		$order->setOrderDate(date('Y-m-d',strtotime($order_date)));
@@ -56,8 +61,11 @@
 
 		if(isset($_POST['save_order']))
 		{
+			
+			
 			if($customer_state == 0)
 			{
+			
 				$data = [
 						'firstname' 	   => $customer->getFirstName(),
 						'lastname' 		   => $customer->getLastname(),
@@ -74,13 +82,14 @@
 						'billing_address'    => $customer->getBillingAddress(),
 						'billing_city' 		 => $customer->getBillingCity(),
 						'billing_zip'  		 => $customer->getBillingZip(),
-						'billing_state_id'   => $customer->getBillingStateId(),
+						'billing_state_id'   => $customer->getBillingStateId() ,
 						'created_by'		=> $customer->getCreatedBy(),
 						'status' 		   => $customer->getStatus() ,
 					];
 
 				$customer_id = $db->insert("customer", $data);
 			}
+
 			//orders
 			if($customer_id)
 			{
