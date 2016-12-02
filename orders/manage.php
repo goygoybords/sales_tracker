@@ -49,7 +49,7 @@
 
 	$order->setShippingFee(5.00);
 
-	if(isset($_GET['view_record']))
+	if(isset($_GET['view_record']) || isset($_GET['add_tracking']))
 	{
 		$read_only = "readonly";
 		$style = "display:none";
@@ -87,6 +87,7 @@
 						$order->setPaymentMethodId($o['payment_method_id']);
 						$order->setMerchant($o['merchant']);
 						$order->setPreparedBy($o['prepared_by']);
+						$order->setTrackingNumber($o['tracking_number']);
 						$order->setStatus($o['status']);
 					}
 					$get_customer = $db->select('customer' , array("*"), "id = ?", array($order->getCustomerId() ) );
@@ -684,8 +685,6 @@
 												<div class="form-group floating-label">
 													<input type="text"  id = "agent_name" class="form-control" readonly 
 													value = "<?php echo ($form_state == 2 ? $get_preparedby[0][0] : $_SESSION['firstname']." ".$_SESSION['lastname']); ?>">
-
-											
 													<label class="agent_name">Prepared By/Salesperson</label>
 												</div>
 											</div>
@@ -698,10 +697,28 @@
 												</div>
 											</div>
 										</div>
-									
+										
+										<?php if(isset($_GET['add_tracking'])): 
+											$style = "display:block;";  
+											$submit_caption = "Add Tracking";
+											$submit_name = "add_tracking_number";
+
+										?>
+											<div class="form-group">
+												<label><b>TRACKING NUMBER</b></label>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group floating-label">
+														<input type="text"  id = "tracking_number" name = "tracking_number" class="form-control" value = "<?php echo $order->getTrackingNumber(); ?>">
+														<label class="tracking_number">Tracking Number</label>
+													</div>
+												</div>
+											</div>
+										<?php endif; ?>
+
 										<div class="row">
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-												
 												<button type="submit" style="<?php echo $style; ?>" name = "<?php echo $submit_name; ?>" class="btn btn-info">
 												<?php echo $submit_caption; ?></button>
 												

@@ -57,7 +57,11 @@ $columns = array(
             {
               if($_SESSION['user_type'] == 1)
               {
-                return ' 
+                return ' <a href="manage.php?id='.$d.'&add_tracking" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> Add Tracking Number
+                            </span>
+                        </a> &nbsp;
                         <a href="../process/order_manage.php?id='.$d.'&send_mail">
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Send Mail

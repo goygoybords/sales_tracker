@@ -44,6 +44,8 @@
 										$error = 'Record Approved';
 									else if($msg == 'sent')
 										$error = 'Mail Sent';
+									else if($msg == 'tracking')
+										$error = 'Tracking Number Updated';
 									echo '<span>'.$error.'</span>';
 								}
 							?>

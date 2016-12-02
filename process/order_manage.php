@@ -1,5 +1,6 @@
 <?php
 	session_start();
+	error_reporting(0);
 	require '../class/database.php';
 	require '../class/customer.php';
 	require '../class/order.php';
@@ -15,8 +16,9 @@
 	$customer_payment = new Customer_Payment();
 	$product_class = new Product();
 
+	
 	extract($_POST);
-	if(!isset($_GET['approve']) && !isset($_GET['send_mail']))
+	if(!isset($_GET['approve']) && !isset($_GET['send_mail']) && !isset($_GET['add_tracking']))
 	{
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
@@ -348,18 +350,18 @@
 	if(isset($_GET['send_mail']))
 	{
 		require '../class/phpmailer/PHPMailerAutoload.php';
-		$order_id = $_GET['id'];
-		$order->setOrderId($order_id);
+		// $order_id = $_GET['id'];
+		// // $order->setOrderId($order_id);
 		
-		$get_customer_id = $db->select('orders' , array("customer_id" , "tracking_number"), "id = ?" , array($order->getOrderId() ) );
-		$get_email = $db->select('customer' , array('firstname','lastname','email') , 
-			'id = ?' , array($get_customer_id[0]['customer_id']) );
+		// // $get_customer_id = $db->select('orders' , array("customer_id" , "tracking_number"), "id = ?" , array($order->getOrderId() ) );
+		// // $get_email = $db->select('customer' , array('firstname','lastname','email') , 
+		// // 	'id = ?' , array($get_customer_id[0]['customer_id']) );
 
-			$tracking_number = $get_customer_id[0][1] + 1;
-			$fields = array("tracking_number");
-			$where  = "WHERE id = ?";
-			$params = array($tracking_number , $order->getOrderId());
-			$db->update("orders", $fields , $where, $params);
+		// // 	$tracking_number = $get_customer_id[0][1] + 1;
+		// // 	$fields = array("tracking_number");
+		// // 	$where  = "WHERE id = ?";
+		// // 	$params = array($tracking_number , $order->getOrderId());
+		// // 	$db->update("orders", $fields , $where, $params);
 
 		$mail = new PHPMailer;
 		$mail->isSMTP();                                      // Set mailer to use SMTP
@@ -388,5 +390,17 @@
 		{
 		    header("location: ../orders/approved_orders.php?msg=sent");
 		}
+	}
+	if(isset($_POST['add_tracking_number']))
+	{
+		$order->setOrderId($order_id_fm);
+		echo $order->getOrderId();
+	
+		$fields = array("tracking_number");
+		$where  = "WHERE id = ?";
+		$params = array($tracking_number , $order->getOrderId());
+		$db->update("orders", $fields , $where, $params);
+		
+		header("location: ../orders/approved_orders.php?msg=tracking");
 	}
 ?>
