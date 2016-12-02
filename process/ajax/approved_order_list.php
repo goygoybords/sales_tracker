@@ -57,12 +57,7 @@ $columns = array(
             {
               if($_SESSION['user_type'] == 1)
               {
-                return ' <a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> &nbsp;
-
+                return ' 
                         <a href="../process/order_manage.php?id='.$d.'&send_mail">
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Send Mail
@@ -71,12 +66,7 @@ $columns = array(
               }
               else
               {
-                return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> &nbsp;
-
+                return '
                         <a href="manage.php?id='.$d.'&view_record" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> View Record
