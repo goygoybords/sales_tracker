@@ -225,6 +225,7 @@
 
 										</div>
 										<br/>
+
 										<div class="form-group">
 											<label><b>CUSTOMER SHIPPING DETAILS</b></label>
 										</div>
@@ -289,6 +290,76 @@
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
 													<input type="text" name = "zip" class="form-control" id="zip"  <?php echo $read_only; ?> value="<?php echo $customer->getZip(); ?>" >
+													<label class="zip">Zip</label>
+												</div>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label><b>SHIP TO SOMEONE SHIPPING DETAILS</b></label>
+										</div>
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<select name = "ship-someone-country" class = "form-control" id = "country" <?php echo $disabled; ?> >
+													<option value="230">United States</option>
+													<?php 
+						  								foreach ($list_countries as $p ) : 
+						  								
+						  									$countries = new Countries();
+						  									$countries->setCountryId($p['country_id']);
+						  									$countries->setCountryName($p['country_name']);
+						  							?>
+							  							<option value ="<?php echo $countries->getCountryId(); ?>"
+														<?php echo ($countries->getCountryId() == $customer->getCountryId() ? "selected='selected'" : ""); ?>
+							  							>
+						  									<?php echo $countries->getCountryName(); ?>
+						  								</option>
+						  							<?php endforeach; ?>
+													</select>
+													<label class="country">County</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group floating-label">
+													<input type="text" name = "ship-someone-address" class="form-control" <?php echo $read_only; ?>  id="address" value="<?php echo $customer->getShippingAddress(); ?>" required>
+													<label class="address">Address</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<select name = "ship-someone-state" class = "form-control" id = "state"  <?php echo $disabled; ?> >
+														<option></option>
+														<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
+														<?php
+															$state = new State();
+															$state->setId($s['id']);
+															$state->setCode($s['code']);
+														?>
+															<option value = "<?php echo $state->getId(); ?>"
+																<?php echo ($state->getId() == $customer->getStateId() ? "selected='selected'" : ""); ?>
+															>
+																<?php echo $state->getCode(); ?>
+															</option>
+														<?php endforeach; ?>
+													</select>
+													<label class="state">State</label>
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "ship-someone-city" class="form-control" id="city"  <?php echo $read_only; ?> value="<?php echo $customer->getCity(); ?>">
+													<label class="city">City</label>
+												</div>
+											</div>
+
+											<div class="col-sm-4">
+												<div class="form-group floating-label">
+													<input type="text" name = "ship-someone-zip" class="form-control" id="zip"  <?php echo $read_only; ?> value="<?php echo $customer->getZip(); ?>" >
 													<label class="zip">Zip</label>
 												</div>
 											</div>
@@ -403,15 +474,6 @@
 										  						</tr>
 										  					<?php endforeach; ?>
 								  						<?php endif; ?>
-								  						
-								  						<tr>
-								  							<td></td>
-								  							<td></td>
-								  							<td>Shipping Fee:</td>
-								  							<td>
-								  								<input type = "text" class = "form-control shipping_fee" name = "shipping" readonly value = "<?php echo $order->getShippingFee(); ?>">
-								  							</td>
-								  						</tr>
 								  						<tr>
 								  							<td></td>
 								  							<td></td>
@@ -419,6 +481,13 @@
 								  							<td><input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="<?php echo $order->getTotal(); ?>"></td>
 								  						</tr>
 								  					</tbody>
+								  						
+								  					<?php if($form_state == 2): ?>
+								  					<input type = "hidden" class = "form-control shipping_fee" name = "shipping"  value = "<?php echo $order->getShippingFee(); ?>">
+								  					<?php else : ?>
+								  						<input type = "hidden" class = "form-control shipping_fee" name = "shipping" value = "">
+								  					<?php endif ;?>
+								  						
 											</table>
 											</div>
 										</div>
@@ -442,6 +511,7 @@
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
 													<select name = "shipping_method" class = "form-control" <?php echo $disabled; ?> id = "shipping_method" required>
+														<option></option>
 														<?php foreach ($list_methods as $m ): 
 															$method = new Shipping_Method();
 															$method->setId($m['id']);
@@ -770,6 +840,7 @@
 		$("#card_details_view").hide();
 		$("#check_details_view").hide();
 		$("#savings_details_view").hide();
+
 		var payment = $( "#payment_method option:selected" ).val();
 
 		if(payment == 1)
@@ -816,6 +887,27 @@
 	       }
 	    );
 
+		$( "#shipping_method" ).change(function() 
+		{
+			 var method = $( "#shipping_method option:selected" ).val();
+			 if(method != null)
+	       		{
+	       			$.ajax({ 
+					  type: "POST", 
+					  url: "../process/ajax/get_specific_shipping.php", 
+					  data: {"shipping": method} ,
+					  success: function(data)
+	                   {	
+	                   		var parse = JSON.parse(data);
+	                   		$(".shipping_fee").val(parse[0][0]);
+	                   		//console.log(parse[0][0]);
+	                   }
+					}); 
+	       		}
+			
+		});
+
+	    
 		 $('#customer_id').change(function()
 	       {
 	       		var customer = $( "#customer_id option:selected" ).val();
@@ -1024,7 +1116,8 @@
 										  		amount = parseFloat(qty * price);
 	                                                // compute total
 	                                                //total = parseFloat($('.displayTotal').val());
-	                                                grand = parseFloat( total + amount + shipping);
+	                                                // grand = parseFloat( total + amount + shipping);
+	                                                 grand = parseFloat( total + amount );
 	                                                // grand = parseFloat(total);
 										  		$(".lblAmount"+counter).val(amount.toFixed(2));
 										  		$(".displayTotal").val(grand.toFixed(2));
@@ -1049,7 +1142,8 @@
 					  		price = parseFloat($(".lblUprice").val());
 					  		amount = parseFloat(qty * price);
 					  		total = parseFloat(amount);
-					  		grand = parseFloat(total + shipping);
+					  		//grand = parseFloat(total + shipping);
+					  		grand = parseFloat(total);
 					  	
 					  		$(".lblAmount").val(amount.toFixed(2));
 					  		$(".displayTotal").val(grand.toFixed(2) );
