@@ -60,6 +60,7 @@
 													<thead>
 														<th>ID</th>
 														<th>Description</th>
+														<th>Price</th>
 														<th>Action</th>
 													</thead>
 													<tbody>

@@ -37,6 +37,7 @@
 					{
 						$method->setId($method_id);
 						$method->setDescription($m['description']);
+						$method->setPrice($m['price']);
 						$method->setStatus($m['status']);
 					}
 
@@ -93,6 +94,13 @@
 															<div class="col-sm-10">
 																<input type="text" name = "description" class="form-control"  
 																value = "<?php echo $method->getDescription(); ?>" required>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="Email5" class="col-sm-2 control-label">Price</label>
+															<div class="col-sm-10">
+																<input type="text" name = "price" class="form-control"  
+																value = "<?php echo $method->getPrice(); ?>" required>
 															</div>
 														</div>
 														

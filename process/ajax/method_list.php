@@ -31,7 +31,8 @@ $primaryKey = 'id';
 $columns = array(
     array( 'db' => '`p`.`id`', 'dt' => 0, 'field' => 'id' ),
     array( 'db' => '`p`.`description`',   'dt' => 1, 'field' => 'description' ),
-    array( 'db' => '`p`.`id`',                    'dt' => 2, 'formatter' => function( $d, $row )
+    array( 'db' => '`p`.`price`',   'dt' => 2, 'field' => 'price' ),
+    array( 'db' => '`p`.`id`',                    'dt' => 3, 'formatter' => function( $d, $row )
             {
                 return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">

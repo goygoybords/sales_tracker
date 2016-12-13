@@ -8,7 +8,7 @@
 
 	extract($_POST);
 	$method->setDescription(htmlentities($description));
-		
+	$method->setPrice(doubleval($price));
 
 	if(isset($_POST['save_method']))
 	{
@@ -16,6 +16,7 @@
 		
 		$data = [
 					'description' 	   => $method->getDescription(),
+					'price' 		   => $method->getPrice(),
 					'status' 		   => $method->getStatus() ,
 				];
 
@@ -27,10 +28,11 @@
 	{
 		$method->setId(intval($method_id_fm));
 
-		$fields = array('description');
+		$fields = array('description', 'price');
 			$where  = "WHERE id = ?";
 			$params = array(
 					$method->getDescription(),
+					$method->getPrice(),
 					$method->getId()
 					);
 
