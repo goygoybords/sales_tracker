@@ -17,6 +17,7 @@
 	require '../class/shipping_method.php';
 	require '../class/order_details.php';
 	require '../class/customer_payment.php';
+	require '../class/order_send_someone.php';
 
 	$db = new Database();
 	$order_id = (isset($_GET["id"]) ? $_GET["id"] : "");
@@ -45,6 +46,7 @@
 	$order = new Order();
 	$customer = new Customer();
 	$customer_payment = new Customer_Payment();
+	$someone = new Order_Send_Someone();
 
 
 	$order->setShippingFee(5.00);
@@ -91,6 +93,21 @@
 						$order->setStatus($o['status']);
 					}
 					$get_customer = $db->select('customer' , array("*"), "id = ?", array($order->getCustomerId() ) );
+				
+					$get_send = $db->select("order_send_someone", array("*") , 'order_id = ?', array($order_id) );
+					foreach ($get_send as $c ) 
+					{
+						$someone->setSendCounter($c['send_counter']);
+						$someone->setSendName($c['send_name']);
+						$someone->setSendContactNumber($c['send_contact_number']);
+						$someone->setSendCountryId($c['send_country_id']);
+						$someone->setSendAddress($c['send_address']);
+						$someone->setSendCity($c['send_city']);
+						$someone->setSendZip($c['send_zip']);
+						$someone->setSendStateId($c['send_state_id']);
+						$someone->setStatus(1);
+					}
+
 					foreach ($get_customer as $c ) 
 					{
 						$customer->setCustomerId($c['id']);
@@ -296,71 +313,102 @@
 										</div>
 										<br />
 
+										<div class = "row">
+											<div class="col-sm-12">
+												<div class="form-group floating-label" >
+													<input type="checkbox" id="send_to_someone" name = "send_to_someone" value="1" <?php echo $disabled; ?> 
+													<?php echo ($someone->getSendCounter() == 1 ? "checked" : ""); ?> />
+													<input type="hidden" id = "send_display_state" value="<?php echo $someone->getSendCounter(); ?>" >
+	  												<label for="test5">Send Shipment To Someone?</label>
+												</div>
+											</div>
+										</div>
+
+										<div class = "ship_some_form">
 										<div class="form-group">
 											<label><b>SHIP TO SOMEONE SHIPPING DETAILS</b></label>
 										</div>
-										<div class="row">
-											<div class="col-sm-6">
-												<div class="form-group floating-label">
-													<select name = "ship-someone-country" class = "form-control" id = "country" <?php echo $disabled; ?> >
-													<option value="230">United States</option>
-													<?php 
-						  								foreach ($list_countries as $p ) : 
-						  								
-						  									$countries = new Countries();
-						  									$countries->setCountryId($p['country_id']);
-						  									$countries->setCountryName($p['country_name']);
-						  							?>
-							  							<option value ="<?php echo $countries->getCountryId(); ?>"
-														<?php echo ($countries->getCountryId() == $customer->getCountryId() ? "selected='selected'" : ""); ?>
-							  							>
-						  									<?php echo $countries->getCountryName(); ?>
-						  								</option>
-						  							<?php endforeach; ?>
-													</select>
-													<label class="country">County</label>
+
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group floating-label">
+														<input type="text" name = "ship_someone_name" class="form-control" <?php echo $read_only; ?>  
+														id="ship_someone_name" value="<?php echo $someone->getSendName(); ?>" >
+														<label class="address">Name</label>
+													</div>
 												</div>
-											</div>
-											<div class="col-sm-6">
-												<div class="form-group floating-label">
-													<input type="text" name = "ship-someone-address" class="form-control" <?php echo $read_only; ?>  id="address" value="<?php echo $customer->getShippingAddress(); ?>" required>
-													<label class="address">Address</label>
+												<div class="col-sm-6">
+													<div class="form-group floating-label">
+														<input type="text" name = "ship_someone_number" class="form-control" <?php echo $read_only; ?>  
+														id="ship_someone_number" value="<?php echo $someone->getSendContactNumber(); ?>" >
+														<label class="address">Contact Number</label>
+													</div>
 												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-sm-4">
-												<div class="form-group floating-label">
-													<select name = "ship-someone-state" class = "form-control" id = "state"  <?php echo $disabled; ?> >
-														<option></option>
-														<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
-														<?php
-															$state = new State();
-															$state->setId($s['id']);
-															$state->setCode($s['code']);
-														?>
-															<option value = "<?php echo $state->getId(); ?>"
-																<?php echo ($state->getId() == $customer->getStateId() ? "selected='selected'" : ""); ?>
-															>
-																<?php echo $state->getCode(); ?>
-															</option>
-														<?php endforeach; ?>
-													</select>
-													<label class="state">State</label>
+												<div class="col-sm-6">
+													<div class="form-group floating-label">
+														<select name = "ship_someone_country" class = "form-control" id = "ship-someone-country" <?php echo $disabled; ?> >
+														<option value="230">United States</option>
+														<?php 
+							  								foreach ($list_countries as $p ) : 
+							  								
+							  									$countries = new Countries();
+							  									$countries->setCountryId($p['country_id']);
+							  									$countries->setCountryName($p['country_name']);
+							  							?>
+								  							<option value ="<?php echo $countries->getCountryId(); ?>"
+															<?php echo ($countries->getCountryId() == $someone->getSendCountryId() ? "selected='selected'" : ""); ?>
+								  							>
+							  									<?php echo $countries->getCountryName(); ?>
+							  								</option>
+							  							<?php endforeach; ?>
+														</select>
+														<label class="country">County</label>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group floating-label">
+														<input type="text" name = "ship_someone_address" class="form-control" <?php echo $read_only; ?>  
+														id="ship_someone_address" value="<?php echo $someone->getSendAddress(); ?>" >
+														<label class="address">Address</label>
+													</div>
 												</div>
 											</div>
 
-											<div class="col-sm-4">
-												<div class="form-group floating-label">
-													<input type="text" name = "ship-someone-city" class="form-control" id="city"  <?php echo $read_only; ?> value="<?php echo $customer->getCity(); ?>">
-													<label class="city">City</label>
+											<div class="row">
+												<div class="col-sm-4">
+													<div class="form-group floating-label">
+														<select name = "ship_someone_state" class = "form-control" id = "ship_someone_state"  <?php echo $disabled; ?> >
+															<option></option>
+															<?php $states = $db->select('state' , array('*') , "status = ?" , array(1));  foreach ($states as $s ): ?>
+															<?php
+																$state = new State();
+																$state->setId($s['id']);
+																$state->setCode($s['code']);
+															?>
+																<option value = "<?php echo $state->getId(); ?>"
+																	<?php echo ($state->getId() == $someone->getSendStateId() ? "selected='selected'" : ""); ?>
+																>
+																	<?php echo $state->getCode(); ?>
+																</option>
+															<?php endforeach; ?>
+														</select>
+														<label class="state">State</label>
+													</div>
 												</div>
-											</div>
 
-											<div class="col-sm-4">
-												<div class="form-group floating-label">
-													<input type="text" name = "ship-someone-zip" class="form-control" id="zip"  <?php echo $read_only; ?> value="<?php echo $customer->getZip(); ?>" >
-													<label class="zip">Zip</label>
+												<div class="col-sm-4">
+													<div class="form-group floating-label">
+														<input type="text" name = "ship_someone_city" class="form-control" id="ship-someone-city"  
+														<?php echo $read_only; ?> value="<?php echo $someone->getSendCity(); ?>">
+														<label class="city">City</label>
+													</div>
+												</div>
+
+												<div class="col-sm-4">
+													<div class="form-group floating-label">
+														<input type="text" name = "ship_someone_zip" class="form-control" id="ship-someone-zip"  <?php echo $read_only; ?> value="<?php echo $someone->getSendZip(); ?>" >
+														<label class="zip">Zip</label>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -832,7 +880,24 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{	
-	
+		var send_state = $("#send_display_state").val();
+		if(send_state == 1)
+			$(".ship_some_form").show();
+		else
+			$(".ship_some_form").hide();
+
+		$("#send_to_someone").click(function() 
+		{
+		    if($(this).is(":checked")) 
+		    {
+		        $(".ship_some_form").show(); 
+		    } 
+		    else 
+		    {
+		        $(".ship_some_form").hide();
+		    }
+		});
+
 		$('#order_date').datepicker({
     		
 		});

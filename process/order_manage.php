@@ -7,7 +7,7 @@
 	require '../class/order_details.php';
 	require '../class/product.php';
 	require '../class/customer_payment.php';
-
+	require '../class/order_send_someone.php';
 
 	$db = new Database();
 	$customer = new Customer();
@@ -15,9 +15,11 @@
 	$detail = new Order_Details();
 	$customer_payment = new Customer_Payment();
 	$product_class = new Product();
+	$someone = new Order_Send_Someone();
 
 	
 	extract($_POST);
+
 	if(!isset($_GET['approve']) && !isset($_GET['send_mail']) && !isset($_GET['add_tracking']))
 	{
 		$customer->setFirstName(htmlentities($firstname));
@@ -178,6 +180,37 @@
 				$order_id = $db->insert("orders", $data);
 				if($order_id)
 				{
+					$someone->setOrderId($order_id);
+					if(isset($_POST['send_to_someone']) == 1)
+						$someone->setSendCounter($send_to_someone);
+					else
+						$someone->setSendCounter(0);
+					$someone->setCustomerId($customer_id);
+					$someone->setSendName($ship_someone_name);
+					$someone->setSendContactNumber($ship_someone_number);
+					$someone->setSendCountryId($ship_someone_country);
+					$someone->setSendAddress($ship_someone_address);
+					$someone->setSendCity($ship_someone_city);
+					$someone->setSendZip($ship_someone_zip);
+					$someone->setSendStateId($ship_someone_state);
+					$someone->setStatus(1);
+
+					$data = [
+						'send_counter' 	     	=> $someone->getSendCounter(),
+						'order_id' 		  		=> $someone->getOrderId() ,
+						'customer_id'  	        => $someone->getCustomerId()   ,
+						'send_name ' 			=> $someone->getSendName()      ,
+						'send_contact_number'  	=> $someone->getSendContactNumber()   ,
+						'send_country_id' 		=> $someone->getSendCountryId() ,
+						'send_address' 		    => $someone->getSendAddress() ,
+						'send_city'			  	=> $someone->getSendCity(),
+						'send_zip'		  		=> $someone->getSendZip(),
+						'send_state_id' 	  	=> $someone->getSendStateId(),
+						'status' 		      	=> $someone->getStatus() ,
+					];
+					
+					$someone_id = $db->insert("order_send_someone", $data);
+
 					//Order Detail Detail Entries
 			        for($i=0; $i < count($product) ; $i++)
 			        {
@@ -321,6 +354,48 @@
 						);
 			
 			$payment_update = $db->update("customer_payment_methods", $fields , $where, $params);
+
+
+					$someone->setOrderId($order_id_fm);
+					if(isset($_POST['send_to_someone']) == 1)
+					{
+						$someone->setSendCounter($send_to_someone);
+						$someone->setStatus(0);
+					}
+					else
+						$someone->setSendCounter(0);
+
+					$someone->setCustomerId($customer_id_fm);
+
+					$someone->setSendName($ship_someone_name);
+					$someone->setSendContactNumber($ship_someone_number);
+					$someone->setSendCountryId($ship_someone_country);
+					$someone->setSendAddress($ship_someone_address);
+					$someone->setSendCity($ship_someone_city);
+					$someone->setSendZip($ship_someone_zip);
+					$someone->setSendStateId($ship_someone_state);
+					
+
+
+			
+
+			$fields = array('send_counter' ,'send_name' , 'send_contact_number' , 'send_country_id', 'send_address' , 'send_city' , 'send_zip',
+				'send_state_id');
+
+			$where = "WHERE order_id = ?";
+				$params = array(
+						$someone->getSendCounter(),
+						$someone->getSendName(),
+						$someone->getSendContactNumber(),
+						$someone->getSendCountryId(),
+						$someone->getSendAddress(),
+						$someone->getSendCity(),
+						$someone->getSendZip(),
+						$someone->getSendStateId(),
+						$someone->getOrderId()
+						);
+			
+			$someone_update = $db->update("order_send_someone", $fields , $where, $params);
 			header("location: ../orders/manage.php?id=".$order->getOrderId()."&msg=updated");
 		}
 
