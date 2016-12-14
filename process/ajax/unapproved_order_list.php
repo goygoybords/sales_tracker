@@ -20,15 +20,11 @@
 
 // DB table to use
 
-require '../../class/database.php';
-$db = new Database();
+
 session_start();
 
 
- $sql = "SELECT first_name, lastname from users WHERE id = ?";
- $cmd = $db->getDb()->prepare($sql);
- $cmd->execute(array(1));
- $users = $cmd->fetchAll();
+
 
   $table = 'orders';
 
@@ -42,11 +38,8 @@ $primaryKey = 'id';
 // indexes
 
 $columns = array(
-    array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
-            {
-                return "INV-$d";
-            }, 'field' => 'id' 
-        ),
+
+  array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
 
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {

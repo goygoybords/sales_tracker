@@ -52,11 +52,20 @@
 
 
 		$order->setOrderDate(date('Y-m-d',strtotime($order_date)));
+
+		$count_orders = $db->select('orders' , array('id') );
+		$total_orders_inv = count($count_orders) + 1;
+		$grand =  40000 + $total_orders_inv;
+		
+		$order->setInvoiceNumber("INV-000".$grand); 
+
 		$order->setTotal(doubleval($total));
 		$order->setShippingMethodId(intval($shipping_method));
 		$order->setShippingFee(doubleval($shipping));
 		$order->setRemarks(htmlentities($remarks));
 		$order->setNotes(htmlentities($notes));
+
+
 
 		$order->setPreparedBy(intval($_SESSION['id']));
 		$order->setMerchant(htmlentities($merchant));
@@ -163,6 +172,7 @@
 
 				$order->setPaymentMethodId($payment_id);
 				$data = [
+						'invoice_number' 	  => $order->getInvoiceNumber(),
 						'order_date' 	      => $order->getOrderDate(),
 						'customer_id' 		  => $order->getCustomerId() ,
 						'total'  	          => $order->getTotal()   ,
@@ -375,10 +385,6 @@
 					$someone->setSendZip($ship_someone_zip);
 					$someone->setSendStateId($ship_someone_state);
 					
-
-
-			
-
 			$fields = array('send_counter' ,'send_name' , 'send_contact_number' , 'send_country_id', 'send_address' , 'send_city' , 'send_zip',
 				'send_state_id');
 

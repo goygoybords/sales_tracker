@@ -22,6 +22,19 @@
 
         private $tracking_number;
         private $merchant;
+        private $invoice_number;
+
+        public function getInvoiceNumber()
+        {
+            return $this->invoice_number;
+        }
+
+        public function setInvoiceNumber($invoice_number)
+        {
+            $this->invoice_number = $invoice_number;
+
+            return $this;
+        }
 
         public function getTrackingNumber()
         {
