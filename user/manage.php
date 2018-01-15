@@ -9,17 +9,21 @@
 
 	require '../class/database.php';
 	require '../class/user.php';
-
+	require '../class/team.php';
+	require '../class/password_encrypt.php';
 
 	$user_id = (isset($_GET["id"]) ? $_GET["id"] : "");
 	$db = new Database();
 	$user = new User();
+	$encrpytion = new Password_Encrypt();
 
 	$form_state = 1;
 	$form_header = "Add User";
 	$submit_caption = "REGISTER USER";
 	$name = "register_user";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
+
+	$list_team = $db->select('teams' , array('id' , 'team_name') , "status = 1");
 	if($user_id)
 	{
 			if($msg != 'deleted')
@@ -38,9 +42,11 @@
 						$user->setId($l['id']);
 						$user->setFirstname($l['first_name']);
 						$user->setLastname($l['lastname']);
-						$user->setPassword($l['password']);
+						$user->setPassword($encrpytion->decryptIt($l['password']));
+						$user->setScreenName($l['screen_name']);
 						$user->setEmail($l['email']);
 						$user->setUsertypeid($l['usertypeid']);
+						$user->setTeamId($l['team_id']);
 						$user->setStatus($l['status']);
 					}
 
@@ -62,6 +68,8 @@
 				}
 			}
 	}
+
+	
 
 ?>
 <!-- BEGIN BASE-->
@@ -127,15 +135,42 @@
 															</div>
 														</div>
 														<div class="form-group">
+															<label for="Password5" class="col-sm-2 control-label">Screen Name</label>
+															<div class="col-sm-10">
+																<input type="text" name = "screen_name" class="form-control" id="screen_name"
+																value = "<?php echo $user->getScreenName(); ?>" >
+															</div>
+														</div>
+														<div class="form-group">
 															<label for="UserType" class="col-sm-2 control-label">User Type</label>
 															<div class="col-sm-10">
-																<select name = "user_type" id="UserType" class = "form-control" required>
+																<select name = "user_type" id="user_type" class = "form-control" required>
 																	<option value = "1" <?php if($user->getUsertypeid() == 1) echo "selected"; ?> >Admin</option>
 																	<option value = "2" <?php if($user->getUsertypeid() == 2) echo "selected"; ?> >QA</option>
 																	<option value = "3" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Agent</option>
+																	<option value = "4" <?php if($user->getUsertypeid() == 4) echo "selected"; ?> >Team Leader</option>
 																</select>
 															</div>
 														</div>
+														<div class="form-group">
+															<label for="team" class="col-sm-2 control-label">Sales Team</label>
+															<div class="col-sm-10">
+																<select name = "team" id="team" class = "form-control">
+																	<option> </option> 
+																	<?php foreach ($list_team as $l ) :
+																		$team = new Team();
+																		$team->setId($l['id']);
+																		$team->setTeamName($l['team_name']);
+																	?>
+																	<option value = "<?php echo $team->getId(); ?>" 
+																		<?php if($user->getTeamId() == $team->getId()) echo "selected"; ?> >
+																		<?php echo $team->getTeamName(); ?>
+																	</option>
+																	<?php endforeach; ?>
+																</select>
+															</div>
+														</div>
+														
 														<br />
 														<div class="row">
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
@@ -187,3 +222,4 @@
 	include '../include/sidebar.php';
 	include '../include/end.php';
 ?>
+

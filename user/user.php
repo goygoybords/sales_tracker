@@ -55,10 +55,12 @@
 											<div class = "row" >
 												<table class = "display responsive nowrap" id = "user-tbl">
 													<thead>
+														<th>#</th>
 														<th>Firstname</th>
 														<th>Lastname</th>
 														<th>Email</th>
 														<th>User Type</th>
+														<th>Sales Team</th>
 														<th>Action</th>
 													</thead>
 												</table>
@@ -90,7 +92,7 @@
 			"bServerSide": true,
 			"responsive": true,
 	        "sPaginationType": "full_numbers",
-	        "order": [0,'desc'],
+	        "order": [0,'asc'],
 	            "ajax":{
 	                url :"../process/ajax/user_list.php", // json datasource
 	                type: "get",  // method  , by default get

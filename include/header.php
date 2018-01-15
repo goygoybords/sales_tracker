@@ -8,7 +8,7 @@
 					<li class="header-nav-brand" >
 						<div class="brand-holder">
 							<a href="">
-								<span class="text-lg text-bold text-biz"><i class="fa fa-cube fa-fw"></i>CRM</span>
+								<span class="text-lg text-bold text-biz"><i class="fa fa-cube fa-fw"></i>Sales Tracker</span>
 							</a>
 						</div>
 					</li>
@@ -92,6 +92,41 @@
 						</ul><!--end .dropdown-menu -->
 					</li><!--end .dropdown -->
 				</ul><!--end .header-nav-profile -->
+
+				<!-- Button trigger modal -->
+
+				<!-- Modal -->
+				<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModalLabel">
+					<div class="modal-dialog" role="document">
+				    	<div class="modal-content">
+				      		<div class="modal-header">
+				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        		<h4 class="modal-title" id="reminderModalLabel">Reminder For Today</h4>
+				      		</div>
+				      		<div class="modal-body">
+				        		<div class="card-body" id="div-add-lead">
+												<div class="form-group">
+													<label for="event_title" class="col-sm-2 control-label">Event:</label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control"  id="head_eventname"
+														value="" readonly="">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="event_title" class="col-sm-2 control-label">Description:</label>
+													<div class="col-sm-10">
+														<input type="text"  class="form-control"  id="head_des"
+														value="" readonly="">
+													</div>
+												</div>
+											</div>
+				      		</div>
+				      		<div class="modal-footer">
+				        		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      		</div>
+				    	</div>
+				  	</div>
+				</div>
 			</div><!--end #header-navbar-collapse -->
 		</div>
 	</header>

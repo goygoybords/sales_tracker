@@ -10,6 +10,18 @@
 		private $usertypeid;
 		private $datecreated;
 		private $datelastlogin;
+		private $screen_name;
+		private $team_id;
+
+		public function getTeamId()
+		{
+			return $this->team_id;
+		}
+
+		public function setTeamId($team_id)
+		{
+			$this->team_id = $team_id;
+		}
 
 		public function getId()
 		{
@@ -99,6 +111,18 @@
 		{
 			$this->datelastlogin = $datelastlogin;
 		}
+
+		public function setScreenName($screen_name)
+		{
+			$this->screen_name = $screen_name;
+		}
+
+		public function getScreenName()
+		{
+			return $this->screen_name;
+		}
+
+	
 	}
 
 ?>

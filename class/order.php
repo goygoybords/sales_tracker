@@ -1,7 +1,5 @@
 <?php 
-    /**
-    * 
-    */
+
     class Order 
     {
         private $order_id;
@@ -12,8 +10,123 @@
         private $remarks;
         private $shipping_fee;
         private $notes;
-        private $status;
+
+        private $payment_method_id;
+        private $prepared_by;
+        private $approved_by;
+        private $date_submitted;
+        private $updated_by;
+        private $date_updated;
         
+        private $status;
+
+        private $tracking_number;
+        private $merchant;
+        private $invoice_number;
+
+        public function getInvoiceNumber()
+        {
+            return $this->invoice_number;
+        }
+
+        public function setInvoiceNumber($invoice_number)
+        {
+            $this->invoice_number = $invoice_number;
+
+            return $this;
+        }
+
+        public function getTrackingNumber()
+        {
+            return $this->tracking_number;
+        }
+
+        public function setTrackingNumber($tracking_number)
+        {
+            $this->tracking_number = $tracking_number;
+
+            return $this;
+        }
+
+        public function getMerchant()
+        {
+            return $this->merchant;
+        }
+
+        public function setMerchant($merchant)
+        {
+            $this->merchant = $merchant;
+            return $this;
+        }
+        
+        
+        public function getPaymentMethodId()
+        {
+            return $this->payment_method_id;
+        }
+
+        public function setPaymentMethodId($payment_method_id)
+        {
+            $this->payment_method_id = $payment_method_id;
+
+            return $this;
+        }
+
+        public function getPreparedBy()
+        {
+            return $this->prepared_by;
+        }
+
+        public function setPreparedBy($prepared_by)
+        {
+            $this->prepared_by = $prepared_by;
+            return $this;
+        }
+
+        public function getApprovedBy()
+        {
+            return $this->approved_by;
+        }
+
+        public function setApprovedBy($approved_by)
+        {
+            $this->approved_by = $approved_by;
+            return $this;
+        }
+
+        public function getDateSubmitted()
+        {
+            return $this->date_submitted;
+        }
+
+        public function setDateSubmitted($date_submitted)
+        {
+            $this->date_submitted = $date_submitted;
+            return $this;
+        }
+
+        public function getUpdatedBy()
+        {
+            return $this->updated_by;
+        }
+
+        public function setUpdatedBy($updated_by)
+        {
+            $this->updated_by = $updated_by;
+            return $this;
+        }
+
+        public function getDateUpdated()
+        {
+            return $this->date_updated;
+        }
+
+        public function setDateUpdated($date_updated)
+        {
+            $this->date_updated = $date_updated;
+            return $this;
+        }
+
         /**
          * Gets the value of order_id.
          *

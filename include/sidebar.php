@@ -17,11 +17,32 @@
 
 			<!-- BEGIN MAIN MENU -->
 			<ul id="main-menu" class="gui-controls">
-
-				<li>
-					<a href="../orders/orders.php">
+				
+				<li class="gui-folder">
+					<a>
 						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
 						<span class="title">Orders</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li>
+							<a href="../orders/unapproved_orders.php">
+								<span class="title">Unapproved Orders</span>
+							</a>
+						</li>
+						<li>
+							<a href="../orders/approved_orders.php">
+								<span class="title">Approved Orders</span>
+							</a>
+						</li>
+
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
+		
+				<li>
+					<a href="../customer/customer.php">
+						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
+						<span class="title">Customer</span>
 					</a>
 				</li>
 
@@ -31,8 +52,7 @@
 						<span class="title">Product</span>
 					</a>
 				</li>
-				
-				
+
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-calendar"></i></div>
@@ -74,8 +94,19 @@
 							</a>
 						</li>
 						<li>
+							<a href="../user/teams.php">
+								<span class="title">Team Leader List</span>
+							</a>
+						</li>
+						<li>
 							<a href="../shipping/methods.php">
 								<span class="title">Shipping Methods</span>
+							</a>
+						</li>
+						<li>
+							<a href="../report/reports.php">
+								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
+								<span class="title">Reports</span>
 							</a>
 						</li>
 

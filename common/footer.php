@@ -13,7 +13,9 @@
 				<script src="assets/js/core/source/AppNavSearch.js"></script>
 				<script src="assets/js/core/source/AppVendor.js"></script>
 				<script src="assets/js/core/demo/Demo.js"></script>
-				<!-- END JAVASCRIPT -->
-
+				<!-- END JAVASCRIPT -->				
+				<script type="text/javascript">
+					localStorage.clear();
+				</script>
 			</body>
 		</html>

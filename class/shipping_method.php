@@ -3,6 +3,7 @@
 	{
 		private $id;
 		private $description;
+		private $price;
 		private $status;
 
 		public function getId()
@@ -24,6 +25,16 @@
 		public function setDescription($description)
 		{
 			$this->description = $description;
+		}
+
+		public function getPrice()
+		{
+			return $this->price;
+		}
+
+		public function setPrice($price)
+		{
+			$this->price = $price;
 		}
 
 

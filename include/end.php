@@ -33,6 +33,34 @@
 		<script src="../assets/js/libs/DataTables/jquery.dataTables.responsive.js"></script>
 		<!--custom script -->
 		<script src="../assets/js/script.js"></script>
+		<script src="../assets/js/jquery.cookie.js"></script>
+	
 		<!-- END JAVASCRIPT -->
+			
+		<script type="text/javascript">
+				$.ajax({
+	                    type: "GET",
+	                    url: '../process/ajax/get_reminders.php',
+	                    success: function(data)
+	                    {   
+	                    	var parse = JSON.parse(data);
+	                    	var today = "<?php echo date('Y-m-d'); ?>";
+	                    	for (var i = 0; i < parse.length; i++) 
+	                    	{
+	                    		if(parse[i].start == today)
+	                    		{
+	                    			var alerted = localStorage.getItem('alerted') || '';
+								    if (alerted != 'yes') 
+								    {
+								    	$("#head_eventname").val(parse[i].event_name);
+	                    				$("#head_des").val(parse[i].description);
+	                    				$('#reminderModal').modal('show') ;
+								     	localStorage.setItem('alerted','yes');
+								    }
+	                    		}
+	                    	}     
+	                    }
+	                }); // end of ajax 
+		</script>
 	</body>
 </html>

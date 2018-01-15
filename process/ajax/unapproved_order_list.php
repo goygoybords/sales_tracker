@@ -19,58 +19,55 @@
  */
 
 // DB table to use
-$table = 'orders';
+
+
+session_start();
+
+
+
+
+  $table = 'orders';
 
 // Table's primary key
 $primaryKey = 'id';
+
 
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
-session_start();
+
 $columns = array(
-    array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
-            {
-                return "INV-$d";
-            }, 'field' => 'id' 
-        ),
+
+  array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
 
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', $d);
+                return date('Y-m-d', strtotime($d));
             }, 'field' => 'order_date' 
         ),
 
-    array( 'db' => '`c`.`firstname`',   'dt' => 2, 'field' => 'firstname' ),
-    array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
-    array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
-    array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => '`o`.`status`',      'dt' => 7, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`date_submitted`', 'dt' => 2, 'formatter' => function( $d, $row )
             {
-                $_SESSION['status'] = $d;
-                if($d == 0)
-                {
-                    return "Record Needs Approval";
-                }
-                else if($d == 1)
-                {
-                    return "Record Approved";
-                }
-                
-                
-            },
-            'field' => 'status' 
-            ),
-    
-    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
+                return date('Y-m-d', strtotime($d));
+            }, 'field' => 'date_submitted' 
+        ),
+
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 3, "field" => "customer_name", "as" => "customer_name" ),
+
+    array( 'db' => '`o`.`total`',       'dt' => 4, 'field' => 'total' ),
+    array( 'db' => '`s`.`description`', 'dt' => 5, 'field' => 'description' ),
+    array( 'db' => '`o`.`remarks`',     'dt' => 6, 'field' => 'remarks' ),
+    array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
+    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 8, "field" => "full_name", "as" => "full_name" ),
+       
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 9, "field" => "updated_by", "as" => "updated_by" ),
+         
+    array( 'db' => '`o`.`id`',          'dt' => 10, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
                 {
-                    if($_SESSION['status'] == 0)
-                    {
-                        return '<a href="manage.php?id='.$d.'" >
+                    return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
@@ -82,26 +79,15 @@ $columns = array(
                             </span>
                         </a>
                         ';
-                    }
-                    else if($_SESSION['status'] == 1)
-                    {
-                        return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> ';
-                    }
                 }
-                else if($_SESSION['user_type'] == 3)
+                else if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4)
                 {
-                    return '<a href="manage.php?id='.$d.'" >
+                  return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> ';
-
+                        </a> &nbsp;';
                 }
-
                 
             },
             'field' => 'id' 
@@ -124,14 +110,52 @@ $sql_details = array(
 
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
-    
-    $joinQuery = "FROM orders o
-                  JOIN customer c 
+    $extraWhere = "";
+    $joinQuery = "";
+    if($_SESSION['user_type'] == 3)
+    {
+        $joinQuery = "FROM orders o
+                    JOIN customer c 
                   ON o.customer_id = c.id 
                   JOIN shipping_method s
                   ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
+                  LEFT JOIN users up
+                  ON o.updated_by = up.id
                  ";
-    $extraWhere =  "o.status BETWEEN 0 AND 1" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 0" ;
+    }
+    else if($_SESSION['user_type'] == 4)
+    {
+        $joinQuery = "FROM orders o
+                    JOIN customer c 
+                  ON o.customer_id = c.id 
+                  JOIN shipping_method s
+                  ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
+                  LEFT JOIN users up
+                  ON o.updated_by = up.id
+                 ";
+                  // WHERE u.team_id = 3
+
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 0" ;
+    }
+    else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+    {
+        $joinQuery = "FROM orders o
+                    JOIN customer c 
+                  ON o.customer_id = c.id 
+                  JOIN shipping_method s
+                  ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
+                  LEFT JOIN users up
+                  ON o.updated_by = up.id
+                 ";
+        $extraWhere =  "o.status = 0" ;
+    }
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

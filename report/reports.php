@@ -7,6 +7,11 @@
 
 	include '../include/start.html';
 	require('../include/header.php');
+	require '../class/database.php';
+	$db = new Database();
+
+	$list_agents = $db->select("users" , array('id', 'first_name', 'lastname') , "usertypeid = 3");
+	$list_teams = $db->select("teams" , array('id, team_name'), 'status = 1' );
 
 ?>
 <!-- BEGIN BASE-->
@@ -49,18 +54,37 @@
 							<div class="col-lg-offset-0 col-md-12">
 								<div class="card-body style-default-bright">
 									<div class="card-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-												<a class="btn btn-success btn-block" href="manage.php" name="btnAddLead" id="btnAddLead">ADD NEW ORDER</a>
-											</div>
-										</div>
 										<br />
 										<div class="col-lg-offset-0 col-md-12">
 											<div id = "filters">
 												<div class="row">
 													
 													<!-- date filters -->
-													<div class="col-sm-4">
+													<div class="col-sm-6">
+														<div class="form-group">
+															<select name = "agents" class = "form-control dirty" id = "agents"  >
+																<option></option>
+																<?php foreach ($list_agents as $l ) :?>
+																	<option value="<?php echo $l['id']; ?>"><?php echo $l['first_name']." ".$l['lastname'];?></option>
+																<?php endforeach; ?>
+															</select>
+															<label class="Agent">Agent</label>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="form-group ">
+															<select name = "teams" class = "form-control dirty" id = "teams"  >
+															<option></option>
+																<?php foreach ($list_teams as $l ) :?>
+																	<option value="<?php echo $l['id']; ?>">
+																		<?php echo $l['team_name']; ?>
+																	</option>
+																<?php endforeach; ?>
+															</select>
+															<label class="Team/Group">Team/Group</label>
+														</div>
+													</div>
+													<div class="col-sm-6">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker1'>
 											                    <input type='text' id = "min" class="form-control" placeholder="From" />
@@ -70,7 +94,7 @@
 											                </div>
 											            </div>
 													</div>
-													<div class="col-sm-4">
+													<div class="col-sm-6">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker2'>
 											                    <input type='text' id = "max" class="form-control" placeholder="To" />
@@ -96,20 +120,11 @@
 														<th>Shipping Method</th>
 														<th>Remarks</th>
 														<th>Notes</th>
-														<th>Status</th>
-														<th>Action</th>
+														<th>Prepared By/Salesperson</th>
+														<th>Tracking Number</th>
+														<th>Status</th>		
 													</thead>
-<!-- 													<tfoot>
-														<tr>
-															<td><input type="text" data-column="0"  placeholder = "Search ID" class="search-input-text"></td>
-															<td><input type="text" data-column="1"  placeholder = "Search Lead Status" class="search-input-text"></td>
-															<td><input type="text" data-column="2"  placeholder = "Search Name" class="search-input-text"></td>
-															<td><input type="text" data-column="3"  placeholder = "Search Position" class="search-input-text"></td>
-															<td><input type="text" data-column="4"  placeholder = "Search SI Code" class="search-input-text"></td>
-															<td><input type="text" data-column="5"  placeholder = "Search Address" class="search-input-text"></td>
-															<td></td>
-														</tr>
-													</tfoot> -->
+<!-- 									
 												</table>
 											</div>
 										</div>
@@ -142,9 +157,9 @@
 			"bServerSide": true,
 				"responsive": true,
 	        "sPaginationType": "full_numbers",
-	        "order": [0,'desc'],
+	        "order": [1,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/order_list.php", // json datasource
+	                url :"../process/ajax/report_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
 
@@ -155,15 +170,12 @@
 		{
 			var min = $("#min").val();
 			var max = $("#max").val();
-			var data = dataTable.ajax.url( "../process/ajax/order_list_filter.php?min="+min+"&max="+max).load();
+			var agent = $( "#agents option:selected" ).val();
+			var team = $( "#teams option:selected" ).val();
+
+			$("#export").attr("href", "../process/export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team);
+		
+			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team).load();
 		});
-
-	   //  $("#employee-grid_filter").css("display","none");
-
-	   //  $('.search-input-text').on( 'keyup click', function () {   // for text boxes
-				// 	var i =$(this).attr('data-column');  // getting column index
-				// 	var v =$(this).val();  // getting search input value
-				// 	dataTable.columns(i).search(v).draw();
-				// } );
 	} );
 </script>

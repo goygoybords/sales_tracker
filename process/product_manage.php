@@ -10,6 +10,7 @@
 
 	$product->setProductDescription(htmlentities($description));
 	$product->setProductPrice(htmlentities($price));
+	$product->setQuantity($quantity);
 
 		
 
@@ -20,6 +21,7 @@
 		$data = [
 					'product_description' 	   => $product->getProductDescription(),
 					'product_price' 		   => $product->getProductPrice(),
+					'quantity'				   => $product->getQuantity(),
 					'status' 				   => $product->getStatus() 
 
 				];
@@ -34,11 +36,12 @@
 	{
 		$product->setProductId(intval($product_id_fm));
 		
-		$fields = array('product_description' ,'product_price' );
+		$fields = array('product_description' ,'product_price' ,'quantity');
 			$where  = "WHERE id = ?";
 			$params = array(
 					$product->getProductDescription(),
 					$product->getProductPrice(),
+					$product->getQuantity(),
 					$product->getProductId()
 					
 					);

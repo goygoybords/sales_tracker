@@ -30,6 +30,7 @@ $primaryKey = 'id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 session_start();
+
 $columns = array(
     array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
             {
@@ -39,74 +40,32 @@ $columns = array(
 
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', $d);
+                return date('Y-m-d', strtotime( $d));
             }, 'field' => 'order_date' 
         ),
 
-    array( 'db' => '`c`.`firstname`',   'dt' => 2, 'field' => 'firstname' ),
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
+
     array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
     array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => '`o`.`status`',      'dt' => 7, 'formatter' => function( $d, $row )
+    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
+    array( 'db' => '`o`.`tracking_number`',       'dt' => 8, 'field' => 'tracking_number' ),
+    array( 'db' => '`o`.`status`', 'dt' => 9, 'formatter' => function( $d, $row )
             {
-                $_SESSION['status'] = $d;
                 if($d == 0)
                 {
-                    return "Record Needs Approval";
+                  return "Order Pending";
                 }
-                else if($d == 1)
+                else if ($d == 1)
                 {
-                    return "Record Approved";
-                }
-                
-                
-            },
-            'field' => 'status' 
-            ),
-    
-    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
-            {
-                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
-                {
-                    if($_SESSION['status'] == 0)
-                    {
-                        return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> &nbsp;
-
-                        <a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Approve This Record
-                            </span>
-                        </a>
-                        ';
-                    }
-                    else if($_SESSION['status'] == 1)
-                    {
-                        return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> ';
-                    }
-                }
-                else if($_SESSION['user_type'] == 3)
-                {
-                    return '<a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> ';
+                  return "Order Billed";
 
                 }
-
-                
-            },
-            'field' => 'id' 
-            )
+            }, 'field' => 'status' 
+        ),
+   
     );
 
 // SQL server connection information
@@ -125,15 +84,30 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     $extraWhere = "";
+    
+                
+        $min =  date('Y-m-d', strtotime($_GET['min']));
+        $max =  date('Y-m-d', strtotime($_GET['max']));
+        $agent = intval($_GET['agent']);
+        $team = intval($_GET['team']);
   
-        $min = strtotime(date('Y-m-d', strtotime($_GET['min'])));
-        $max = strtotime(date('Y-m-d', strtotime($_GET['max'])));
-  
-    if ($_GET['min'] != 0 && $_GET['max'] != 0) //search by date
+    if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by date
     {
-        $extraWhere = "o.order_date BETWEEN $min AND $max AND o.status BETWEEN 0 AND 1 ";
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' ";
     }
-   
+
+    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0)
+    {
+        $extraWhere = " o.prepared_by = '$agent' ";
+    }
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0)
+    {
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
+    }
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 )
+    {
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
+    }
     else
     {
         $extraWhere =  "o.status BETWEEN 0 AND 1" ;
@@ -144,6 +118,8 @@ $sql_details = array(
                   ON o.customer_id = c.id 
                   JOIN shipping_method s
                   ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
                  ";
 
     echo json_encode(

@@ -20,6 +20,11 @@
 	
 	$name = "save_product";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
+
+	if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4)
+		$disabled = "disabled";
+	else 
+		$disabled = "";
 	
 	if($product_id)
 	{
@@ -38,6 +43,8 @@
 						$product->setProductId($product_id);
 						$product->setProductDescription($p['product_description']);
 						$product->setProductPrice(doubleval($p['product_price']));
+						$product->setQuantity(doubleval($p['quantity']));
+
 						$product->setStatus($p['status']);					
 					}
 
@@ -93,14 +100,22 @@
 															<label for="Email5" class="col-sm-2 control-label">Description</label>
 															<div class="col-sm-10">
 																<input type="text" name = "description" class="form-control"  
-																value = "<?php echo $product->getProductDescription(); ?>" required>
+																value = "<?php echo $product->getProductDescription(); ?>" <?php echo $disabled; ?> required>
 															</div>
 														</div>
 														<div class="form-group">
 															<label for="Email5" class="col-sm-2 control-label">Price</label>
 															<div class="col-sm-10">
 																<input type="text" name = "price" class="form-control"  
-																value = "<?php echo $product->getProductPrice();  ?>" required>
+																value = "<?php echo $product->getProductPrice();  ?>" <?php echo $disabled; ?> required>
+															</div>
+														</div>
+
+														<div class="form-group">
+															<label for="Email5" class="col-sm-2 control-label">Quantity</label>
+															<div class="col-sm-10">
+																<input type="text" name = "quantity" class="form-control"  
+																value = "<?php echo $product->getQuantity();  ?>" <?php echo $disabled; ?> required>
 															</div>
 														</div>
 														
@@ -108,7 +123,7 @@
 														<div class="row">
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
 																<?php if($form_state == 2) $name = "update_product"; ?>
-																<button type="submit" name = <?php echo $name; ?> class="btn btn-info"><?php echo $submit_caption; ?></button>
+																<button type="submit" <?php echo $disabled; ?> name = <?php echo $name; ?> class="btn btn-info"><?php echo $submit_caption; ?></button>
 															</div>
 														</div>
 													</div><!--end .card-body -->
