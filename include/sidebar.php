@@ -51,11 +51,13 @@
 								<span class="title">Customers</span>
 							</a>
 						</li>
+						<?php if($_SESSION['user_type'] == 1): ?>
 						<li>
 							<a href="../customer/blacklist_customer.php">
 								<span class="title">Blacklist Customers</span>
 							</a>
 						</li>
+						<?php endif; ?>
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
