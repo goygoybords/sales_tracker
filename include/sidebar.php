@@ -27,7 +27,7 @@
 					<ul>
 						<li>
 							<a href="../orders/unapproved_orders.php">
-								<span class="title">Unapproved Orders</span>
+								<span class="title">Hold Orders</span>
 							</a>
 						</li>
 						<li>
@@ -38,13 +38,29 @@
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
-		
-				<li>
-					<a href="../customer/customer.php">
+				
+				<li class="gui-folder">
+					<a>
 						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
-						<span class="title">Customer</span>
+						<span class="title">Customers</span>
 					</a>
-				</li>
+					<!--start submenu -->
+					<ul>
+						<li>
+							<a href="../customer/customer.php">
+								<span class="title">Customers</span>
+							</a>
+						</li>
+						<li>
+							<a href="../customer/blacklist_customer.php">
+								<span class="title">Blacklist Customers</span>
+							</a>
+						</li>
+
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
+
+				
 
 				<li>
 					<a href="../product/product.php">
