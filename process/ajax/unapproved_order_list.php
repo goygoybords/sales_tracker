@@ -47,23 +47,31 @@ $columns = array(
             }, 'field' => 'order_date' 
         ),
 
-    array( 'db' => '`o`.`date_submitted`', 'dt' => 2, 'formatter' => function( $d, $row )
+    // array( 'db' => '`o`.`date_submitted`', 'dt' => 2, 'formatter' => function( $d, $row )
+    //         {
+    //             return date('Y-m-d', strtotime($d));
+    //         }, 'field' => 'date_submitted' 
+    //     ),
+
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
+
+    // array( 'db' => '`o`.`total`',       'dt' => 4, 'field' => 'total' ),
+    // array( 'db' => '`s`.`description`', 'dt' => 5, 'field' => 'description' ),
+    array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
+    // array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
+    // array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 4, "field" => "full_name", "as" => "full_name" ),
+    
+
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "updated_by", "as" => "updated_by" ),
+         
+    array( 'db' => '`o`.`status`', 'dt' => 5, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', strtotime($d));
-            }, 'field' => 'date_submitted' 
+                if($d == 0)
+                  return "On Hold";
+            }, 'field' => 'status' 
         ),
 
-    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 3, "field" => "customer_name", "as" => "customer_name" ),
-
-    array( 'db' => '`o`.`total`',       'dt' => 4, 'field' => 'total' ),
-    array( 'db' => '`s`.`description`', 'dt' => 5, 'field' => 'description' ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 6, 'field' => 'remarks' ),
-    array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 8, "field" => "full_name", "as" => "full_name" ),
-       
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 9, "field" => "updated_by", "as" => "updated_by" ),
-         
-    array( 'db' => '`o`.`id`',          'dt' => 10, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`id`', 'dt' => 6, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
                 {
@@ -71,11 +79,10 @@ $columns = array(
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> &nbsp;
-
+                        </a> 
                         <a href="../process/order_manage.php?id='.$d.'&approve" onclick="return confirm(\'Are you sure you want to approve this record?\')" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Approve This Record
+                                <i class="fa fa-check-square-o"></i> Approve 
                             </span>
                         </a>
                         ';
@@ -86,7 +93,7 @@ $columns = array(
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> &nbsp;';
+                        </a>';
                 }
                 
             },

@@ -42,15 +42,25 @@ $columns = array(
 
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
 
-    array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
-    array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
-    array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
+    //array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
+    //array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
+    array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
+    //array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
+    //array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
 
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 8, "field" => "approved_by", "as" => "approved_by" ),
-    array( 'db' => '`o`.`tracking_number`',       'dt' => 9, 'field' => 'tracking_number' ),
-    array( 'db' => '`o`.`id`',          'dt' => 10, 'formatter' => function( $d, $row )
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "approved_by", "as" => "approved_by" ),
+   // array( 'db' => '`o`.`tracking_number`',  'dt' => 4, 'field' => 'tracking_number' ),
+
+    array( 'db' => '`o`.`status`', 'dt' => 5, 'formatter' => function( $d, $row )
+            {
+                if($d == 1)
+                    return "Approved";
+                else if($d == 2)
+                    return "Shipped";
+            }, 'field' => 'status' 
+        ),
+    
+    array( 'db' => '`o`.`id`',          'dt' => 6, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
@@ -66,7 +76,7 @@ $columns = array(
                         </a> &nbsp;
                         <a href="../process/order_manage.php?id='.$d.'&send_mail">
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Send Mail
+                                <i class="fa fa-share"></i> Mail
                             </span>
                         </a>';
               }

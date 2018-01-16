@@ -7,7 +7,6 @@
 
 	include '../include/start.html';
 	require('../include/header.php');
-
 ?>
 <!-- BEGIN BASE-->
 <div id="base">
@@ -42,10 +41,6 @@
 										$error = 'Sorry, the record selected does not exist.';
 									else if($msg == 'approved')
 										$error = 'Record Approved';
-									else if($msg == 'sent')
-										$error = 'Mail Sent';
-									else if($msg == 'tracking')
-										$error = 'Tracking Number Updated';
 									echo '<span>'.$error.'</span>';
 								}
 							?>
@@ -53,23 +48,28 @@
 							<div class="col-lg-offset-0 col-md-12">
 								<div class="card-body style-default-bright">
 									<div class="card-body">
-									
+										<div class="row">
+											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
+												<a class="btn btn-success btn-block" href="manage.php" name="btnAddLead" id="btnAddLead">ADD NEW ORDER</a>
+											</div>
+										</div>
+										<br />
 										<div class="col-lg-offset-0 col-md-12">
 											
-												<br/>
-												<br/>
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
 														<th>Invoice Number</th>
 														<th>Date</th>
 														<th>Customer</th>
-														<th>Total</th>
+														<th>Remarks</th>
+														<!--<th>Total</th>
 														<th>Shipping Method</th>
 														<th>Remarks</th>
 														<th>Notes</th>
-														<th>Prepared By/Salesperson</th>
+														<th>Prepared By/Salesperson</th> -->
 														<th>Approved By</th>
-														<th>Tracking Number</th>
+														<!--<th>Tracking Number</th>-->
+														<th>Status</th>
 														<th>Action</th>
 													</thead>
 <!-- 													<tfoot>
@@ -133,3 +133,4 @@
 				// } );
 	} );
 </script>
+
