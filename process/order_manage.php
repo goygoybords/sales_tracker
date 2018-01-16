@@ -244,7 +244,15 @@
 
 						$order_details_id = $db->insert("order_detail", $data);
 			        }
-			        header("location: ../orders/manage.php?msg=inserted");
+
+			            $data = [
+							'description' => "Created a new Order",
+							'user_id'     => intval($_SESSION['id']) ,
+							'order_id'    => $order_id,
+						];
+						
+						$logs = $db->insert("logs", $data);
+			       		header("location: ../orders/manage.php?msg=inserted");
 				}
 				
 			}
@@ -396,6 +404,14 @@
 						);
 			
 			$someone_update = $db->update("order_send_someone", $fields , $where, $params);
+
+			$data = [
+							'description' => "Updated an Order",
+							'user_id'     => intval($_SESSION['id']) ,
+							'order_id'    => $order_id_fm,
+						];
+						
+			$logs = $db->insert("logs", $data);
 			header("location: ../orders/manage.php?id=".$order->getOrderId()."&msg=updated");
 		}
 
@@ -419,7 +435,28 @@
 
 		$order_update = $db->update("orders", $fields , $where, $params);
 
+
+		$data = [
+				'description' => "Approved an Order",
+				'user_id'     => intval($_SESSION['id']) ,
+				'order_id'    => $order_id,
+			];			
+		$logs = $db->insert("logs", $data);
 		header("location: ../orders/approved_orders.php?msg=approved");
+	}
+
+	if(isset($_GET['shipped']))
+	{
+		echo "okay";
+
+		$order_id = $_GET['id'];
+		$order->setStatus(2);
+		$table  = "orders";
+		$fields = array('status');
+		$where  = "WHERE id = ?"; 
+		$params = array($order->getStatus(), $order_id );
+		$result = $db->update($table, $fields, $where, $params);
+		header("location: ../orders/shipped_orders.php?&msg=shipped");
 	}
 
 	if(isset($_GET['send_mail']))

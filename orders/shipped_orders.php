@@ -26,7 +26,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Approved Orders</header>
+								<header><i class="fa fa-fw fa-users"></i>Shipped Orders</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -41,11 +41,8 @@
 										$error = 'Sorry, the record selected does not exist.';
 									else if($msg == 'approved')
 										$error = 'Record Approved';
-									else if($msg == 'shipped')
-										$error = 'Record Shipped';
 									else if($msg == 'tracking')
 										$error = 'Record has a tracking number';
-
 									echo '<span>'.$error.'</span>';
 								}
 							?>
@@ -122,7 +119,7 @@
 	        "sPaginationType": "full_numbers",
 	        "order": [0,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/approved_order_list.php", // json datasource
+	                url :"../process/ajax/shipped_order_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
 

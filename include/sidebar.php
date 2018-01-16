@@ -17,7 +17,6 @@
 
 			<!-- BEGIN MAIN MENU -->
 			<ul id="main-menu" class="gui-controls">
-				
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-list"></i></div>
@@ -35,7 +34,21 @@
 								<span class="title">Approved Orders</span>
 							</a>
 						</li>
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
 
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="fa fa-ship"></i></div>
+						<span class="title">Shipment</span>
+					</a>
+					<!--start submenu -->
+					<ul>
+						<li>
+							<a href="../orders/shipped_orders.php">
+								<span class="title">Shipped Orders</span>
+							</a>
+						</li>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				
@@ -95,7 +108,6 @@
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 
-				
 				<?php if($_SESSION['user_type'] == 1): ?>
 				<li class="gui-folder">
 					<a>
@@ -134,6 +146,12 @@
 							<a href="../report/reports.php">
 								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
 								<span class="title">Reports</span>
+							</a>
+						</li>
+						<li>
+							<a href="../logs/logs.php">
+								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
+								<span class="title">Logs</span>
 							</a>
 						</li>
 

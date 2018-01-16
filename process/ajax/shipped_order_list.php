@@ -59,14 +59,14 @@ $columns = array(
                     return "Shipped";
             }, 'field' => 'status' 
         ),
-
+    
     array( 'db' => '`o`.`id`',          'dt' => 6, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
-                return '<a href="../process/order_manage.php?id='.$d.'&shipped">
+                return ' <a href="manage.php?id='.$d.'&add_tracking" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-ship"></i> Ship
+                                <i class="fa fa-edit"></i> Add Tracking Number
                             </span>
                         </a>
                         <a href="manage.php?id='.$d.'" >
@@ -89,6 +89,7 @@ $columns = array(
                             </span>
                         </a> &nbsp;';
               }
+                
             },
             'field' => 'id' 
             )
@@ -126,7 +127,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 1" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 4)
     {
@@ -142,7 +143,7 @@ $sql_details = array(
                  ";
                   // WHERE u.team_id = 3
 
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 1" ;
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
     {
@@ -156,7 +157,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.status = 1" ;
+        $extraWhere =  "o.status = 2" ;
     }
     
     
