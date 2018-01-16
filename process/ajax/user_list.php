@@ -31,12 +31,11 @@ $primaryKey = 'id';
 // indexes
 $columns = array(
     array( 'db' => '`u`.`id`',   'dt' => 0, 'field' => 'id' ),
-    array( 'db' => '`u`.`first_name`',   'dt' => 1, 'field' => 'first_name' ),
-    array( 'db' => '`u`.`lastname`',    'dt' => 2, 'field' => 'lastname' ),
-    array( 'db' => '`u`.`email`',       'dt' => 3, 'field' => 'email' ),
-    array( 'db' => '`ut`.`type`',       'dt' => 4, 'field' => 'type' ),
-    array( 'db' => '`t`.`team_name`',   'dt' => 5, 'field' => 'team_name' ),
-    array( 'db' => '`u`.`id`',          'dt' => 6, 'formatter' => function( $d, $row )
+    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 1, "field" => "name", "as" => "name" ),
+    array( 'db' => '`u`.`email`',       'dt' => 2, 'field' => 'email' ),
+    array( 'db' => '`ut`.`type`',       'dt' => 3, 'field' => 'type' ),
+    array( 'db' => '`t`.`team_name`',   'dt' => 4, 'field' => 'team_name' ),
+    array( 'db' => '`u`.`id`',          'dt' => 5, 'formatter' => function( $d, $row )
             {
                 return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">

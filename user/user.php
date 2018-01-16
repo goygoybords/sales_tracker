@@ -56,8 +56,7 @@
 												<table class = "display responsive nowrap" id = "user-tbl">
 													<thead>
 														<th>#</th>
-														<th>Firstname</th>
-														<th>Lastname</th>
+														<th>Employee Name</th>
 														<th>Email</th>
 														<th>User Type</th>
 														<th>Sales Team</th>
