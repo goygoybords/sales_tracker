@@ -59,8 +59,7 @@
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
 														<th>ID</th>
-														<th>Firstname</th>
-														<th>Lastname</th>
+														<th>Name</th>
 														<th>Contact Number</th>
 														<th>Shipping Address</th>
 														<th>Action</th>

@@ -31,25 +31,22 @@ $primaryKey = 'id';
 // indexes
 $columns = array(
     array( 'db' => '`c`.`id`',              'dt' => 0, 'field' => 'id' ),
-    array( 'db' => '`c`.`firstname`',       'dt' => 1, 'field' => 'firstname' ),
-    array( 'db' => '`c`.`lastname`',        'dt' => 2, 'field' => 'lastname' ),
-    array( 'db' => '`c`.`contact_number`',  'dt' => 3, 'field' => 'contact_number' ),
-    array( 'db' => '`c`.`shipping_address`',  'dt' => 4, 'field' => 'shipping_address' ),
-    array( 'db' => '`c`.`id`',              'dt' => 5, 'formatter' => function( $d, $row )
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 1, "field" => "name", "as" => "name" ),
+    array( 'db' => '`c`.`contact_number`',  'dt' => 2, 'field' => 'contact_number' ),
+    array( 'db' => '`c`.`shipping_address`',  'dt' => 3, 'field' => 'shipping_address' ),
+    array( 'db' => '`c`.`id`',              'dt' => 4, 'formatter' => function( $d, $row )
             {
                 return '
                          <a href="customer_orders.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> View Orders
                             </span>
-                        </a> &nbsp;
-                        
+                        </a> 
                         <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> &nbsp;
-                       
+                        </a> 
                         <a href="../process/customer_manage.php?id='.$d.'&p=list&active" onclick="return confirm(\'Are you sure you want to remove this customer in the blacklist record?\')" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Unblacklist
