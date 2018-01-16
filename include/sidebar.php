@@ -20,7 +20,7 @@
 				
 				<li class="gui-folder">
 					<a>
-						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
+						<div class="gui-icon"><i class="fa fa-list"></i></div>
 						<span class="title">Orders</span>
 					</a>
 					<!--start submenu -->
@@ -41,7 +41,7 @@
 				
 				<li class="gui-folder">
 					<a>
-						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
+						<div class="gui-icon"><i class="fa fa-users"></i></div>
 						<span class="title">Customers</span>
 					</a>
 					<!--start submenu -->
@@ -61,8 +61,6 @@
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
-
-				
 
 				<li>
 					<a href="../product/product.php">
@@ -101,21 +99,32 @@
 				<?php if($_SESSION['user_type'] == 1): ?>
 				<li class="gui-folder">
 					<a>
-						<div class="gui-icon"><i class="fa fa-users"></i></div>
-						<span class="title">Admin Modules</span>
+						<div class="gui-icon"><i class="fa fa-user-plus"></i></div>
+						<span class="title">User/Team Modules</span>
 					</a>
 					<!--start submenu -->
 					<ul>
-						<li>
-							<a href="../user/user.php">
-								<span class="title">User Accounts</span>
-							</a>
-						</li>
 						<li>
 							<a href="../user/teams.php">
 								<span class="title">Team Leader List</span>
 							</a>
 						</li>
+						<li>
+							<a href="../user/user.php">
+								<span class="title">User Accounts</span>
+							</a>
+						</li>
+						
+					</ul><!--end /submenu -->
+				</li><!--end /menu-li -->
+
+				<li class="gui-folder">
+					<a>
+						<div class="gui-icon"><i class="fa fa-database"></i></div>
+						<span class="title">Report/System Modules</span>
+					</a>
+					<!--start submenu -->
+					<ul>
 						<li>
 							<a href="../shipping/methods.php">
 								<span class="title">Shipping Methods</span>

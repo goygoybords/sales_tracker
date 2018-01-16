@@ -48,7 +48,6 @@
 	$customer_payment = new Customer_Payment();
 	$someone = new Order_Send_Someone();
 
-
 	$order->setShippingFee(5.00);
 
 	if(isset($_GET['view_record']) || isset($_GET['add_tracking']))
@@ -462,18 +461,21 @@
 												  									$product->setProductDescription($p['product_description']);
 												  									$product->setQuantity($p['quantity']);
 												  							?>
+												  								<!-- <option value ="<?php echo $product->getProductId(); ?>" >
+												  									<?php echo $product->getProductDescription()." --- Stock On Hand: ".$product->getQuantity(); ?> -->
+
 												  								<option value ="<?php echo $product->getProductId(); ?>" >
-												  									<?php echo $product->getProductDescription()." --- Stock On Hand: ".$product->getQuantity(); ?>
+												  									<?php echo $product->getProductDescription(); ?>
 												  										
 												  									</option>
 												  							<?php endforeach;  ?>
 												  					</select>
 									  							</td>
 									  							<td>
-									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" placeholder="Quantity" >		
+									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" value = "0.00" placeholder="Quantity" >		
 												  				</td>
-									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" placeholder="Unit Price"></td>
-									  							<td><input type = "text" class = "form-control lblAmount" readonly name = "amount[]" placeholder="Amount"></td>
+									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" value = "0.00" placeholder="Unit Price"></td>
+									  							<td><input type = "text" class = "form-control lblAmount" readonly name = "amount[]" value = "0.00" placeholder="Amount"></td>
 									  						</tr>
 
 								  						<?php elseif ($form_state == 2): ?>
@@ -526,7 +528,13 @@
 								  							<td></td>
 								  							<td></td>
 								  							<td>Total:</td>
-								  							<td><input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="<?php echo $order->getTotal(); ?>"></td>
+								  							<td>	
+								  								<?php if($form_state == 1): ?>
+								  								<input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="0.00">
+																<?php elseif($form_state == 2): ?>
+																<input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="<?php echo $order->getTotal(); ?>">
+																<?php endif; ?>
+								  							</td>
 								  						</tr>
 								  					</tbody>
 								  						
@@ -1148,9 +1156,9 @@
 
                 var start = "<tr><td>";
                 var middle = "<select name = 'product[]' class = 'form-control item_list"+counter+" product"+counter+ " browser-default'>";
-                var end1 = "</select></td>"  + "<td><input type='text' name='quantity[]' class = 'form-control quantity"+counter+" browser-default' placeholder='Quantity' > </td>";
-                var end2 = "<td><input type = 'text' class = 'form-control lblUprice"+counter+"' name = 'unit_price[]' placeholder='Unit Price'></td>";
-                var end3 = "<td><input type = 'text' class = 'form-control lblAmount"+counter+"' readonly name = 'amount[]' placeholder='Amount'></td>";
+                var end1 = "</select></td>"  + "<td><input type='text' name='quantity[]' class = 'form-control quantity"+counter+" browser-default' value='0.00' placeholder='Quantity' > </td>";
+                var end2 = "<td><input type = 'text' value='0.00' class = 'form-control lblUprice"+counter+"' name = 'unit_price[]' placeholder='Unit Price'></td>";
+                var end3 = "<td><input type = 'text' value='0.00' class = 'form-control lblAmount"+counter+"' readonly name = 'amount[]' placeholder='Amount'></td>";
                 var superEnd = "</tr>";
                 var combine = start + middle + end1 + end2  + end3 + superEnd;
                 $('.order-table tbody').prepend(combine);
@@ -1166,7 +1174,9 @@
 	                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
 	                        for (var i = 0; i < datas.length; i++) 
 	                        {
-	                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
+	                            // $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
+
+	                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description + '</option>');
 	                            
 	                        }
 	                        $('.item_list'+counter).change(function()

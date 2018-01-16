@@ -59,6 +59,11 @@ $columns = array(
                                 <i class="fa fa-edit"></i> Add Tracking Number
                             </span>
                         </a> &nbsp;
+                        <a href="manage.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> Edit
+                            </span>
+                        </a> &nbsp;
                         <a href="../process/order_manage.php?id='.$d.'&send_mail">
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-remove"></i> Send Mail

@@ -65,8 +65,6 @@
 		$order->setRemarks(htmlentities($remarks));
 		$order->setNotes(htmlentities($notes));
 
-
-
 		$order->setPreparedBy(intval($_SESSION['id']));
 		$order->setMerchant(htmlentities($merchant));
 		$order->setDateSubmitted(date('Y-m-d H:i:s'));
@@ -74,11 +72,8 @@
 
 		if(isset($_POST['save_order']))
 		{
-			
-			
 			if($customer_state == 0)
 			{
-			
 				$data = [
 						'firstname' 	   => $customer->getFirstName(),
 						'lastname' 		   => $customer->getLastname(),
@@ -146,7 +141,6 @@
 					$customer_payment->setAccountNumber(0);
 					$customer_payment->setBankName("");
 					$customer_payment->setRoutingNumber(0);
-
 				}
 				
 				$customer_payment->setStatus(1);
@@ -239,14 +233,14 @@
 							'amount'  	  => $detail->getAmount()   ,
 							'status' 	  => $detail->getStatus() ,
 						];
-						$get_product =	$db->select('products', array('quantity'), "id = ?", array($product[$i]) );
-						foreach ($get_product as $p ) 
-						{
-							$total_qty = $p['quantity'] - $quantity[$i];
-							$product_class->setQuantity($total_qty);
-							$db->update("products", array('quantity') , "WHERE id = ?", array($product_class->getQuantity(), $product[$i])) ;
-
-						}
+						//removed the product since user will be the one putting quantity
+						// $get_product =	$db->select('products', array('quantity'), "id = ?", array($product[$i]) );
+						// foreach ($get_product as $p ) 
+						// {
+						// 	$total_qty = $p['quantity'] - $quantity[$i];
+						// 	$product_class->setQuantity($total_qty);
+						// 	$db->update("products", array('quantity') , "WHERE id = ?", array($product_class->getQuantity(), $product[$i])) ;
+						// }
 
 						$order_details_id = $db->insert("order_detail", $data);
 			        }
