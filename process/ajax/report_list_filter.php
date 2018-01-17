@@ -87,7 +87,6 @@ $sql_details = array(
     {
         $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
     }
-
     else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by all
     {
         $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' ";
@@ -97,9 +96,17 @@ $sql_details = array(
     {
         $extraWhere = " o.prepared_by = '$agent' ";
     }
-    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 ) //search by date and team
+    else if($agent == 0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team != 0) // search by team only
+    {
+        $extraWhere = " u.team_id = '$team' ";
+    }
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 && $agent == 0) //search by date and team
     {
         $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
+    }
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team == 0 && $agent != 0) //search by date and agent
+    {
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND o.prepared_by = '$agent' ";
     }
     else
     {
