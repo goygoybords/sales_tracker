@@ -32,20 +32,14 @@ $primaryKey = 'id';
 session_start();
 
 $columns = array(
-    array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
-            {
-                return "INV-$d";
-            }, 'field' => 'id' 
-        ),
 
+    array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
                 return date('Y-m-d', strtotime( $d));
             }, 'field' => 'order_date' 
         ),
-
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-
     array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
     array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
@@ -83,28 +77,27 @@ $sql_details = array(
  */
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
-    $extraWhere = "";
-    
-                
+    $extraWhere = "";  
         $min =  date('Y-m-d', strtotime($_GET['min']));
         $max =  date('Y-m-d', strtotime($_GET['max']));
         $agent = intval($_GET['agent']);
         $team = intval($_GET['team']);
   
-    if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by date
+    if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0) //search by date
+    {
+        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
+    }
+
+    else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by all
     {
         $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' ";
     }
 
-    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0)
+    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0) // search by agent only
     {
         $extraWhere = " o.prepared_by = '$agent' ";
     }
-    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0)
-    {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
-    }
-    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 )
+    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 ) //search by date and team
     {
         $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
     }

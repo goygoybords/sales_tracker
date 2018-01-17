@@ -31,12 +31,7 @@ $primaryKey = 'id';
 // indexes
 
 $columns = array(
-    array( 'db' => '`o`.`id`', 'dt' => 0, 'formatter' => function( $d, $row )
-            {
-                return "INV-$d";
-            }, 'field' => 'id' 
-        ),
-
+    array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
                 return date('Y-m-d', strtotime( $d));

@@ -456,6 +456,15 @@
 		$where  = "WHERE id = ?"; 
 		$params = array($order->getStatus(), $order_id );
 		$result = $db->update($table, $fields, $where, $params);
+
+		$data = [
+							'description' => "Shipped an Order",
+							'user_id'     => intval($_SESSION['id']) ,
+							'order_id'    => $order_id,
+						];
+						
+		$logs = $db->insert("logs", $data);
+   
 		header("location: ../orders/shipped_orders.php?&msg=shipped");
 	}
 
@@ -500,18 +509,23 @@
 		} 
 		else 
 		{
-		    header("location: ../orders/approved_orders.php?msg=sent");
+		    header("location: ../orders/shipped_orders.php?msg=sent");
 		}
 	}
 	if(isset($_POST['add_tracking_number']))
 	{
 		$order->setOrderId($order_id_fm);
-		echo $order->getOrderId();
-	
 		$fields = array("tracking_number");
 		$where  = "WHERE id = ?";
 		$params = array($tracking_number , $order->getOrderId());
 		$db->update("orders", $fields , $where, $params);
+
+		$data = [
+					'description' => "Added Tracking Number",
+					'user_id'     => intval($_SESSION['id']) ,
+					'order_id'    => $order_id_fm,
+				];
+		$logs = $db->insert("logs", $data);
 		
 		header("location: ../orders/approved_orders.php?msg=tracking");
 	}
