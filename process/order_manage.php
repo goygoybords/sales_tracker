@@ -247,6 +247,7 @@
 
 			            $data = [
 							'description' => "Created a new Order",
+							'date_log'    => date("Y-m-d h:i:sa"),
 							'user_id'     => intval($_SESSION['id']) ,
 							'order_id'    => $order_id,
 						];
@@ -343,9 +344,7 @@
 					$customer_payment->setAccountNumber(0);
 					$customer_payment->setBankName("");
 					$customer_payment->setRoutingNumber(0);
-				}
-
-			
+				}	
 
 			$fields = array('payment_method' , 'card_type' , 'card_number' , 'card_name', 'expiry_date' , 'cvv' , 'check_number',
 				'account_number','bank_name' ,'routing_number');
@@ -407,6 +406,7 @@
 
 			$data = [
 							'description' => "Updated an Order",
+							'date_log'    => date("Y-m-d h:i:sa"),
 							'user_id'     => intval($_SESSION['id']) ,
 							'order_id'    => $order_id_fm,
 						];
@@ -438,6 +438,7 @@
 
 		$data = [
 				'description' => "Approved an Order",
+				'date_log'    => date("Y-m-d h:i:sa"),
 				'user_id'     => intval($_SESSION['id']) ,
 				'order_id'    => $order_id,
 			];			
@@ -459,6 +460,7 @@
 
 		$data = [
 							'description' => "Shipped an Order",
+							'date_log'    => date("Y-m-d h:i:sa"),
 							'user_id'     => intval($_SESSION['id']) ,
 							'order_id'    => $order_id,
 						];
@@ -522,11 +524,11 @@
 
 		$data = [
 					'description' => "Added Tracking Number",
+					'date_log'    => date("Y-m-d h:i:sa"),
 					'user_id'     => intval($_SESSION['id']) ,
 					'order_id'    => $order_id_fm,
 				];
 		$logs = $db->insert("logs", $data);
-		
 		header("location: ../orders/approved_orders.php?msg=tracking");
 	}
 ?>
