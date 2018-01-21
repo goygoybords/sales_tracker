@@ -32,7 +32,6 @@ $primaryKey = 'id';
 session_start();
 
 $columns = array(
-
     array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
@@ -40,23 +39,15 @@ $columns = array(
             }, 'field' => 'order_date' 
         ),
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-    array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
-    array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
-    array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
-    array( 'db' => '`o`.`tracking_number`',       'dt' => 8, 'field' => 'tracking_number' ),
-    array( 'db' => '`o`.`status`', 'dt' => 9, 'formatter' => function( $d, $row )
+    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "full_name", "as" => "full_name" ),
+    array( 'db' => '`o`.`status`', 'dt' => 4, 'formatter' => function( $d, $row )
             {
                 if($d == 0)
-                {
-                  return "Order Pending";
-                }
-                else if ($d == 1)
-                {
-                  return "Order Billed";
-
-                }
+                    return "On Hold";
+                else if($d == 1)
+                    return "Approved";
+                else if($d == 2)
+                    return "Shipped";
             }, 'field' => 'status' 
         ),
    

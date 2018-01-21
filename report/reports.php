@@ -116,12 +116,7 @@
 														<th>Invoice Number</th>
 														<th>Date</th>
 														<th>Customer</th>
-														<th>Total</th>
-														<th>Shipping Method</th>
-														<th>Remarks</th>
-														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
-														<th>Tracking Number</th>
 														<th>Status</th>		
 													</thead>
 <!-- 									
