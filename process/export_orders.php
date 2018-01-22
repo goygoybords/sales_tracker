@@ -222,7 +222,6 @@
    ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 
   // Add column headers
-
   $style = array(
         'alignment' => array(
             'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
@@ -239,10 +238,23 @@
             ->setCellValue('A2' , 'List of Orders')
             ->getStyle("A2:Q2")->applyFromArray($style)->getFont()->setSize(16);
 
-  $objPHPExcel->getActiveSheet() 
+  if(isset($_GET['min']) && isset($_GET['max']))
+  {
+      $objPHPExcel->getActiveSheet() 
+            ->mergeCells('A3:Q3')
+            ->setCellValue('A3' , 'From '.date('Y-m-d' , strtotime($_GET['min'])) .' To '. date('Y-m-d' , strtotime($_GET['max'])))
+            ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
+  } 
+  else
+  {
+      $objPHPExcel->getActiveSheet() 
             ->mergeCells('A3:Q3')
             ->setCellValue('A3' , 'As of '.date('Y-m-d'))
             ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
+  }         
+
+
+  
   
   foreach(range('A','Q') as $columnID) 
   {
@@ -303,8 +315,16 @@
 
       // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
       //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
-     
   }
+
+  $iiiv2 = $ii + 1;
+  $objPHPExcel->getActiveSheet() 
+              ->setCellValue('N'.$iiiv2, "=SUM(N6:N".($ii).")")->getStyle('N'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
+  
+  $objPHPExcel->getActiveSheet() 
+              ->setCellValue('O'.$iiiv2, "=SUM(O6:O".($ii).")")->getStyle('O'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
+                 
+
 
   $iii = $ii + 3;
   $objPHPExcel->getActiveSheet() 
