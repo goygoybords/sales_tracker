@@ -253,9 +253,6 @@
             ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
   }         
 
-
-  
-  
   foreach(range('A','Q') as $columnID) 
   {
       $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
