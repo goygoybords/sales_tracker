@@ -266,7 +266,7 @@
 			$order->setUpdatedBy($_SESSION['id']);
 
 			$fields = array('firstname' ,'lastname' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id' , 
-				'same' , 'billing_country_id','billing_address' , 'billing_zip' , 'billing_zip' , 'billing_state_id');
+				'same' , 'billing_country_id','billing_city' , 'billing_zip' , 'billing_zip' , 'billing_state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
 						$customer->getFirstname(),

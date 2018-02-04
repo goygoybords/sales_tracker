@@ -43,6 +43,8 @@
 										$error = 'Record Approved';
 									else if($msg == 'tracking')
 										$error = 'Record has a tracking number';
+									else if($msg == 'shipped')
+										$error = 'Order Shipped';
 									echo '<span>'.$error.'</span>';
 								}
 							?>
