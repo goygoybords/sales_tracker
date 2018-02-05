@@ -41,16 +41,8 @@ $columns = array(
         ),
 
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-
-    //array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
-    //array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
-    //array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    //array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
-
     array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "approved_by", "as" => "approved_by" ),
-   // array( 'db' => '`o`.`tracking_number`',  'dt' => 4, 'field' => 'tracking_number' ),
-
     array( 'db' => '`o`.`status`', 'dt' => 5, 'formatter' => function( $d, $row )
             {
                 if($d == 1)
@@ -59,7 +51,6 @@ $columns = array(
                     return "Shipped";
             }, 'field' => 'status' 
         ),
-    
     array( 'db' => '`o`.`id`',          'dt' => 6, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
@@ -122,7 +113,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 2" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  lower(o.remarks) = 'reshipment' AND o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 4)
     {
@@ -138,7 +129,7 @@ $sql_details = array(
                  ";
                   // WHERE u.team_id = 3
 
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 2" ;
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND lower(o.remarks) = 'reshipment' AND o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
     {
@@ -152,7 +143,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.status = 2" ;
+        $extraWhere =  "lower(o.remarks) = 'reshipment' AND o.status = 2   " ;
     }
     
     

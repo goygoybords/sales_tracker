@@ -9,7 +9,7 @@
 			</div>
 			<div class="expanded">
 				<a href="../search/search.php">
-					<span class="text-lg text-bold text-primary ">Vina Business System</span>
+					<span class="text-lg text-bold text-primary ">Sales Tracker</span>
 				</a>
 			</div>
 		</div>
@@ -49,6 +49,11 @@
 								<span class="title">Shipped Orders</span>
 							</a>
 						</li>
+						<li>
+							<a href="../orders/reshipment_orders.php">
+								<span class="title">Reshipped Orders</span>
+							</a>
+						</li>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				
@@ -81,33 +86,6 @@
 						<span class="title">Product</span>
 					</a>
 				</li>
-
-				<li class="gui-folder">
-					<a>
-						<div class="gui-icon"><i class="fa fa-calendar"></i></div>
-						<span class="title">Reminders</span>
-					</a>
-					<!--start submenu -->
-					<ul>
-						<li>
-							<a href="../calendar/calendar.php">
-								<span class="title">Calendar View</span>
-							</a>
-						</li>
-					<!-- 	<li>
-							<a href="../calendar/calendar_events.php">
-								<span class="title">Create Events</span>
-							</a>
-						</li> -->
-						<li>
-							<a href="../calendar/upcoming_events.php">
-								<span class="title">Create Reminder</span>
-							</a>
-						</li>
-
-					</ul><!--end /submenu -->
-				</li><!--end /menu-li -->
-
 				<?php if($_SESSION['user_type'] == 1): ?>
 				<li class="gui-folder">
 					<a>
