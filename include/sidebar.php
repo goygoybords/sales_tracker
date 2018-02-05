@@ -76,6 +76,11 @@
 							</a>
 						</li>
 						<?php endif; ?>
+						<li>
+							<a href="../customer/customer_refund.php">
+								<span class="title">Customer Refund</span>
+							</a>
+						</li>
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
