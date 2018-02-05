@@ -434,9 +434,7 @@
 											            </div>
 													</div>
 											<div class = "col-lg-12">
-												<?php if ($form_state == 1) : ?>
 												<a id = "add_more_button" class = "btn btn-info">Add More Items</a>
-												<?php endif; ?>
 												<br>
 												<br>
 												<table class = "table order-table" border="1">
@@ -475,7 +473,7 @@
 									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" value = "0.00" placeholder="Quantity" >		
 												  				</td>
 									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" value = "0.00" placeholder="Unit Price"></td>
-									  							<td><input type = "text" class = "form-control lblAmount" readonly name = "amount[]" value = "0.00" placeholder="Amount"></td>
+									  							<td><input type = "text" class = "form-control lblAmount" name = "amount[]" value = "0.00" placeholder="Amount"></td>
 									  						</tr>
 
 								  						<?php elseif ($form_state == 2): ?>
@@ -514,11 +512,11 @@
 										  								value = "<?php echo $details->getQuantity();  ?>">		
 													  				</td>
 										  							<td>
-										  								<input type = "text" class = "form-control lblUprice" readonly name = "unit_price[]" placeholder="Unit Price" 
+										  								<input type = "text" class = "form-control lblUprice"  name = "unit_price[]" placeholder="Unit Price" 
 										  								value = "<?php echo $details->getUnitPrice(); ?>">
 										  							</td>
 										  							<td>
-										  								<input type = "text" class = "form-control lblAmount" readonly name = "amount[]" placeholder="Amount" 
+										  								<input type = "text" class = "form-control lblAmount"  name = "amount[]" placeholder="Amount" 
 										  								value="<?php echo $details->getAmount(); ?>">
 										  								</td>
 										  						</tr>
@@ -1151,14 +1149,12 @@
 		  var grand = 0.0;
 		  $("#add_more_button").click(function()
 		  {
-    			
     			counter++;
-
                 var start = "<tr><td>";
                 var middle = "<select name = 'product[]' class = 'form-control item_list"+counter+" product"+counter+ " browser-default'>";
                 var end1 = "</select></td>"  + "<td><input type='text' name='quantity[]' class = 'form-control quantity"+counter+" browser-default' value='0.00' placeholder='Quantity' > </td>";
                 var end2 = "<td><input type = 'text' value='0.00' class = 'form-control lblUprice"+counter+"' name = 'unit_price[]' placeholder='Unit Price'></td>";
-                var end3 = "<td><input type = 'text' value='0.00' class = 'form-control lblAmount"+counter+"' readonly name = 'amount[]' placeholder='Amount'></td>";
+                var end3 = "<td><input type = 'text' value='0.00' class = 'form-control lblAmount"+counter+"'  name = 'amount[]' placeholder='Amount'></td>";
                 var superEnd = "</tr>";
                 var combine = start + middle + end1 + end2  + end3 + superEnd;
                 $('.order-table tbody').prepend(combine);
@@ -1169,13 +1165,10 @@
 	                    success: function(data)
 	                    {
 	                       	var datas = JSON.parse(data);
-
-							
 	                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
 	                        for (var i = 0; i < datas.length; i++) 
 	                        {
 	                            // $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
-
 	                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description + '</option>');
 	                            
 	                        }
@@ -1185,10 +1178,10 @@
 								  	{ 
 								  		qty = parseInt($(".quantity"+counter).val());
 								  		
-								  		 $('.lblUprice'+counter).change(function () 
+								  		 $('.lblAmount'+counter).change(function () 
 										  	{ 
 										  		price = parseFloat($(".lblUprice"+counter).val());
-										  		amount = parseFloat(qty * price);
+										  		amount = parseFloat($(".lblAmount"+counter).val());
 	                                                // compute total
 	                                                //total = parseFloat($('.displayTotal').val());
 	                                                // grand = parseFloat( total + amount + shipping);
@@ -1211,15 +1204,13 @@
 	            $('.quantity').change(function () 
 			  	{ 
 			  		qty = parseInt($(".quantity").val());
-			  		console.log(qty);
-			  		 $('.lblUprice').change(function () 
+			  		 $('.lblAmount').change(function () 
 					  	{ 
 					  		price = parseFloat($(".lblUprice").val());
-					  		amount = parseFloat(qty * price);
+					  		amount = parseFloat($(".lblAmount").val());
 					  		total = parseFloat(amount);
 					  		//grand = parseFloat(total + shipping);
 					  		grand = parseFloat(total);
-					  	
 					  		$(".lblAmount").val(amount.toFixed(2));
 					  		$(".displayTotal").val(grand.toFixed(2) );
 					  	}

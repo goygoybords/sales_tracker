@@ -73,7 +73,7 @@
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th> -->
 														<th>Approved By</th>
-														<!--<th>Tracking Number</th>-->
+														<th>Updated By</th>
 														<th>Status</th>
 														<th>Action</th>
 													</thead>
