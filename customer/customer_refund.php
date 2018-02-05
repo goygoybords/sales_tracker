@@ -64,10 +64,10 @@
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
 														<th>ID</th>
-														<th>Name</th>
-														
-														<th>Contact Number</th>
-														<th>Shipping Address</th>
+														<th>Date</th>
+														<th>Invoice Number</th>
+														<th>Customer</th>
+														<th>Amount</th>
 														<th>Action</th>
 													</thead>
 												</table>
@@ -104,7 +104,7 @@
 	        "sPaginationType": "full_numbers",
 	        "order": [0,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/customer_list.php", // json datasource
+	                url :"../process/ajax/customer_refund_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
 
