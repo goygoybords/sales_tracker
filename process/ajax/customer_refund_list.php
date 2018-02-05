@@ -51,7 +51,6 @@ $columns = array(
             },
             'field' => 'id' )
     );
-
 // SQL server connection information
 $sql_details = array(
     'user' => 'root',
