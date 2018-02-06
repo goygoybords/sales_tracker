@@ -19,8 +19,7 @@
 	$name = "save_entry";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
-  	if($form_state == 1)
-		$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2 AND refunded = 0");
+	$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2 AND refunded = 0");
 	 
 	if($refund_id)
 	{
@@ -47,7 +46,6 @@
 						$form_state = 2;
 						$form_header = "Edit Refund Details";
 						$submit_caption = "Save Changes";
-						$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2");
 					}
 					else
 					{
@@ -106,20 +104,29 @@
 															</div>
 														<div class="form-group">
 															<label for="team" class="col-sm-2 control-label">Invoice Number</label>
-															<div class="col-sm-10">
-																<input type="hidden" name="previous_invoice" 
-																value="<?php echo $refund->getOrderId(); ?>">
-																<select name = "order_id" id="team" class = "form-control" required="">
+															<div class="col-sm-6">
+																<?php 
+																	$table = 'orders';
+																	$fields = array('invoice_number');
+																	$where = " id = ? ";
+																	$params = array($refund->getOrderId());
+																	$inv = $db->select($table, $fields, $where, $params);
+																?>
+																<input type="hidden"  class="form-control"
+																	name="previous_invoice" value="<?php echo $refund->getOrderId(); ?>">
+																<input type="text" id = "previous" class="form-control"
+																	name="inv" value="<?php echo $inv[0][0]; ?>">
+																
+																<select name = "order_id" id="select_order_id" class = "form-control" >
 																	<option> </option> 
 																	<?php foreach ($list_orders as $o ) : ?>
-																		<option value="<?php echo $o['id']; ?>"
-																			<?php echo ($refund->getOrderId() == $o['id'] ? "selected='selected'" : ""); ?>
-																		>
+																		<option value="<?php echo $o['id']; ?>">
 																			<?php echo $o['invoice_number']; ?>	
 																		</option>
 																	<?php endforeach; ?>
 																</select>
 															</div>
+															<button id = "change" class = "btn btn-info">Change Invoice</button>
 														</div>
 														<div class="form-group">
 															<label for="Password5" class="col-sm-2 control-label">Amount</label>
@@ -181,9 +188,22 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
+		$('#previous').show();
+		$('#select_order_id').hide();
+
+		$( "#change" ).click(function(e) 
+		{
+			e.preventDefault();
+		 	$('#select_order_id').show();
+		 	$('#previous').hide();
+		});	
+
 		$('#date').datepicker({
     		
 		});
+
+			
+
 	} );
 </script>
 

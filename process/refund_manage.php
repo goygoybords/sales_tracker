@@ -51,14 +51,12 @@
 		$refund->setDate(htmlentities(date('Y-m-d',strtotime($date))));
 		$refund->setAmount(htmlentities($amount));
 
-		if($previous_invoice == $refund->getOrderId())
+		if($_POST['order_id'] == null)
 		{
 			$table  = "customer_refund";
-			$fields = array('date' ,'order_id' ,'amount');
+			$fields = array('date' , 'amount');
 			$where  = "WHERE id = ?";
-			$params = array($refund->getDate(), 
-					$refund->getOrderId(), $refund->getAmount(), $id 
-					);
+			$params = array($refund->getDate(),  $refund->getAmount(), $id );
 			
 			$result = $db->update($table, $fields, $where, $params);
 		}
@@ -79,6 +77,7 @@
 			$where  = "WHERE id = ?";
 			$params = array(0 , $previous_invoice );
 			$result = $db->update($table, $fields, $where, $params);
+
 			//update new invoice to 1
 			$table  = "orders";
 			$fields = array('refunded');
@@ -92,7 +91,6 @@
 					'user_id'     => intval($_SESSION['id']) ,
 					'order_id'    => $refund->getOrderId(),
 				];
-
 		header("location: ../customer/customer_refund_manage.php?id=".$id."&msg=updated");
 	}
 	if(isset($_GET['del']))
