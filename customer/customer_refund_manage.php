@@ -28,15 +28,16 @@
 				$where = " id = ? ";
 				$params = array($refund_id);
 				$refund_data = $db->select($table, $fields, $where, $params);
+
 				if(count($refund_data))
 				{
 					foreach ($refund_data as $l)
 					{
-
 						$refund->setId($l['id']);
 						$refund->setOrderId($l['order_id']);
 						$refund->setDate($l['date']);
 						$refund->setAmount($l['amount']);
+						$refund->setStatus($l['status']);
 						
 					}
 
@@ -95,7 +96,7 @@
 																<label for="Email5" class="col-sm-2 control-label">Date</label>
 																<div class="col-sm-10">
 																	<input type="text" name = "date" class="form-control"  id="date"
-																	value = "<?php  ?>" required>
+																	value = "<?php echo date('m/d/Y' , strtotime($refund->getDate())); ?>" required>
 																</div>
 															</div>
 														<div class="form-group">
@@ -104,7 +105,9 @@
 																<select name = "order_id" id="team" class = "form-control" required="">
 																	<option> </option> 
 																	<?php foreach ($list_orders as $o ) : ?>
-																		<option value="<?php echo $o['id']; ?>">
+																		<option value="<?php echo $o['id']; ?>"
+																			<?php echo ($refund->getOrderId() == $o['id'] ? "selected='selected'" : ""); ?>
+																		>
 																			<?php echo $o['invoice_number']; ?>	
 																		</option>
 																	<?php endforeach; ?>
