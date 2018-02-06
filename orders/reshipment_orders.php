@@ -124,17 +124,7 @@
 	                url :"../process/ajax/reshipped_order_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
-
-
 	    } );
-
-	   //  $("#employee-grid_filter").css("display","none");
-
-	   //  $('.search-input-text').on( 'keyup click', function () {   // for text boxes
-				// 	var i =$(this).attr('data-column');  // getting column index
-				// 	var v =$(this).val();  // getting search input value
-				// 	dataTable.columns(i).search(v).draw();
-				// } );
 	} );
 </script>
 

@@ -18,7 +18,10 @@
 	$submit_caption = "SAVE";
 	$name = "save_entry";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
-	$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2");
+
+  	if($form_state == 1)
+		$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2 AND refunded = 0");
+	 
 	if($refund_id)
 	{
 			if($msg != 'deleted')
@@ -38,14 +41,13 @@
 						$refund->setDate($l['date']);
 						$refund->setAmount($l['amount']);
 						$refund->setStatus($l['status']);
-						
 					}
-
 					if($refund->getStatus() == 1)
 					{
 						$form_state = 2;
 						$form_header = "Edit Refund Details";
 						$submit_caption = "Save Changes";
+						$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2");
 					}
 					else
 					{
@@ -96,12 +98,17 @@
 																<label for="Email5" class="col-sm-2 control-label">Date</label>
 																<div class="col-sm-10">
 																	<input type="text" name = "date" class="form-control"  id="date"
-																	value = "<?php echo date('m/d/Y' , strtotime($refund->getDate())); ?>" required>
+																	value = "<?php 
+																			if($form_state == 2)
+																				echo date('m/d/Y' , strtotime($refund->getDate())); ?>" 
+																		required>
 																</div>
 															</div>
 														<div class="form-group">
 															<label for="team" class="col-sm-2 control-label">Invoice Number</label>
 															<div class="col-sm-10">
+																<input type="hidden" name="previous_invoice" 
+																value="<?php echo $refund->getOrderId(); ?>">
 																<select name = "order_id" id="team" class = "form-control" required="">
 																	<option> </option> 
 																	<?php foreach ($list_orders as $o ) : ?>
