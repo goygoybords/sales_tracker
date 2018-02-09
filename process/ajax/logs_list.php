@@ -20,7 +20,7 @@
 
 // DB table to use
 session_start();
-$table = 'orders';
+$table = 'logs';
 
 // Table's primary key
 $primaryKey = 'id';
@@ -31,25 +31,15 @@ $primaryKey = 'id';
 // indexes
 
 $columns = array(
-    array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
-    array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
+    array( 'db' => '`l`.`id`',       'dt' => 0, 'field' => 'id' ),
+    array( 'db' => '`o`.`invoice_number`',       'dt' => 1, 'field' => 'invoice_number' ),
+    array( 'db' => '`l`.`date_log`', 'dt' => 2, 'formatter' => function( $d, $row )
             {
-                return date('Y-m-d', strtotime( $d));
-            }, 'field' => 'order_date' 
+                return date('Y-m-d h:i:sa', strtotime($d));
+            }, 'field' => 'date_log' 
         ),
-    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "full_name", "as" => "full_name" ),
-    array( 'db' => '`o`.`status`', 'dt' => 4, 'formatter' => function( $d, $row )
-            {
-                if($d == 0)
-                    return "On Hold";
-                else if($d == 1)
-                    return "Approved";
-                else if($d == 2)
-                    return "Shipped";
-            }, 'field' => 'status' 
-        ),
-   
+    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "user", "as" => "user" ),
+    array( 'db' => '`l`.`description`',  'dt' => 4, 'field' => 'description' ),
     );
 
 // SQL server connection information
@@ -69,15 +59,13 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-      $joinQuery = "FROM orders o
-                  JOIN customer c 
-                ON o.customer_id = c.id 
-                JOIN shipping_method s
-                ON s.id = o.shipping_method_id
-                JOIN users u 
-                ON o.prepared_by = u.id
+      $joinQuery = "FROM logs l 
+                    JOIN orders o 
+                    ON o.id = l.order_id
+                    JOIN users u 
+                    ON u.id = l.user_id
                ";
-      $extraWhere =  "o.status BETWEEN 0 AND 1" ;
+      $extraWhere =  "" ;
     
     
     echo json_encode(

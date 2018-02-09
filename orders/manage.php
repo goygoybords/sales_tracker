@@ -48,7 +48,6 @@
 	$customer_payment = new Customer_Payment();
 	$someone = new Order_Send_Someone();
 
-
 	$order->setShippingFee(5.00);
 
 	if(isset($_GET['view_record']) || isset($_GET['add_tracking']))
@@ -435,9 +434,7 @@
 											            </div>
 													</div>
 											<div class = "col-lg-12">
-												<?php if ($form_state == 1) : ?>
 												<a id = "add_more_button" class = "btn btn-info">Add More Items</a>
-												<?php endif; ?>
 												<br>
 												<br>
 												<table class = "table order-table" border="1">
@@ -463,22 +460,22 @@
 												  									$product->setQuantity($p['quantity']);
 												  							?>
 												  								<option value ="<?php echo $product->getProductId(); ?>" >
-												  									<?php echo $product->getProductDescription()." --- Stock On Hand: ".$product->getQuantity(); ?>
+												  									<?php echo $product->getProductDescription(); ?>
 												  										
 												  									</option>
 												  							<?php endforeach;  ?>
 												  					</select>
 									  							</td>
 									  							<td>
-									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" placeholder="Quantity" >		
+									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" value = "0.00" placeholder="Quantity" >		
 												  				</td>
-									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" placeholder="Unit Price"></td>
-									  							<td><input type = "text" class = "form-control lblAmount" readonly name = "amount[]" placeholder="Amount"></td>
+									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" value = "0.00" placeholder="Unit Price"></td>
+									  							<td><input type = "text" class = "form-control lblAmount" name = "amount[]" value = "0.00" placeholder="Amount"></td>
 									  						</tr>
 
 								  						<?php elseif ($form_state == 2): ?>
 								  							<?php 
-
+								  								$counter  = 0;
 								  								foreach ($get_orders as $g ): 
 								  									$details = new Order_Details();
 								  									$details->setProductId($g['product_id']);
@@ -489,7 +486,7 @@
 								  							?>
 									  							<tr>
 										  							<td>
-										  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list browser-default">
+										  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list<?php echo $counter; ?> browser-default">
 											  							<option disabled selected>Choose Items Here</option>
 											  								<?php 
 													  								foreach ($list_product as $p ) : 
@@ -508,27 +505,37 @@
 													  					</select>
 										  							</td>
 										  							<td>
-										  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" placeholder="Quantity" 
+										  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity<?php echo $counter; ?> browser-default" placeholder="Quantity" 
 										  								value = "<?php echo $details->getQuantity();  ?>">		
 													  				</td>
 										  							<td>
-										  								<input type = "text" class = "form-control lblUprice" readonly name = "unit_price[]" placeholder="Unit Price" 
+										  								<input type = "text" class = "form-control lblUprice<?php echo $counter; ?>"  name = "unit_price[]" placeholder="Unit Price" 
 										  								value = "<?php echo $details->getUnitPrice(); ?>">
 										  							</td>
 										  							<td>
-										  								<input type = "text" class = "form-control lblAmount" readonly name = "amount[]" placeholder="Amount" 
+										  								<input type = "text" class = "form-control lblAmount<?php echo $counter; ?>"  name = "amount[]" placeholder="Amount" 
 										  								value="<?php echo $details->getAmount(); ?>">
 										  								</td>
 										  						</tr>
+
+										  					<?php $counter++; ?>	
+										  					<input type="hidden" id="counter_form" value="<?php echo $counter; ?>">
 										  					<?php endforeach; ?>
 								  						<?php endif; ?>
 								  						<tr>
 								  							<td></td>
 								  							<td></td>
 								  							<td>Total:</td>
-								  							<td><input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="<?php echo $order->getTotal(); ?>"></td>
+								  							<td>	
+								  								<?php if($form_state == 1): ?>
+								  								<input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="0.00">
+																<?php elseif($form_state == 2): ?>
+																<input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="<?php echo $order->getTotal(); ?>">
+																<?php endif; ?>
+								  							</td>
 								  						</tr>
 								  					</tbody>
+								  					<input type="hidden" value="<?php echo $form_state; ?>" id = "form_state">
 								  						
 								  					<?php if($form_state == 2): ?>
 								  					<input type = "hidden" class = "form-control shipping_fee" name = "shipping"  value = "<?php echo $order->getShippingFee(); ?>">
@@ -1134,88 +1141,95 @@
 	  		}
 		});
 
-		  var counter = 0;
-		  var qty = 0;
-		  var price = 0.0;
-		  var amount = 0.0;
-		  var shipping = parseFloat($(".shipping_fee").val());
-		  var total= 0.0;
-		  var grand = 0.0;
-		  $("#add_more_button").click(function()
-		  {
-    			
-    			counter++;
-
-                var start = "<tr><td>";
-                var middle = "<select name = 'product[]' class = 'form-control item_list"+counter+" product"+counter+ " browser-default'>";
-                var end1 = "</select></td>"  + "<td><input type='text' name='quantity[]' class = 'form-control quantity"+counter+" browser-default' placeholder='Quantity' > </td>";
-                var end2 = "<td><input type = 'text' class = 'form-control lblUprice"+counter+"' name = 'unit_price[]' placeholder='Unit Price'></td>";
-                var end3 = "<td><input type = 'text' class = 'form-control lblAmount"+counter+"' readonly name = 'amount[]' placeholder='Amount'></td>";
-                var superEnd = "</tr>";
-                var combine = start + middle + end1 + end2  + end3 + superEnd;
-                $('.order-table tbody').prepend(combine);
-	             $.ajax({
-	                    type: "GET",
-	                    url: '../process/ajax/get_items.php',
-	                    data: 'json',
-	                    success: function(data)
-	                    {
-	                       	var datas = JSON.parse(data);
-
-							
-	                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
-	                        for (var i = 0; i < datas.length; i++) 
-	                        {
-	                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
-	                            
-	                        }
-	                        $('.item_list'+counter).change(function()
-	                         {	
-	                            	$('.quantity'+counter).change(function () 
-								  	{ 
-								  		qty = parseInt($(".quantity"+counter).val());
-								  		
-								  		 $('.lblUprice'+counter).change(function () 
-										  	{ 
-										  		price = parseFloat($(".lblUprice"+counter).val());
-										  		amount = parseFloat(qty * price);
-	                                                // compute total
-	                                                //total = parseFloat($('.displayTotal').val());
-	                                                // grand = parseFloat( total + amount + shipping);
-	                                                 grand = parseFloat( total + amount );
-	                                                // grand = parseFloat(total);
-										  		$(".lblAmount"+counter).val(amount.toFixed(2));
-										  		$(".displayTotal").val(grand.toFixed(2));
-										  	}
-										  );
-								  	}
-								  );
-	                            
-	                        });//end of item list
-	                    }
-	                }); // end of ajax                 
-		  });
+		var state = $("#form_state").val();
+		if(state == 1)
+		{
+			  var counter = 0;
+			  var qty = 0;
+			  var price = 0.0;
+			  var amount = 0.0;
+			  var shipping = parseFloat($(".shipping_fee").val());
+			  var total= 0.0;
+			  var grand = 0.0;
+			  $("#add_more_button").click(function()
+			  {
+	    			counter++;
+	                var start = "<tr><td>";
+	                var middle = "<select name = 'product[]' class = 'form-control item_list"+counter+" product"+counter+ " browser-default'>";
+	                var end1 = "</select></td>"  + "<td><input type='text' name='quantity[]' class = 'form-control quantity"+counter+" browser-default' value='0.00' placeholder='Quantity' > </td>";
+	                var end2 = "<td><input type = 'text' value='0.00' class = 'form-control lblUprice"+counter+"' name = 'unit_price[]' placeholder='Unit Price'></td>";
+	                var end3 = "<td><input type = 'text' value='0.00' class = 'form-control lblAmount"+counter+"'  name = 'amount[]' placeholder='Amount'></td>";
+	                var superEnd = "</tr>";
+	                var combine = start + middle + end1 + end2  + end3 + superEnd;
+	                $('.order-table tbody').prepend(combine);
+		             $.ajax({
+		                    type: "GET",
+		                    url: '../process/ajax/get_items.php',
+		                    data: 'json',
+		                    success: function(data)
+		                    {
+		                       	var datas = JSON.parse(data);
+		                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
+		                        for (var i = 0; i < datas.length; i++) 
+		                        {
+		                            // $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
+		                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description + '</option>');
+		                            
+		                        }
+		                        $('.item_list'+counter).change(function()
+		                         {	
+		                            	$('.quantity'+counter).change(function () 
+									  	{ 
+									  		qty = parseInt($(".quantity"+counter).val());
+									  		
+									  		 $('.lblAmount'+counter).change(function () 
+											  	{ 
+											  		price = parseFloat($(".lblUprice"+counter).val());
+											  		amount = parseFloat($(".lblAmount"+counter).val());
+		                                            total = parseFloat($('.displayTotal').val());
+		                                             // grand = parseFloat( total + amount + shipping);
+		                                            grand = parseFloat( total + amount );
+											  		$(".lblAmount"+counter).val(amount.toFixed(2));
+											  		$(".displayTotal").val(grand.toFixed(2));
+											  	}
+											  );
+									  	}
+									  );
+		                        });//end of item list
+		                    }
+		                }); // end of ajax                 
+			  });
 		
-			$('.item_list').change(function()
-	       {
-	            $('.quantity').change(function () 
-			  	{ 
-			  		qty = parseInt($(".quantity").val());
-			  		console.log(qty);
-			  		 $('.lblUprice').change(function () 
-					  	{ 
-					  		price = parseFloat($(".lblUprice").val());
-					  		amount = parseFloat(qty * price);
-					  		total = parseFloat(amount);
-					  		//grand = parseFloat(total + shipping);
-					  		grand = parseFloat(total);
-					  	
-					  		$(".lblAmount").val(amount.toFixed(2));
-					  		$(".displayTotal").val(grand.toFixed(2) );
-					  	}
-					  );
-			  	}
-			  );
-			});//end of item list	   
+			   $('.item_list').change(function()
+		       {
+		            $('.quantity').change(function () 
+				  	{ 
+				  		qty = parseInt($(".quantity").val());
+				  		 $('.lblAmount').change(function () 
+						  	{ 
+						  		price = parseFloat($(".lblUprice").val());
+						  		amount = parseFloat($(".lblAmount").val());
+						  		total = parseFloat(amount);
+						  		//grand = parseFloat(total + shipping);
+						  		grand = parseFloat(total);
+						  		$(".lblAmount").val(amount.toFixed(2));
+						  		$(".displayTotal").val(grand.toFixed(2) );
+						  	}
+						  );
+				  	}
+				  );
+				});//end of item list	   
+		}
+		else
+		{
+			var counters= $("#counter_form").val();
+			alert(state);
+			   
+
+		}
+
+
+
+		  
 	} );
 </script>

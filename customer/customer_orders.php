@@ -112,16 +112,26 @@
 																	<th>Invoice Number</th>
 																	<th>Remarks</th>
 																	<th>Total</th>
+																	<th>Status</th>
 																	<th>Action</th>
 																</thead>
 																<tbody>
 																	<?php foreach($get_orders as $o): ?>
 																	<tr>
-																		<td><?php echo "INV-".$o['id'];?></td>
+																		<td><?php echo $o['invoice_number']; ?></td>
 																		<td><?php echo $o['remarks'];?></td>
 																		<td><?php echo $o['total'];?></td>
+																		<td>
+																			<?php 
+																				if($o['status'] == 0 )
+																					echo "On Hold";
+																				else if($o['status'] == 1)
+																					echo "Approved";
+																			?>
+
+																		</td>
 																		<td> 
-																		<a href="../orders/manage.php?id=<?php echo $o['id']; ?>&view" >
+																		<a href="../orders/manage.php?id=<?php echo $o['id']; ?>&view_record" >
 												                            <span class="label label-inverse" style = "color:black;">
 												                                <i class="fa fa-edit"></i> View Record
 												                            </span>

@@ -20,7 +20,7 @@
 
 // DB table to use
 session_start();
-$table = 'orders';
+$table = 'customer_refund';
 
 // Table's primary key
 $primaryKey = 'id';
@@ -29,29 +29,28 @@ $primaryKey = 'id';
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
-
 $columns = array(
-    array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
-    array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
+    array( 'db' => '`r`.`id`',              'dt' => 0, 'field' => 'id' ),
+    array( 'db' => '`r`.`date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
                 return date('Y-m-d', strtotime( $d));
-            }, 'field' => 'order_date' 
+            }, 'field' => 'date' 
         ),
-    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "full_name", "as" => "full_name" ),
-    array( 'db' => '`o`.`status`', 'dt' => 4, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`invoice_number`',  'dt' => 2, 'field' => 'invoice_number' ),
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 3, "field" => "name", "as" => "name" ),
+    array( 'db' => '`r`.`amount`',  'dt' => 4, 'field' => 'amount' ),
+    array( 'db' => '`r`.`id`',              'dt' => 5, 'formatter' => function( $d, $row )
             {
-                if($d == 0)
-                    return "On Hold";
-                else if($d == 1)
-                    return "Approved";
-                else if($d == 2)
-                    return "Shipped";
-            }, 'field' => 'status' 
-        ),
-   
+                return '
+                        <a href="customer_refund_manage.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> Edit
+                            </span>
+                        </a> &nbsp;
+                        ';
+            },
+            'field' => 'id' )
     );
-
 // SQL server connection information
 $sql_details = array(
     'user' => 'root',
@@ -69,16 +68,14 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-      $joinQuery = "FROM orders o
-                  JOIN customer c 
-                ON o.customer_id = c.id 
-                JOIN shipping_method s
-                ON s.id = o.shipping_method_id
-                JOIN users u 
-                ON o.prepared_by = u.id
-               ";
-      $extraWhere =  "o.status BETWEEN 0 AND 1" ;
     
+    $joinQuery = "FROM customer_refund r
+                  JOIN orders o 
+                  ON o.id = r.order_id 
+                  JOIN customer c
+                  ON o.customer_id = c.id";
+                
+    $extraWhere =  "r.status = 1" ;
     
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )

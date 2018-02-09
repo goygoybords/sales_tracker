@@ -4,8 +4,15 @@
 		header("location: ../index.php");
 		exit;
 	}
+
 	include '../include/start.html';
 	require('../include/header.php');
+	require '../class/database.php';
+	$db = new Database();
+
+	$list_agents = $db->select("users" , array('id', 'first_name', 'lastname') , "usertypeid = 3");
+	$list_teams = $db->select("teams" , array('id, team_name'), 'status = 1' );
+
 ?>
 <!-- BEGIN BASE-->
 <div id="base">
@@ -25,7 +32,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i> User Accounts</header>
+								<header><i class="fa fa-fw fa-users"></i>Logs</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -38,6 +45,8 @@
 										$error = 'Record was deleted previously';
 									else if($msg == 'none')
 										$error = 'Sorry, the record selected does not exist.';
+									else if($msg == 'approved')
+										$error = 'Record Approved';
 									echo '<span>'.$error.'</span>';
 								}
 							?>
@@ -45,31 +54,24 @@
 							<div class="col-lg-offset-0 col-md-12">
 								<div class="card-body style-default-bright">
 									<div class="card-body">
-										<div class="row">
-											<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
-												<a class="btn btn-success btn-block" href="manage.php" name="btnAddUser" id="btnAddUser">ADD NEW USER</a>
-											</div>
-										</div>
 										<br />
 										<div class="col-lg-offset-0 col-md-12">
-											<div class = "row" >
-												<table class = "display responsive nowrap" id = "user-tbl">
-													<thead>
-														<th>#</th>
-														<th>Employee Name</th>
-														<th>Email</th>
-														<th>User Type</th>
-														<th>Sales Team</th>
-														<th>Action</th>
-													</thead>
-												</table>
-											</div>
+											<table class = "table display responsive nowrap" id = "lead-tbl">
+												<thead>
+													<th>#</th>
+													<th>Invoice Number</th>
+													<th>Date</th>
+													<th>User</th>
+													<th>Description</th>		
+												</thead>
+										
+											</table>
 										</div>
-									</div><!--end .card -->
-								</div><!--end .col -->
-							</div>
-						</div><!--end .card -->
-					</div>
+									</div>
+								</div><!--end .card -->
+							</div><!--end .col -->
+						</div>
+					</div><!--end .card -->
 				</div>
 			</div>
 		</section>
@@ -85,15 +87,15 @@
 <script type="text/javascript">
 	$(document).ready(function()
 	{
-	    $('#user-tbl').DataTable(
+		var dataTable = $('#lead-tbl').DataTable(
 	    {
 			"bProcessing": true,
 			"bServerSide": true,
-			"responsive": true,
+				"responsive": true,
 	        "sPaginationType": "full_numbers",
-	        "order": [0,'asc'],
+	        "order": [0,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/user_list.php", // json datasource
+	                url :"../process/ajax/logs_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
 	    } );

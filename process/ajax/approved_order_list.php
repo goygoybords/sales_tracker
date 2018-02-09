@@ -32,38 +32,42 @@ $primaryKey = 'id';
 
 $columns = array(
     array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
-
-
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
                 return date('Y-m-d', strtotime( $d));
             }, 'field' => 'order_date' 
         ),
-
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-
-    array( 'db' => '`o`.`total`',       'dt' => 3, 'field' => 'total' ),
-    array( 'db' => '`s`.`description`', 'dt' => 4, 'field' => 'description' ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 5, 'field' => 'remarks' ),
-    array( 'db' => '`o`.`notes`',       'dt' => 6, 'field' => 'notes' ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 7, "field" => "full_name", "as" => "full_name" ),
-
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 8, "field" => "approved_by", "as" => "approved_by" ),
-    array( 'db' => '`o`.`tracking_number`',       'dt' => 9, 'field' => 'tracking_number' ),
-    array( 'db' => '`o`.`id`',          'dt' => 10, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "approved_by", "as" => "approved_by" ),
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 5, "field" => "updated_by", "as" => "updated_by" ),
+    array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
+            {
+                if($d == 1)
+                    return "Approved";
+                else if($d == 2)
+                    return "Shipped";
+            }, 'field' => 'status' 
+        ),
+    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
-                return ' <a href="manage.php?id='.$d.'&add_tracking" >
+                return '<a href="../process/order_manage.php?id='.$d.'&shipped">
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Add Tracking Number
+                                <i class="fa fa-ship"></i> Ship
                             </span>
-                        </a> &nbsp;
-                        <a href="../process/order_manage.php?id='.$d.'&send_mail">
+                        </a>
+                        <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Send Mail
+                                <i class="fa fa-edit"></i> Edit
                             </span>
                         </a>';
+                        // <a href="../process/order_manage.php?id='.$d.'&send_mail">
+                        //     <span class="label label-inverse" style = "color:black;">
+                        //         <i class="fa fa-share"></i> Mail
+                        //     </span>
+                        // </a>'
               }
               else
               {
@@ -74,7 +78,6 @@ $columns = array(
                             </span>
                         </a> &nbsp;';
               }
-                
             },
             'field' => 'id' 
             )

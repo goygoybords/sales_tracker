@@ -26,7 +26,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Approved Orders</header>
+								<header><i class="fa fa-fw fa-users"></i>Shipped Orders</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -41,11 +41,10 @@
 										$error = 'Sorry, the record selected does not exist.';
 									else if($msg == 'approved')
 										$error = 'Record Approved';
-									else if($msg == 'shipped')
-										$error = 'Record Shipped';
 									else if($msg == 'tracking')
 										$error = 'Record has a tracking number';
-
+									else if($msg == 'shipped')
+										$error = 'Order Shipped';
 									echo '<span>'.$error.'</span>';
 								}
 							?>
@@ -73,7 +72,7 @@
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th> -->
 														<th>Approved By</th>
-														<th>Updated By</th>
+														<!--<th>Tracking Number</th>-->
 														<th>Status</th>
 														<th>Action</th>
 													</thead>
@@ -122,20 +121,10 @@
 	        "sPaginationType": "full_numbers",
 	        "order": [0,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/approved_order_list.php", // json datasource
+	                url :"../process/ajax/reshipped_order_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
-
-
 	    } );
-
-	   //  $("#employee-grid_filter").css("display","none");
-
-	   //  $('.search-input-text').on( 'keyup click', function () {   // for text boxes
-				// 	var i =$(this).attr('data-column');  // getting column index
-				// 	var v =$(this).val();  // getting search input value
-				// 	dataTable.columns(i).search(v).draw();
-				// } );
 	} );
 </script>
 

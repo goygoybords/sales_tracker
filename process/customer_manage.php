@@ -11,7 +11,7 @@
 	$detail = new Order_Details();
 
 	extract($_POST);
-	if(!isset($_GET['del']))
+	if(!isset($_GET['del'])  AND !isset($_GET['active']))
 	{
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
@@ -109,6 +109,23 @@
 			header("location: ../customer/manage.php?id=".$customer->getCustomerId()."&msg=updated");
 		}
 
+	}
+	else if(isset($_GET['active']))
+	{
+
+		$customer_id = $_GET['id'];
+		$customer->setStatus(1);
+			
+			$fields = array("status");
+			$where  = "WHERE id = ?";
+			$params = array(
+					$customer->getStatus(),
+					$customer_id
+					);
+
+			$db->update("customer", $fields , $where, $params);
+
+			header("location: ../customer/blacklist_customer.php?msg=activated");
 	}
 		
 	else if(isset($_GET['del']))
