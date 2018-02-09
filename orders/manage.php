@@ -439,240 +439,112 @@
 												<br>
 												<br>
 												<table id="invoice-item-table" class="table table-bordered order-table" >
-                    <tr>
-                      <th width="7%">Sr No.</th>
-                      <th width="20%">Item Name</th>
-                      <th width="5%">Quantity</th>
-                      <th width="5%">Price</th>
-                      <th width="10%">Actual Amt.</th>
-                      <th width="12.5%" colspan="2">Tax1 (%)</th>
-                      <th width="12.5%" colspan="2">Tax2 (%)</th>
-                      <th width="12.5%" colspan="2">Tax3 (%)</th>
-                      <th width="12.5%" rowspan="2">Total</th>
-                      <th width="3%" rowspan="2"></th>
-                    </tr>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th>Rate</th>
-                      <th>Amt.</th>
-                      <th>Rate</th>
-                      <th>Amt.</th>
-                      <th>Rate</th>
-                      <th>Amt.</th>
-                    </tr>
-                    <?php if($form_state == 1): ?>
-                    <tr>
-                      <td><span id="sr_no">1</span></td>
-                      <td>
-                      	<select name="item_name[]" id="item_name1" class="form-control input-sm">
-							<option disabled selected>Choose Items Here</option>
-	  							<?php 
-	  								foreach ($list_product as $p ) : 
-	  									$product = new Product();
-	  									$product->setProductId($p['id']);
-	  									$product->setProductDescription($p['product_description']);
-	  									$product->setQuantity($p['quantity']);
-	  							?>
-	  								<option value ="<?php echo $product->getProductId(); ?>" >
-	  									<?php echo $product->getProductDescription(); ?>
-	  										
-	  									</option>
-	  							<?php endforeach;  ?>
-	  					</select>
-                      </td>
-                      <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
-                      <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" /></td>
-                      <td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount1" data-srno="1" class="form-control input-sm order_item_actual_amount" readonly /></td>
-                      <td><input type="text" name="order_item_tax1_rate[]" id="order_item_tax1_rate1" data-srno="1" class="form-control input-sm number_only order_item_tax1_rate" /></td>
-                      <td><input type="text" name="order_item_tax1_amount[]" id="order_item_tax1_amount1" data-srno="1" readonly class="form-control input-sm order_item_tax1_amount" /></td>
-                      <td><input type="text" name="order_item_tax2_rate[]" id="order_item_tax2_rate1" data-srno="1" class="form-control input-sm number_only order_item_tax2_rate" /></td>
-                      <td><input type="text" name="order_item_tax2_amount[]" id="order_item_tax2_amount1" data-srno="1" readonly class="form-control input-sm order_item_tax2_amount" /></td>
-                      <td><input type="text" name="order_item_tax3_rate[]" id="order_item_tax3_rate1" data-srno="1" class="form-control input-sm number_only order_item_tax3_rate" /></td>
-                      <td><input type="text" name="order_item_tax3_amount[]" id="order_item_tax3_amount1" data-srno="1" readonly class="form-control input-sm order_item_tax3_amount" /></td>
-                      <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" readonly class="form-control input-sm order_item_final_amount" /></td>
-                      <td></td>
-                    </tr>
-                <?php elseif ($form_state == 2): ?>
-                		<?php 
-                			$m = 1;
-							foreach ($get_orders as $g ): 
-								$details = new Order_Details();
-								$details->setProductId($g['product_id']);
-								$details->setQuantity($g['quantity']);
-								$details->setUnitPrice($g['unit_price']);
-								$details->setAmount($g['amount']);
-						?>
-						<tr>
-                      <td>
-                      	<span id="sr_no"><?php echo $m; ?></span>
-                      	<input type="hidden" name="counter" id = "counter" value="<?php echo count($get_orders); ?>">
-                      </td>
-                      <td>
-                      		<select name="item_name[]" id="item_name1" class="form-control input-sm">
-								<option disabled selected>Choose Items Here</option>
-		  							<?php 
-		  								foreach ($list_product as $p ) : 
-		  									$product = new Product();
-		  									$product->setProductId($p['id']);
-		  									$product->setProductDescription($p['product_description']);
-		  									$product->setQuantity($p['quantity']);
-		  							?>
-		  								<option value ="<?php echo $product->getProductId(); ?>" 
-											<?php echo ($product->getProductId() == $details->getProductId() ? "selected='selected'" : ""); ?>>
-  											<?php echo $product->getProductDescription(); ?>
-  										</option>
-		  							<?php endforeach;  ?>
-	  						</select>
-                      </td>
-                      <td><input type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $details->getQuantity(); ?>"/></td>
-                      <td><input type="text" name="order_item_price[]" id="order_item_price<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_price" value="<?php echo $details->getUnitPrice(); ?>" /></td>
-                      <td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_actual_amount" value="<?php echo $details->getAmount(); ?>" readonly /></td>
-
-                      <td><input type="text" name="order_item_tax1_rate[]" id="order_item_tax1_rate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_tax1_rate" value="" /></td>
-                      <td><input type="text" name="order_item_tax1_amount[]" id="order_item_tax1_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" readonly class="form-control input-sm order_item_tax1_amount" value="" /></td>
-                      <td><input type="text" name="order_item_tax2_rate[]" id="order_item_tax2_rate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_tax2_rate" value="" /></td>
-                      <td><input type="text" name="order_item_tax2_amount[]" id="order_item_tax2_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" readonly class="form-control input-sm order_item_tax2_amount" value="" /></td>
-                      <td><input type="text" name="order_item_tax3_rate[]" id="order_item_tax3_rate<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_tax3_rate" value="" /></td>
-                      <td><input type="text" name="order_item_tax3_amount[]" id="order_item_tax3_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" readonly class="form-control input-sm order_item_tax3_amount" value="" /></td>
-                      <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" readonly class="form-control input-sm order_item_final_amount" value="" /></td>
-                      <td></td>
-                    </tr>
-					<?php  $m++; endforeach; ?>
-            	<?php endif;?>
-                  </table>
-                  <table>
-                  	<tr>
-	                <td align="right"><b>Total</td>
-	                <td align="right">
-	                	<?php if($form_state == 1): ?>
-							<input type = "text" name = "total" class = "form-control displayTotal" id = "final_total_amt" readonly value="0.00">
-						<?php elseif($form_state == 2): ?>
-							<input type = "text" name = "total" class = "form-control displayTotal" id = "final_total_amt" readonly value="<?php echo $order->getTotal(); ?>">
-							
-						<?php endif; ?>
-	                		
-	                </td>
-	              </tr>
-	              <tr>
-	                <td colspan="2"></td>
-	              </tr>
-	              <tr>
-	                <td colspan="2" align="center">
-	                  <input type="hidden" name="total_item" id="total_item" value="1" />
-	                </td>
-	              </tr>
-                  </table>
-												<!-- <table class = "table order-table" border="1">
-								  					<thead>
-								  						<tr>
-								  							<th>Product</th>
-								  							<th>Quantity</th>
-								  							<th>Unit Price</th>
-								  							<th>Amount</th>
-								  						<tr>
-								  					</thead>
-								  					<tbody>
-								  						<?php if($form_state == 1): ?>
-															<tr>
-									  							<td>
-									  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list browser-default">
-										  							<option disabled selected>Choose Items Here</option>
-												  							<?php 
-												  								foreach ($list_product as $p ) : 
-												  									$product = new Product();
-												  									$product->setProductId($p['id']);
-												  									$product->setProductDescription($p['product_description']);
-												  									$product->setQuantity($p['quantity']);
-												  							?>
-												  								<option value ="<?php echo $product->getProductId(); ?>" >
-												  									<?php echo $product->getProductDescription(); ?>
-												  										
-												  									</option>
-												  							<?php endforeach;  ?>
-												  					</select>
-									  							</td>
-									  							<td>
-									  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity browser-default" value = "0.00" placeholder="Quantity" >		
-												  				</td>
-									  							<td><input type = "text" class = "form-control lblUprice" name = "unit_price[]" value = "0.00" placeholder="Unit Price"></td>
-									  							<td><input type = "text" class = "form-control lblAmount" name = "amount[]" value = "0.00" placeholder="Amount"></td>
-									  						</tr>
-
-								  						<?php elseif ($form_state == 2): ?>
+							                    <tr>
+							                      <th>No</th>
+							                      <th>Item Name</th>
+							                      <th>Quantity</th>
+							                      <th>Price</th>
+							                      <th>Actual Amt.</th>
+							                      <th></th>
+							                    
+							                    </tr>
+							                    <?php if($form_state == 1): ?>
+							                    <tr>
+							                      <td><span id="sr_no">1</span></td>
+							                      <td>
+							                      	<select name="item_name[]" id="item_name1" class="form-control input-sm" >
+														<option disabled selected>Choose Items Here</option>
 								  							<?php 
-								  								$counter  = count($get_orders) - 1;
-								  								foreach ($get_orders as $g ): 
-								  									$details = new Order_Details();
-								  									$details->setProductId($g['product_id']);
-								  									$details->setQuantity($g['quantity']);
-								  									$details->setUnitPrice($g['unit_price']);
-								  									$details->setAmount($g['amount']);
-
+								  								foreach ($list_product as $p ) : 
+								  									$product = new Product();
+								  									$product->setProductId($p['id']);
+								  									$product->setProductDescription($p['product_description']);
+								  									$product->setQuantity($p['quantity']);
 								  							?>
-								  								<input type="hidden" id="counter_form" value="<?php echo $counter; ?>">
-									  							<tr>
-										  							<td>
-										  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list<?php echo $counter; ?> browser-default">
-											  							<option disabled selected>Choose Items Here</option>
-											  								<?php 
-													  								foreach ($list_product as $p ) : 
-													  									$product = new Product();
-													  									$product->setProductId($p['id']);
-													  									$product->setProductDescription($p['product_description']);
-													  							?>
-													  								<option value ="<?php echo $product->getProductId(); ?>" 
-																						<?php echo ($product->getProductId() == $details->getProductId() ? "selected='selected'" : ""); ?>
-													  								>
-													  									<?php echo $product->getProductDescription(); ?>
-													  										
-													  									</option>
-													  							<?php endforeach;  ?>
-													  							
-													  					</select>
-										  							</td>
-										  							<td>
-										  								<input type="text" name="quantity[]" <?php echo $read_only; ?> class = "form-control quantity<?php echo $counter; ?> browser-default" placeholder="Quantity" 
-										  								value = "<?php echo $details->getQuantity();  ?>">		
-													  				</td>
-										  							<td>
-										  								<input type = "text" class = "form-control lblUprice<?php echo $counter; ?>"  name = "unit_price[]" placeholder="Unit Price" 
-										  								value = "<?php echo $details->getUnitPrice(); ?>">
-										  							</td>
-										  							<td>
-										  								<input type = "text" class = "form-control lblAmount<?php echo $counter; ?>"  name = "amount[]" placeholder="Amount" 
-										  								value="<?php echo $details->getAmount(); ?>">
-										  								</td>
-										  						</tr>
+								  								<option value ="<?php echo $product->getProductId(); ?>" >
+								  									<?php echo $product->getProductDescription(); ?>
+								  										
+								  									</option>
+								  							<?php endforeach;  ?>
+								  					</select>
+							                      </td>
+							                      <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" value = "0.00" /></td>
+							                      <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" value = "0.00" /></td>
+							                      <td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount1" data-srno="1" class="form-control input-sm order_item_actual_amount" value = "0.00"  /></td>
+							                      <td></td>
+							                    </tr>
+							                <?php elseif ($form_state == 2): ?>
+							                		<?php 
+							                			$m = 1;
+														foreach ($get_orders as $g ): 
+															$details = new Order_Details();
+															$details->setProductId($g['product_id']);
+															$details->setQuantity($g['quantity']);
+															$details->setUnitPrice($g['unit_price']);
+															$details->setAmount($g['amount']);
+													?>
+													<tr>
+							                      <td>
+							                      	<span id="sr_no"><?php echo $m; ?></span>
+							                      	<input type="hidden" name="counter" id = "counter" value="<?php echo count($get_orders); ?>">
+							                      </td>
+							                      <td>
+							                      		<select name="item_name[]" id="item_name1" class="form-control input-sm" <?php echo $disabled; ?> >
+															<option disabled selected>Choose Items Here</option>
+									  							<?php 
+									  								foreach ($list_product as $p ) : 
+									  									$product = new Product();
+									  									$product->setProductId($p['id']);
+									  									$product->setProductDescription($p['product_description']);
+									  									$product->setQuantity($p['quantity']);
+									  							?>
+									  								<option value ="<?php echo $product->getProductId(); ?>" 
+																		<?php echo ($product->getProductId() == $details->getProductId() ? "selected='selected'" : ""); ?>>
+							  											<?php echo $product->getProductDescription(); ?>
+							  										</option>
+									  							<?php endforeach;  ?>
+								  						</select>
+							                      </td>
+							                      <td>
+							                      	<input <?php echo $read_only; ?> type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $details->getQuantity(); ?>"/>
+							                      	</td>
+							                      <td>
+							                      	<input <?php echo $read_only; ?> type="text" name="order_item_price[]" id="order_item_price<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_price" value="<?php echo $details->getUnitPrice(); ?>" /></td>
+							                      <td>
+							                      	<input <?php echo $read_only; ?> type="text" name="order_item_actual_amount[]" id="order_item_actual_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_actual_amount" value="<?php echo $details->getAmount(); ?>"  /></td>
+							                      <td></td>
+							                    </tr>
+												<?php  $m++; endforeach; ?>
+							            	<?php endif;?>
+							                  </table>
+							                  <table>
+							                  	<tr>
+								                <td align="right"><b>Total</td>
+								                <td align="right">
+								                	<?php if($form_state == 1): ?>
+														<input type = "text" name = "total" class = "form-control displayTotal" id = "final_total_amt" readonly value="0.00">
+													<?php elseif($form_state == 2): ?>
+														<input type = "text" name = "total" class = "form-control displayTotal" id = "final_total_amt" readonly value="<?php echo $order->getTotal(); ?>">
+														
+													<?php endif; ?>
 
-										  					<?php $counter--; ?>	
-										  					<?php endforeach; ?>
-								  						<?php endif; ?>
-								  						<tr>
-								  							<td></td>
-								  							<td></td>
-								  							<td>Total:</td>
-								  							<td>	
-								  								<?php if($form_state == 1): ?>
-								  								<input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="0.00">
-																<?php elseif($form_state == 2): ?>
-																<input type = "text" name = "total" class = "form-control displayTotal" readonly placeholder = "Total" value="<?php echo $order->getTotal(); ?>">
-																<?php endif; ?>
-								  							</td>
-								  						</tr>
-								  					</tbody>
-								  					
-								  						
-								  					<?php if($form_state == 2): ?>
-								  					<input type = "hidden" class = "form-control shipping_fee" name = "shipping"  value = "<?php echo $order->getShippingFee(); ?>">
+													<?php if($form_state == 2): ?>
+								  						<input type = "hidden" class = "form-control shipping_fee" name = "shipping"  value = "<?php echo $order->getShippingFee(); ?>">
 								  					<?php else : ?>
 								  						<input type = "hidden" class = "form-control shipping_fee" name = "shipping" value = "">
 								  					<?php endif ;?>
-								  						
-											</table> -->
+								                		
+								                </td>
+								              </tr>
+								              <tr>
+								                <td colspan="2"></td>
+								              </tr>
+								              <tr>
+								                <td colspan="2" align="center">
+								                  <input type="hidden" name="total_item" id="total_item" value="1" />
+								                </td>
+								              </tr>
+							                  </table>
 											</div>
 										</div>
 
@@ -1271,31 +1143,27 @@
 		});
 
 		var state = $("#form_state").val();
+		var count = 0;
+		var final_total_amt = $('#final_total_amt').text();
 		if(state == 1)
 		{
-			var final_total_amt = $('#final_total_amt').text();
-        	var count = 1;
-        
+        	count = 1;
+    	}
+    	else if(state == 2)
+    	{
+        	count = $("#counter").val() ;
+        	count = parseInt(count);
+        }
         $(document).on('click', '#add_row', function(){
           count++;
           $('#total_item').val(count);
           var html_code = '';
           html_code += '<tr id="row_id_'+count+'">';
           html_code += '<td><span id="sr_no">'+count+'</span></td>';
-          
           html_code += '<td><select name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></select></td>';
-          
-          html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
-          html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" /></td>';
-          html_code += '<td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_actual_amount" readonly /></td>';
-          
-          html_code += '<td><input type="text" name="order_item_tax1_rate[]" id="order_item_tax1_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax1_rate" /></td>';
-          html_code += '<td><input type="text" name="order_item_tax1_amount[]" id="order_item_tax1_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax1_amount" /></td>';
-          html_code += '<td><input type="text" name="order_item_tax2_rate[]" id="order_item_tax2_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax2_rate" /></td>';
-          html_code += '<td><input type="text" name="order_item_tax2_amount[]" id="order_item_tax2_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax2_amount" /></td>';
-          html_code += '<td><input type="text" name="order_item_tax3_rate[]" id="order_item_tax3_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax3_rate" /></td>';
-          html_code += '<td><input type="text" name="order_item_tax3_amount[]" id="order_item_tax3_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax3_amount" /></td>';
-          html_code += '<td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_final_amount" /></td>';
+          html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" value="0.00" /></td>';
+          html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
+          html_code += '<td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_actual_amount" value="0.00" /></td>';
           html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
           html_code += '</tr>';
 
@@ -1309,9 +1177,7 @@
                 $('#item_name'+count).append('<option disabled selected>Choose Items Here</option>');
                 for (var i = 0; i < datas.length; i++) 
                 {
-                    // $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
                     $('#item_name'+count).append('<option value='+datas[i].id+'>'+datas[i].product_description + '</option>');
-                    
                 }
             }
         	});
@@ -1351,167 +1217,26 @@
               price = $('#order_item_price'+j).val();
               if(price > 0)
               {
-                actual_amount = parseFloat(quantity) * parseFloat(price);
-                $('#order_item_actual_amount'+j).val(actual_amount);
-                tax1_rate = $('#order_item_tax1_rate'+j).val();
-                if(tax1_rate > 0)
-                {
-                  tax1_amount = parseFloat(actual_amount)*parseFloat(tax1_rate)/100;
-                  $('#order_item_tax1_amount'+j).val(tax1_amount);
-                }
-                tax2_rate = $('#order_item_tax2_rate'+j).val();
-                if(tax2_rate > 0)
-                {
-                  tax2_amount = parseFloat(actual_amount)*parseFloat(tax2_rate)/100;
-                  $('#order_item_tax2_amount'+j).val(tax2_amount);
-                }
-                tax3_rate = $('#order_item_tax3_rate'+j).val();
-                if(tax3_rate > 0)
-                {
-                  tax3_amount = parseFloat(actual_amount)*parseFloat(tax3_rate)/100;
-                  $('#order_item_tax3_amount'+j).val(tax3_amount);
-                }
-                item_total = parseFloat(actual_amount) + parseFloat(tax1_amount) + parseFloat(tax2_amount) + parseFloat(tax3_amount);
-                final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
-                $('#order_item_final_amount'+j).val(item_total);
+              	 actual_amount = $('#order_item_actual_amount'+j).val();
+              	if(actual_amount > 0)
+              	{
+              		//actual_amount = parseFloat(quantity) * parseFloat(price);
+              		item_total = parseFloat(actual_amount);
+	                final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
+	                $('#order_item_final_amount'+j).val(item_total);
+              	}  
               }
             }
           }
           $('#final_total_amt').val(final_item_total);
         }
 
-        $(document).on('blur', '.order_item_price', function(){
+        $(document).on('blur', '.order_item_actual_amount', function(){
 
           cal_final_total(count);
         });
 
-        $(document).on('blur', '.order_item_tax1_rate', function(){
-          cal_final_total(count);
-        })
-
-        $(document).on('blur', '.order_item_tax2_rate', function(){
-          cal_final_total(count);
-        });
-
-        $(document).on('blur', '.order_item_tax3_rate', function(){
-          cal_final_total(count);
-        });
-
-   
-		}
-		else
-		{
-			var final_total_amt = $('#final_total_amt').val();
-        	var count = $("#counter").val() ;
-        	var count = parseInt(count);
-        	
-	        $(document).on('click', '#add_row', function(){
-	          count++;
-	          $('#total_item').val(count);
-	          var html_code = '';
-	          html_code += '<tr id="row_id_'+count+'">';
-	          html_code += '<td><span id="sr_no">'+count+'</span></td>';
-	          
-	          html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
-	          
-	          html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
-	          html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" /></td>';
-	          html_code += '<td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_actual_amount" readonly /></td>';
-	          
-	          html_code += '<td><input type="text" name="order_item_tax1_rate[]" id="order_item_tax1_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax1_rate" /></td>';
-	          html_code += '<td><input type="text" name="order_item_tax1_amount[]" id="order_item_tax1_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax1_amount" /></td>';
-	          html_code += '<td><input type="text" name="order_item_tax2_rate[]" id="order_item_tax2_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax2_rate" /></td>';
-	          html_code += '<td><input type="text" name="order_item_tax2_amount[]" id="order_item_tax2_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax2_amount" /></td>';
-	          html_code += '<td><input type="text" name="order_item_tax3_rate[]" id="order_item_tax3_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax3_rate" /></td>';
-	          html_code += '<td><input type="text" name="order_item_tax3_amount[]" id="order_item_tax3_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax3_amount" /></td>';
-	          html_code += '<td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_final_amount" /></td>';
-	          html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
-	          html_code += '</tr>';
-	          $('#invoice-item-table').append(html_code);
-	        });
-	        
-	        $(document).on('click', '.remove_row', function(){
-	          var row_id = $(this).attr("id");
-	          var total_item_amount = $('#order_item_final_amount'+row_id).val();
-	          var final_amount = $('#final_total_amt').text();
-	          var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
-	          $('#final_total_amt').val(result_amount);
-	          $('#row_id_'+row_id).remove();
-	          count--;
-	          $('#total_item').val(count);
-	        });
-
-	        function cal_final_total(count)
-	        {
-	          var final_item_total = 0;
-	          for(j=1; j<=count; j++)
-	          {
-	            var quantity = 0;
-	            var price = 0;
-	            var actual_amount = 0;
-	            var tax1_rate = 0;
-	            var tax1_amount = 0;
-	            var tax2_rate = 0;
-	            var tax2_amount = 0;
-	            var tax3_rate = 0;
-	            var tax3_amount = 0;
-	            var item_total = 0;
-	            quantity = $('#order_item_quantity'+j).val();
-	            if(quantity > 0)
-	            {
-	              price = $('#order_item_price'+j).val();
-	              if(price > 0)
-	              {
-	                actual_amount = parseFloat(quantity) * parseFloat(price);
-	                $('#order_item_actual_amount'+j).val(actual_amount);
-	                tax1_rate = $('#order_item_tax1_rate'+j).val();
-	                if(tax1_rate > 0)
-	                {
-	                  tax1_amount = parseFloat(actual_amount)*parseFloat(tax1_rate)/100;
-	                  $('#order_item_tax1_amount'+j).val(tax1_amount);
-	                }
-	                tax2_rate = $('#order_item_tax2_rate'+j).val();
-	                if(tax2_rate > 0)
-	                {
-	                  tax2_amount = parseFloat(actual_amount)*parseFloat(tax2_rate)/100;
-	                  $('#order_item_tax2_amount'+j).val(tax2_amount);
-	                }
-	                tax3_rate = $('#order_item_tax3_rate'+j).val();
-	                if(tax3_rate > 0)
-	                {
-	                  tax3_amount = parseFloat(actual_amount)*parseFloat(tax3_rate)/100;
-	                  $('#order_item_tax3_amount'+j).val(tax3_amount);
-	                }
-	                item_total = parseFloat(actual_amount) + parseFloat(tax1_amount) + parseFloat(tax2_amount) + parseFloat(tax3_amount);
-	                final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
-	                $('#order_item_final_amount'+j).val(item_total);
-	              }
-	            }
-	          }
-	          $('#final_total_amt').val(final_item_total);
-	        }
-
-	        $(document).on('blur', '.order_item_price', function(){
-	          cal_final_total(count);
-	        });
-
-	        $(document).on('blur', '.order_item_tax1_rate', function(){
-	          cal_final_total(count);
-	        });
-
-	        $(document).on('blur', '.order_item_tax2_rate', function(){
-	          cal_final_total(count);
-	        });
-
-	        $(document).on('blur', '.order_item_tax3_rate', function(){
-	          cal_final_total(count);
-	        });
-			
-
-		}
-
-
-
+		
 		  
 	} );
 </script>
