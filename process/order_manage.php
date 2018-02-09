@@ -216,13 +216,13 @@
 					$someone_id = $db->insert("order_send_someone", $data);
 
 					//Order Detail Detail Entries
-			        for($i=0; $i < count($product) ; $i++)
+			        for($i=0; $i < count($item_name) ; $i++)
 			        {
 			            $detail->setOrderId($order_id);
-			            $detail->setProductId(intval($product[$i]));
-			            $detail->setQuantity(intval($quantity[$i]));
-			            $detail->setUnitPrice(doubleval($unit_price[$i]));
-			            $detail->setAmount(doubleval($amount[$i]));
+			            $detail->setProductId(intval($item_name[$i]));
+			            $detail->setQuantity(intval($order_item_quantity[$i]));
+			            $detail->setUnitPrice(doubleval($order_item_price[$i]));
+			            $detail->setAmount(doubleval($order_item_actual_amount[$i]));
 			            $detail->setStatus(1);
 
 			            $data = [

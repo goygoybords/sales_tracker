@@ -434,10 +434,68 @@
 											            </div>
 													</div>
 											<div class = "col-lg-12">
-												<a id = "add_more_button" class = "btn btn-info">Add More Items</a>
+												<input type="hidden" value="<?php echo $form_state; ?>" id = "form_state">
+												<a id = "add_row" class = "btn btn-info">Add More Items</a>
 												<br>
 												<br>
-												<table class = "table order-table" border="1">
+												<table id="invoice-item-table" class="table table-bordered order-table" >
+                    <tr>
+                      <th width="7%">Sr No.</th>
+                      <th width="20%">Item Name</th>
+                      <th width="5%">Quantity</th>
+                      <th width="5%">Price</th>
+                      <th width="10%">Actual Amt.</th>
+                      <th width="12.5%" colspan="2">Tax1 (%)</th>
+                      <th width="12.5%" colspan="2">Tax2 (%)</th>
+                      <th width="12.5%" colspan="2">Tax3 (%)</th>
+                      <th width="12.5%" rowspan="2">Total</th>
+                      <th width="3%" rowspan="2"></th>
+                    </tr>
+                    <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th>Rate</th>
+                      <th>Amt.</th>
+                      <th>Rate</th>
+                      <th>Amt.</th>
+                      <th>Rate</th>
+                      <th>Amt.</th>
+                    </tr>
+                    <tr>
+                      <td><span id="sr_no">1</span></td>
+                      <td><input type="text" name="item_name[]" id="item_name1" class="form-control input-sm" /></td>
+                      <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
+                      <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" /></td>
+                      <td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount1" data-srno="1" class="form-control input-sm order_item_actual_amount" readonly /></td>
+                      <td><input type="text" name="order_item_tax1_rate[]" id="order_item_tax1_rate1" data-srno="1" class="form-control input-sm number_only order_item_tax1_rate" /></td>
+                      <td><input type="text" name="order_item_tax1_amount[]" id="order_item_tax1_amount1" data-srno="1" readonly class="form-control input-sm order_item_tax1_amount" /></td>
+                      <td><input type="text" name="order_item_tax2_rate[]" id="order_item_tax2_rate1" data-srno="1" class="form-control input-sm number_only order_item_tax2_rate" /></td>
+                      <td><input type="text" name="order_item_tax2_amount[]" id="order_item_tax2_amount1" data-srno="1" readonly class="form-control input-sm order_item_tax2_amount" /></td>
+                      <td><input type="text" name="order_item_tax3_rate[]" id="order_item_tax3_rate1" data-srno="1" class="form-control input-sm number_only order_item_tax3_rate" /></td>
+                      <td><input type="text" name="order_item_tax3_amount[]" id="order_item_tax3_amount1" data-srno="1" readonly class="form-control input-sm order_item_tax3_amount" /></td>
+                      <td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount1" data-srno="1" readonly class="form-control input-sm order_item_final_amount" /></td>
+                      <td></td>
+                    </tr>
+                  </table>
+                  <table>
+                  	<tr>
+	                <td align="right"><b>Total</td>
+	                <td align="right">
+	                	<b><input type = "text" name = "total" class = "form-control displayTotal" id = "final_total_amt" readonly placeholder = "Total" value="0.00"></b></td>
+	              </tr>
+	              <tr>
+	                <td colspan="2"></td>
+	              </tr>
+	              <tr>
+	                <td colspan="2" align="center">
+	                  <input type="hidden" name="total_item" id="total_item" value="1" />
+	                </td>
+	              </tr>
+                  </table>
+												<!-- <table class = "table order-table" border="1">
 								  					<thead>
 								  						<tr>
 								  							<th>Product</th>
@@ -475,7 +533,7 @@
 
 								  						<?php elseif ($form_state == 2): ?>
 								  							<?php 
-								  								$counter  = 0;
+								  								$counter  = count($get_orders) - 1;
 								  								foreach ($get_orders as $g ): 
 								  									$details = new Order_Details();
 								  									$details->setProductId($g['product_id']);
@@ -484,6 +542,7 @@
 								  									$details->setAmount($g['amount']);
 
 								  							?>
+								  								<input type="hidden" id="counter_form" value="<?php echo $counter; ?>">
 									  							<tr>
 										  							<td>
 										  								<select  name = "product[]" <?php echo $disabled; ?> class = "form-control item_list<?php echo $counter; ?> browser-default">
@@ -518,8 +577,7 @@
 										  								</td>
 										  						</tr>
 
-										  					<?php $counter++; ?>	
-										  					<input type="hidden" id="counter_form" value="<?php echo $counter; ?>">
+										  					<?php $counter--; ?>	
 										  					<?php endforeach; ?>
 								  						<?php endif; ?>
 								  						<tr>
@@ -535,7 +593,7 @@
 								  							</td>
 								  						</tr>
 								  					</tbody>
-								  					<input type="hidden" value="<?php echo $form_state; ?>" id = "form_state">
+								  					
 								  						
 								  					<?php if($form_state == 2): ?>
 								  					<input type = "hidden" class = "form-control shipping_fee" name = "shipping"  value = "<?php echo $order->getShippingFee(); ?>">
@@ -543,7 +601,7 @@
 								  						<input type = "hidden" class = "form-control shipping_fee" name = "shipping" value = "">
 								  					<?php endif ;?>
 								  						
-											</table>
+											</table> -->
 											</div>
 										</div>
 
@@ -1144,87 +1202,136 @@
 		var state = $("#form_state").val();
 		if(state == 1)
 		{
-			  var counter = 0;
-			  var qty = 0;
-			  var price = 0.0;
-			  var amount = 0.0;
-			  var shipping = parseFloat($(".shipping_fee").val());
-			  var total= 0.0;
-			  var grand = 0.0;
-			  $("#add_more_button").click(function()
-			  {
-	    			counter++;
-	                var start = "<tr><td>";
-	                var middle = "<select name = 'product[]' class = 'form-control item_list"+counter+" product"+counter+ " browser-default'>";
-	                var end1 = "</select></td>"  + "<td><input type='text' name='quantity[]' class = 'form-control quantity"+counter+" browser-default' value='0.00' placeholder='Quantity' > </td>";
-	                var end2 = "<td><input type = 'text' value='0.00' class = 'form-control lblUprice"+counter+"' name = 'unit_price[]' placeholder='Unit Price'></td>";
-	                var end3 = "<td><input type = 'text' value='0.00' class = 'form-control lblAmount"+counter+"'  name = 'amount[]' placeholder='Amount'></td>";
-	                var superEnd = "</tr>";
-	                var combine = start + middle + end1 + end2  + end3 + superEnd;
-	                $('.order-table tbody').prepend(combine);
-		             $.ajax({
-		                    type: "GET",
-		                    url: '../process/ajax/get_items.php',
-		                    data: 'json',
-		                    success: function(data)
-		                    {
-		                       	var datas = JSON.parse(data);
-		                        $('.product'+counter).append('<option disabled selected>Choose Items Here</option>');
-		                        for (var i = 0; i < datas.length; i++) 
-		                        {
-		                            // $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
-		                            $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description + '</option>');
-		                            
-		                        }
-		                        $('.item_list'+counter).change(function()
-		                         {	
-		                            	$('.quantity'+counter).change(function () 
-									  	{ 
-									  		qty = parseInt($(".quantity"+counter).val());
-									  		
-									  		 $('.lblAmount'+counter).change(function () 
-											  	{ 
-											  		price = parseFloat($(".lblUprice"+counter).val());
-											  		amount = parseFloat($(".lblAmount"+counter).val());
-		                                            total = parseFloat($('.displayTotal').val());
-		                                             // grand = parseFloat( total + amount + shipping);
-		                                            grand = parseFloat( total + amount );
-											  		$(".lblAmount"+counter).val(amount.toFixed(2));
-											  		$(".displayTotal").val(grand.toFixed(2));
-											  	}
-											  );
-									  	}
-									  );
-		                        });//end of item list
-		                    }
-		                }); // end of ajax                 
-			  });
-		
-			   $('.item_list').change(function()
-		       {
-		            $('.quantity').change(function () 
-				  	{ 
-				  		qty = parseInt($(".quantity").val());
-				  		 $('.lblAmount').change(function () 
-						  	{ 
-						  		price = parseFloat($(".lblUprice").val());
-						  		amount = parseFloat($(".lblAmount").val());
-						  		total = parseFloat(amount);
-						  		//grand = parseFloat(total + shipping);
-						  		grand = parseFloat(total);
-						  		$(".lblAmount").val(amount.toFixed(2));
-						  		$(".displayTotal").val(grand.toFixed(2) );
-						  	}
-						  );
-				  	}
-				  );
-				});//end of item list	   
+			var final_total_amt = $('#final_total_amt').text();
+        var count = 1;
+        
+        $(document).on('click', '#add_row', function(){
+          count++;
+          $('#total_item').val(count);
+          var html_code = '';
+          html_code += '<tr id="row_id_'+count+'">';
+          html_code += '<td><span id="sr_no">'+count+'</span></td>';
+          
+          html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
+          
+          html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
+          html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" /></td>';
+          html_code += '<td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_actual_amount" readonly /></td>';
+          
+          html_code += '<td><input type="text" name="order_item_tax1_rate[]" id="order_item_tax1_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax1_rate" /></td>';
+          html_code += '<td><input type="text" name="order_item_tax1_amount[]" id="order_item_tax1_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax1_amount" /></td>';
+          html_code += '<td><input type="text" name="order_item_tax2_rate[]" id="order_item_tax2_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax2_rate" /></td>';
+          html_code += '<td><input type="text" name="order_item_tax2_amount[]" id="order_item_tax2_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax2_amount" /></td>';
+          html_code += '<td><input type="text" name="order_item_tax3_rate[]" id="order_item_tax3_rate'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_tax3_rate" /></td>';
+          html_code += '<td><input type="text" name="order_item_tax3_amount[]" id="order_item_tax3_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_tax3_amount" /></td>';
+          html_code += '<td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_final_amount" /></td>';
+          html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
+          html_code += '</tr>';
+          $('#invoice-item-table').append(html_code);
+        });
+        
+        $(document).on('click', '.remove_row', function(){
+          var row_id = $(this).attr("id");
+          var total_item_amount = $('#order_item_final_amount'+row_id).val();
+          var final_amount = $('#final_total_amt').text();
+          var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
+          $('#final_total_amt').val(result_amount);
+          $('#row_id_'+row_id).remove();
+          count--;
+          $('#total_item').val(count);
+        });
+
+        function cal_final_total(count)
+        {
+          var final_item_total = 0;
+          for(j=1; j<=count; j++)
+          {
+            var quantity = 0;
+            var price = 0;
+            var actual_amount = 0;
+            var tax1_rate = 0;
+            var tax1_amount = 0;
+            var tax2_rate = 0;
+            var tax2_amount = 0;
+            var tax3_rate = 0;
+            var tax3_amount = 0;
+            var item_total = 0;
+            quantity = $('#order_item_quantity'+j).val();
+            if(quantity > 0)
+            {
+              price = $('#order_item_price'+j).val();
+              if(price > 0)
+              {
+                actual_amount = parseFloat(quantity) * parseFloat(price);
+                $('#order_item_actual_amount'+j).val(actual_amount);
+                tax1_rate = $('#order_item_tax1_rate'+j).val();
+                if(tax1_rate > 0)
+                {
+                  tax1_amount = parseFloat(actual_amount)*parseFloat(tax1_rate)/100;
+                  $('#order_item_tax1_amount'+j).val(tax1_amount);
+                }
+                tax2_rate = $('#order_item_tax2_rate'+j).val();
+                if(tax2_rate > 0)
+                {
+                  tax2_amount = parseFloat(actual_amount)*parseFloat(tax2_rate)/100;
+                  $('#order_item_tax2_amount'+j).val(tax2_amount);
+                }
+                tax3_rate = $('#order_item_tax3_rate'+j).val();
+                if(tax3_rate > 0)
+                {
+                  tax3_amount = parseFloat(actual_amount)*parseFloat(tax3_rate)/100;
+                  $('#order_item_tax3_amount'+j).val(tax3_amount);
+                }
+                item_total = parseFloat(actual_amount) + parseFloat(tax1_amount) + parseFloat(tax2_amount) + parseFloat(tax3_amount);
+                final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
+                $('#order_item_final_amount'+j).val(item_total);
+              }
+            }
+          }
+          $('#final_total_amt').val(final_item_total);
+        }
+
+        $(document).on('blur', '.order_item_price', function(){
+
+          cal_final_total(count);
+        });
+
+        $(document).on('blur', '.order_item_tax1_rate', function(){
+          cal_final_total(count);
+        })
+
+        $(document).on('blur', '.order_item_tax2_rate', function(){
+          cal_final_total(count);
+        });
+
+        $(document).on('blur', '.order_item_tax3_rate', function(){
+          cal_final_total(count);
+        });
+
+   
 		}
 		else
 		{
-			var counters= $("#counter_form").val();
-			alert(state);
-			   
+			var counter = $("#counter_form").val();
+			for (var i = 0; i <= counter; i++) 
+			{
+				$('.quantity'+i).change(function () 
+				  	{
+				  		qty = parseInt($(".quantity"+i).val());
+				  		 $('.lblAmount'+i).change(function () 
+						  	{ 
+						  		price = parseFloat($(".lblUprice"+i).val());
+						  		amount = parseFloat($(".lblAmount"+i).val());
+						  		total = parseFloat(amount);
+						  		//grand = parseFloat(total + shipping);
+						  		grand = parseFloat(total);
+						  		$(".lblAmount"+i).val(amount.toFixed(2));
+						  		$(".displayTotal").val(grand.toFixed(2) );
+						  	}
+						  );
+				  	});
+				
+			}
 
 		}
 
