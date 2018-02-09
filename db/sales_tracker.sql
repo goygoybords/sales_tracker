@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2018 at 06:56 AM
+-- Generation Time: Feb 09, 2018 at 07:53 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -331,17 +331,18 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `alternate_contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `same`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `created_by`, `status`) VALUES
-(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 124, 'Sun Valley Updated', 'Cebu Queen City of the south', '6001', 1, 0, 0, '', '', '', 0, 12, 1),
-(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 0, 0, '', '', '', 0, 12, 1),
-(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '6000', 3, 13, 1),
+(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 106, 'Sun Valley Updated', 'Cebu Queen City of the south', '55555', 16, 1, 106, 'Sun Valley Updated', '', '55555', 16, 12, 1),
+(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 1, 230, '', 'asdasd', '123123', 5, 12, 1),
+(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '123213', 19, 13, 1),
 (13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 0, 230, 'asdasd', 'ghjhgj', '2313', 59, 15, 1),
 (14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 15, 1),
 (15, 'bruce', 'lee', 'brucelee@gmail.com', '12312', '123', 230, 'asdasd', 'asd', '123123', 5, 1, 230, 'asdasd', 'asd', '123123', 5, 15, 1),
 (16, 'asdasdas', 'asdsad', 'asd@gmail.com', '123123', '', 230, 'asd', 'asd', '123213', 2, 1, 230, 'asd', 'asd', '123213', 2, 1, 1),
 (17, 'CC', 'CCF ', 'ccf@gmail.com', '123213', '', 230, 'asdsad', 'sad', '123213', 4, 1, 230, 'asdsad', 'sad', '123213', 4, 1, 1),
 (18, 'Jose ', 'Chan', 'josemari@gmail.com', '12312434234', '', 230, 'address', 'cebu', '6000', 5, 0, 17, 'billing updated', 'sokbu', '56565', 19, 19, 0),
-(19, 'Peter', 'Lim', 'peterlim@gmail.com', '123123', '', 230, 'address', 'Sokbu', '123', 5, 1, 230, 'address', 'Sokbu', '123', 5, 1, 1),
-(20, 'David ', 'Lim', 'davidlim@gmail.com', '12312321323', '', 174, 'Maria luisa', 'Cebu', '6000', 3, 1, 174, 'Maria luisa', 'Staples Center', '6000', 3, 1, 1);
+(19, 'Peter', 'Lim', 'peterlim@gmail.com', '123123', '45454545', 229, 'updatesdfsd343434', '43534fgfdg', '5454fghg', 1, 1, 229, 'updatesdfsd343434', 'updatesdfsd343434', '5454fghg', 1, 1, 1),
+(20, 'David ', 'Lim', 'davidlim@gmail.com', '12312321323', '', 174, 'Maria luisa', 'Cebu', '6000', 3, 1, 174, 'Maria luisa', 'Staples Center', '6000', 3, 1, 1),
+(21, 'Ming Si', 'dao', 'kkkkk@yahoo.com', '12345', '12345', 230, 'Staples Center', 'san fran', '90011', 6, 1, 230, 'Staples Center', 'Staples Center', '90011', 6, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -382,7 +383,39 @@ INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `
 (10, 19, 1, 'MasterCard', '123123', 'Kev', '0419', '123', '', 0, '', 0, 1),
 (11, 1, 1, 'MasterCard', '1234', 'kev', '04/22', '888', '', 0, '', 0, 1),
 (12, 12, 1, 'MasterCard', '123', 'BDO', '04/20', '222', '', 0, '', 0, 1),
-(13, 11, 1, 'MasterCard', '512232323', '', '04/20', '222', '', 0, '', 0, 1);
+(13, 11, 1, 'MasterCard', '512232323', '', '04/20', '222', '', 0, '', 0, 1),
+(14, 11, 2, '', '', '', '', '', '90001465', 12345, 'BDO', 0, 1),
+(15, 12, 1, 'MasterCard', '123213', 'asdas', '04/20', '111', '', 0, '', 0, 1),
+(16, 21, 1, 'MasterCard', '123', 'kev', '04/20', '111', '', 0, '', 0, 1),
+(17, 21, 2, '', '', '', '', '', '1231231', 1123123, 'BDO', 12331, 1),
+(18, 21, 1, 'MasterCard', '123', '123', '1231', '111', '', 0, '', 0, 1),
+(19, 12, 1, 'MasterCard', '123123', 'sdfsdf', '01/12', '111', '', 0, '', 0, 1),
+(20, 1, 1, 'MasterCard', '12321', 'asdsad', '04/11', '111', '', 0, '', 0, 1),
+(21, 21, 3, '', '', '', '', '', '', 123213, 'bdo', 123, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_refund`
+--
+
+CREATE TABLE `customer_refund` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `amount` decimal(16,2) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_refund`
+--
+
+INSERT INTO `customer_refund` (`id`, `order_id`, `date`, `amount`, `status`) VALUES
+(1, 4, '0000-00-00', '111.00', 1),
+(5, 13, '2018-02-02', '300.00', 1),
+(6, 11, '2018-02-02', '120.00', 1),
+(7, 13, '2018-02-17', '3650.00', 1);
 
 -- --------------------------------------------------------
 
@@ -406,7 +439,49 @@ INSERT INTO `logs` (`id`, `date_log`, `description`, `user_id`, `order_id`) VALU
 (1, '0000-00-00 00:00:00', 'Created a new Order', 1, 13),
 (2, '0000-00-00 00:00:00', 'Approved an Order', 1, 13),
 (3, '0000-00-00 00:00:00', 'Approved an Order', 1, 11),
-(4, '2018-01-18 02:22:11', 'Approved an Order', 1, 12);
+(4, '2018-01-18 02:22:11', 'Approved an Order', 1, 12),
+(5, '2018-02-05 12:40:59', 'Shipped an Order', 1, 13),
+(6, '2018-02-05 12:44:08', 'Updated an Order', 1, 11),
+(7, '2018-02-05 12:44:40', 'Updated an Order', 1, 11),
+(8, '2018-02-05 12:45:06', 'Updated an Order', 1, 10),
+(9, '2018-02-05 12:46:00', 'Updated an Order', 1, 10),
+(10, '2018-02-05 12:50:37', 'Updated an Order', 1, 10),
+(11, '2018-02-05 12:50:54', 'Updated an Order', 1, 10),
+(12, '2018-02-05 12:51:12', 'Updated an Order', 1, 10),
+(13, '2018-02-05 12:51:23', 'Updated an Order', 1, 10),
+(14, '2018-02-05 12:51:34', 'Updated an Order', 1, 10),
+(15, '2018-02-05 12:51:50', 'Updated an Order', 1, 10),
+(16, '2018-02-05 12:51:54', 'Updated an Order', 1, 10),
+(17, '2018-02-05 12:52:06', 'Updated an Order', 1, 10),
+(18, '2018-02-05 12:53:43', 'Updated an Order', 1, 10),
+(19, '2018-02-05 12:55:21', 'Updated an Order', 1, 10),
+(20, '2018-02-05 01:27:15', 'Created a new Order', 1, 14),
+(21, '2018-02-05 01:28:49', 'Updated an Order', 1, 14),
+(22, '2018-02-05 01:29:03', 'Updated an Order', 1, 14),
+(23, '2018-02-05 01:30:05', 'Created a new Order', 1, 15),
+(24, '2018-02-05 01:31:40', 'Created a new Order', 1, 16),
+(25, '2018-02-05 01:31:56', 'Updated an Order', 1, 16),
+(26, '2018-02-05 01:31:58', 'Updated an Order', 1, 16),
+(27, '2018-02-05 01:32:01', 'Updated an Order', 1, 16),
+(28, '2018-02-05 01:32:12', 'Updated an Order', 1, 15),
+(29, '2018-02-05 01:32:29', 'Updated an Order', 1, 15),
+(30, '2018-02-05 01:32:37', 'Updated an Order', 1, 15),
+(31, '2018-02-05 01:35:04', 'Updated an Order', 1, 12),
+(32, '2018-02-05 02:40:05', 'Shipped an Order', 1, 12),
+(33, '2018-02-05 02:40:11', 'Shipped an Order', 1, 11),
+(34, '2018-02-05 05:51:58', 'Refunded an Order', 0, 0),
+(35, '2018-02-05 05:52:23', 'Refunded an Order', 0, 0),
+(36, '2018-02-05 05:57:52', 'Refunded an Order', 0, 4),
+(37, '2018-02-06 12:55:46', 'Refunded an Order', 0, 11),
+(38, '2018-02-06 01:30:48', 'Refunded an Order', 0, 4),
+(39, '2018-02-06 02:17:59', 'Refunded an Order', 0, 4),
+(40, '2018-02-07 12:31:46', 'Updated an Order', 1, 16),
+(41, '2018-02-07 12:34:42', 'Updated an Order', 1, 16),
+(42, '2018-02-09 01:23:47', 'Created a new Order', 1, 17),
+(43, '2018-02-09 01:27:58', 'Created a new Order', 1, 18),
+(44, '2018-02-09 01:38:36', 'Created a new Order', 1, 19),
+(45, '2018-02-09 06:42:46', 'Created a new Order', 1, 20),
+(46, '2018-02-09 06:59:48', 'Created a new Order', 1, 21);
 
 -- --------------------------------------------------------
 
@@ -432,6 +507,7 @@ CREATE TABLE `orders` (
   `updated_by` int(11) NOT NULL,
   `date_updated` datetime NOT NULL,
   `tracking_number` varchar(5) NOT NULL DEFAULT '0',
+  `refunded` tinyint(1) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -439,20 +515,28 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `invoice_number`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method_id`, `merchant`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `tracking_number`, `status`) VALUES
-(1, 'INV-00040001', '2016-11-30', 17, '25.00', 1, '5.00', 'remarks', 'good', 1, 'salesman', 12, 1, '2016-11-29 14:24:23', 1, '2018-01-15 04:26:00', '1', 1),
-(2, 'INV-00040002', '2016-11-30', 15, '30.00', 1, '5.00', '', '', 2, 'kane', 13, 0, '2016-11-29 14:25:49', 0, '0000-00-00 00:00:00', '0', 0),
-(3, 'INV-00040003', '2016-12-01', 18, '15.00', 1, '5.00', 're', 'nyer', 3, 'ahente john', 19, 0, '2016-12-02 15:11:43', 0, '0000-00-00 00:00:00', '0', 0),
-(4, 'INV-00040004', '2016-12-01', 20, '105.00', 1, '5.00', 'remarks', 'notes', 4, 'KSK Marketing', 12, 1, '2016-12-02 15:22:00', 1, '2018-01-15 04:25:19', '12321', 2),
-(5, 'INV-00040005', '2016-12-23', 19, '35.00', 1, '22.00', 'test', 'test', 5, 'asdsad', 16, 0, '2016-12-13 10:44:27', 0, '0000-00-00 00:00:00', '0', 0),
-(6, 'INV-00040006', '2016-12-15', 18, '25.00', 2, '20.00', 'k', 'k', 6, 'Salesman update', 16, 0, '2016-12-14 09:38:09', 16, '2016-12-14 10:22:08', '0', 0),
-(7, 'INV-00040007', '2016-12-22', 18, '4.00', 1, '22.00', 'ko', 'ko', 7, 'asdsad', 16, 0, '2016-12-14 11:26:53', 1, '2018-01-15 04:22:55', '0', 0),
-(8, 'INV-00040008', '2018-01-15', 1, '4.00', 1, '22.00', '', '', 8, '', 12, 0, '2018-01-15 07:27:20', 0, '0000-00-00 00:00:00', '0', 0),
-(9, 'INV-00040009', '2018-01-25', 1, '1.00', 1, '22.00', '', '', 9, 'asdsad', 14, 0, '2018-01-16 00:11:04', 0, '0000-00-00 00:00:00', '0', 0),
-(10, 'INV-00040010', '2017-01-16', 19, '4.00', 1, '22.00', '', '', 10, 'merchant', 14, 0, '2018-01-16 01:12:57', 0, '0000-00-00 00:00:00', '0', 0),
-(11, 'INV-00040011', '2018-01-17', 1, '4.00', 1, '22.00', 'notes', 'notes', 11, 'salesman', 14, 1, '2018-01-16 06:30:00', 0, '0000-00-00 00:00:00', '0', 1),
-(12, 'INV-00040012', '1970-01-01', 12, '4.00', 2, '20.00', '', '', 12, '', 14, 1, '2018-01-16 06:31:35', 0, '0000-00-00 00:00:00', '0', 1),
-(13, 'INV-00040013', '1970-01-01', 11, '4.00', 1, '22.00', '', '', 13, '', 14, 1, '2018-01-16 06:33:02', 0, '0000-00-00 00:00:00', '0', 1);
+INSERT INTO `orders` (`id`, `invoice_number`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method_id`, `merchant`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `tracking_number`, `refunded`, `status`) VALUES
+(1, 'INV-00040001', '2016-11-30', 17, '25.00', 1, '5.00', 'remarks', 'good', 1, 'salesman', 12, 1, '2016-11-29 14:24:23', 1, '2018-01-15 04:26:00', '1', 0, 1),
+(2, 'INV-00040002', '2016-11-30', 15, '30.00', 1, '5.00', '', '', 2, 'kane', 13, 0, '2016-11-29 14:25:49', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(3, 'INV-00040003', '2016-12-01', 18, '15.00', 1, '5.00', 're', 'nyer', 3, 'ahente john', 19, 0, '2016-12-02 15:11:43', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(4, 'INV-00040004', '2016-12-01', 20, '105.00', 1, '5.00', 'remarks', 'notes', 4, 'KSK Marketing', 12, 1, '2016-12-02 15:22:00', 1, '2018-01-15 04:25:19', '12321', 1, 2),
+(5, 'INV-00040005', '2016-12-23', 19, '35.00', 1, '22.00', 'test', 'test', 5, 'asdsad', 16, 0, '2016-12-13 10:44:27', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(6, 'INV-00040006', '2016-12-15', 18, '25.00', 2, '20.00', 'k', 'k', 6, 'Salesman update', 16, 0, '2016-12-14 09:38:09', 16, '2016-12-14 10:22:08', '0', 0, 0),
+(7, 'INV-00040007', '2016-12-22', 18, '4.00', 1, '22.00', 'ko', 'ko', 7, 'asdsad', 16, 0, '2016-12-14 11:26:53', 1, '2018-01-15 04:22:55', '0', 0, 0),
+(8, 'INV-00040008', '2018-01-15', 1, '4.00', 1, '22.00', '', '', 8, '', 12, 0, '2018-01-15 07:27:20', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(9, 'INV-00040009', '2018-01-25', 1, '1.00', 1, '22.00', '', '', 9, 'asdsad', 14, 0, '2018-01-16 00:11:04', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(10, 'INV-00040010', '2017-01-16', 19, '4.00', 1, '22.00', 'update', 'update\r\n', 10, 'merchant', 14, 0, '2018-01-16 01:12:57', 1, '2018-02-05 00:55:21', '0', 0, 0),
+(11, 'INV-00040011', '2018-01-17', 1, '4.00', 1, '22.00', 'Reshipment', 'notes', 11, 'salesman', 14, 1, '2018-01-16 06:30:00', 1, '2018-02-05 00:44:40', '0', 0, 2),
+(12, 'INV-00040012', '2018-01-01', 12, '4.00', 2, '20.00', 'remarks', 'remarks\r\n', 12, '', 14, 1, '2018-01-16 06:31:35', 1, '2018-02-05 01:35:04', '0', 0, 2),
+(13, 'INV-00040013', '2018-01-01', 11, '4.00', 1, '22.00', '', '', 13, '', 14, 1, '2018-01-16 06:33:02', 0, '0000-00-00 00:00:00', '0', 1, 2),
+(14, 'INV-00040014', '2018-02-01', 11, '6.00', 2, '20.00', 'remarks', 'notes', 14, 'Kev', 1, 0, '2018-02-05 01:27:15', 1, '2018-02-05 01:29:03', '0', 0, 0),
+(15, 'INV-00040015', '2018-02-03', 12, '1.00', 2, '20.00', 'remarks', 'notes', 15, 'kev', 1, 0, '2018-02-05 01:30:05', 1, '2018-02-05 01:32:37', '0', 0, 0),
+(16, 'INV-00040016', '2018-02-03', 21, '2.00', 1, '22.00', 'remarks', 'notes', 16, 'kevv', 1, 0, '2018-02-05 01:31:40', 1, '2018-02-07 00:34:42', '0', 0, 0),
+(17, 'INV-00040017', '2018-01-01', 21, '2.00', 1, '0.00', 'remarks', 'notes\r\n', 17, 'merchant', 1, 0, '2018-02-09 01:23:46', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(18, 'INV-00040018', '1970-01-01', 21, '5.00', 2, '0.00', 'asdasd', 'asdsad', 18, 'merchant', 1, 0, '2018-02-09 01:27:58', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(19, 'INV-00040019', '2018-02-14', 12, '2.00', 2, '0.00', 'marks', 'notes', 19, 'merchant', 1, 0, '2018-02-09 01:38:36', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(20, 'INV-00040020', '2018-02-03', 1, '1.00', 2, '0.00', 'remarks', 'notes\r\n', 20, 'merchant', 1, 0, '2018-02-09 06:42:46', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(21, 'INV-00040021', '2018-02-01', 21, '3.00', 2, '0.00', 'notes', 'notes', 21, 'merchant', 1, 0, '2018-02-09 06:59:48', 0, '0000-00-00 00:00:00', '0', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -489,7 +573,20 @@ INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_pr
 (12, 10, 3, '2.00', '2.00', '4.00', 1),
 (13, 11, 2, '2.00', '2.00', '4.00', 1),
 (14, 12, 4, '2.00', '2.00', '4.00', 1),
-(15, 13, 2, '2.00', '2.00', '4.00', 1);
+(15, 13, 2, '2.00', '2.00', '4.00', 1),
+(16, 14, 3, '2.00', '0.00', '4.00', 1),
+(17, 14, 1, '1.00', '1.00', '2.00', 1),
+(18, 15, 1, '1.00', '1.00', '1.00', 1),
+(19, 16, 3, '2.00', '2.00', '4.00', 1),
+(20, 16, 1, '2.00', '2.00', '2.00', 1),
+(21, 18, 1, '1.00', '1.00', '1.00', 1),
+(22, 18, 2, '2.00', '2.00', '4.00', 1),
+(23, 19, 1, '1.00', '1.00', '1.00', 1),
+(24, 19, 2, '2.00', '1.00', '1.00', 1),
+(25, 20, 2, '1.00', '1.00', '1.00', 1),
+(26, 21, 1, '1.00', '1.00', '1.00', 1),
+(27, 21, 2, '1.00', '1.00', '1.00', 1),
+(28, 21, 3, '1.00', '1.00', '1.00', 1);
 
 -- --------------------------------------------------------
 
@@ -524,7 +621,15 @@ INSERT INTO `order_send_someone` (`id`, `send_counter`, `order_id`, `customer_id
 (5, 0, 10, 19, '', '', 230, '', '', '', 0, 1),
 (6, 0, 11, 1, '', '', 230, '', '', '', 0, 1),
 (7, 0, 12, 12, '', '', 230, '', '', '', 0, 1),
-(8, 0, 13, 11, '', '', 230, '', '', '', 0, 1);
+(8, 0, 13, 11, '', '', 230, '', '', '', 0, 1),
+(9, 0, 14, 11, '', '', 230, '', '', '', 0, 1),
+(10, 0, 15, 12, '', '', 230, '', '', '', 0, 1),
+(11, 0, 16, 21, '', '', 230, '', '', '', 0, 1),
+(12, 0, 17, 21, '', '', 230, '', '', '', 0, 1),
+(13, 0, 18, 21, '', '', 230, '', '', '', 0, 1),
+(14, 0, 19, 12, '', '', 230, '', '', '', 0, 1),
+(15, 0, 20, 1, '', '', 230, '', '', '', 0, 1),
+(16, 0, 21, 21, '', '', 230, '', '', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -767,6 +872,12 @@ ALTER TABLE `customer_payment_methods`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `customer_refund`
+--
+ALTER TABLE `customer_refund`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `logs`
 --
 ALTER TABLE `logs`
@@ -845,32 +956,37 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `customer_payment_methods`
 --
 ALTER TABLE `customer_payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
+-- AUTO_INCREMENT for table `customer_refund`
+--
+ALTER TABLE `customer_refund`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `order_send_someone`
 --
 ALTER TABLE `order_send_someone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `products`
 --
