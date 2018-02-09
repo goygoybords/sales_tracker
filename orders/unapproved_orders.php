@@ -60,6 +60,12 @@
 													<thead>
 														<th>Invoice Number</th>
 														<th>Order Date</th>
+														<th>Customer</th>
+														<th>Remarks</th>
+														<th>Updated By</th>
+														<th>Status</th>
+														<th>Action</th>
+														<!-- 
 														<th>Date Processed</th>
 														<th>Customer</th>
 														<th>Total</th>
@@ -68,7 +74,7 @@
 														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
 														<th>Updated By</th>
-														<th>Action</th>
+														<th>Action</th> -->
 													</thead>
 <!-- 													<tfoot>
 														<tr>

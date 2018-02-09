@@ -32,7 +32,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i> Orders</header>
+								<header><i class="fa fa-fw fa-users"></i>Reports</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -116,12 +116,7 @@
 														<th>Invoice Number</th>
 														<th>Date</th>
 														<th>Customer</th>
-														<th>Total</th>
-														<th>Shipping Method</th>
-														<th>Remarks</th>
-														<th>Notes</th>
 														<th>Prepared By/Salesperson</th>
-														<th>Tracking Number</th>
 														<th>Status</th>		
 													</thead>
 <!-- 									

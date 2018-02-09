@@ -6,6 +6,6 @@
 		exit;
 	}
 
-	header("location: calendar.php");
+	header("location: reports.php");
 	exit;
 ?>

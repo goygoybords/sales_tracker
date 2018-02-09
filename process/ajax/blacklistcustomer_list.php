@@ -19,8 +19,8 @@
  */
 
 // DB table to use
-
-$table = 'users';
+session_start();
+$table = 'customer';
 
 // Table's primary key
 $primaryKey = 'id';
@@ -30,21 +30,26 @@ $primaryKey = 'id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
-    array( 'db' => '`u`.`id`',   'dt' => 0, 'field' => 'id' ),
-    array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 1, "field" => "name", "as" => "name" ),
-    array( 'db' => '`u`.`email`',       'dt' => 2, 'field' => 'email' ),
-    array( 'db' => '`ut`.`type`',       'dt' => 3, 'field' => 'type' ),
-    array( 'db' => '`t`.`team_name`',   'dt' => 4, 'field' => 'team_name' ),
-    array( 'db' => '`u`.`id`',          'dt' => 5, 'formatter' => function( $d, $row )
+    array( 'db' => '`c`.`id`',              'dt' => 0, 'field' => 'id' ),
+    array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 1, "field" => "name", "as" => "name" ),
+    array( 'db' => '`c`.`contact_number`',  'dt' => 2, 'field' => 'contact_number' ),
+    array( 'db' => '`c`.`shipping_address`',  'dt' => 3, 'field' => 'shipping_address' ),
+    array( 'db' => '`c`.`id`',              'dt' => 4, 'formatter' => function( $d, $row )
             {
-                return '<a href="manage.php?id='.$d.'" >
+                return '
+                         <a href="customer_orders.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> View Orders
+                            </span>
+                        </a> 
+                        <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> &nbsp;
-                        <a href="../process/user_manage.php?id='.$d.'&del" onclick="return confirm(\'Are you sure you want to delete this record?\')" >
+                        </a> 
+                        <a href="../process/customer_manage.php?id='.$d.'&p=list&active" onclick="return confirm(\'Are you sure you want to remove this customer in the blacklist record?\')" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Delete
+                                <i class="fa fa-remove"></i> Unblacklist
                             </span>
                         </a>
                         ';
@@ -68,14 +73,26 @@ $sql_details = array(
 
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
-
-    $joinQuery = "FROM users u
-                  JOIN usertypes ut
-                  ON u.usertypeid = ut.id
-                  LEFT OUTER JOIN teams t
-                  ON u.team_id = t.id
-                ";
-    $extraWhere =  "u.status = 1" ;
+    
+    $joinQuery = "";
+    $extraWhere =  "" ;
+    if($_SESSION['user_type'] == 3)
+    {
+        $joinQuery = "FROM customer c";
+        $extraWhere =  "c.created_by =".$_SESSION['id']." AND  c.status = 1" ;
+    }
+    else if($_SESSION['user_type'] == 4)
+    {
+        $joinQuery = "FROM customer c
+                        JOIN users u
+                        ON c.created_by = u.id";
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  c.status = 1" ;
+    }
+    else
+    {
+        $joinQuery = "FROM customer c";
+         $extraWhere =  "c.status = 0" ;
+    }
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

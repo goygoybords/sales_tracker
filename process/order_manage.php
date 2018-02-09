@@ -65,8 +65,6 @@
 		$order->setRemarks(htmlentities($remarks));
 		$order->setNotes(htmlentities($notes));
 
-
-
 		$order->setPreparedBy(intval($_SESSION['id']));
 		$order->setMerchant(htmlentities($merchant));
 		$order->setDateSubmitted(date('Y-m-d H:i:s'));
@@ -74,11 +72,8 @@
 
 		if(isset($_POST['save_order']))
 		{
-			
-			
 			if($customer_state == 0)
 			{
-			
 				$data = [
 						'firstname' 	   => $customer->getFirstName(),
 						'lastname' 		   => $customer->getLastname(),
@@ -146,7 +141,6 @@
 					$customer_payment->setAccountNumber(0);
 					$customer_payment->setBankName("");
 					$customer_payment->setRoutingNumber(0);
-
 				}
 				
 				$customer_payment->setStatus(1);
@@ -222,13 +216,13 @@
 					$someone_id = $db->insert("order_send_someone", $data);
 
 					//Order Detail Detail Entries
-			        for($i=0; $i < count($product) ; $i++)
+			        for($i=0; $i < count($item_name) ; $i++)
 			        {
 			            $detail->setOrderId($order_id);
-			            $detail->setProductId(intval($product[$i]));
-			            $detail->setQuantity(intval($quantity[$i]));
-			            $detail->setUnitPrice(doubleval($unit_price[$i]));
-			            $detail->setAmount(doubleval($amount[$i]));
+			            $detail->setProductId(intval($item_name[$i]));
+			            $detail->setQuantity(intval($order_item_quantity[$i]));
+			            $detail->setUnitPrice(doubleval($order_item_price[$i]));
+			            $detail->setAmount(doubleval($order_item_actual_amount[$i]));
 			            $detail->setStatus(1);
 
 			            $data = [
@@ -239,18 +233,27 @@
 							'amount'  	  => $detail->getAmount()   ,
 							'status' 	  => $detail->getStatus() ,
 						];
-						$get_product =	$db->select('products', array('quantity'), "id = ?", array($product[$i]) );
-						foreach ($get_product as $p ) 
-						{
-							$total_qty = $p['quantity'] - $quantity[$i];
-							$product_class->setQuantity($total_qty);
-							$db->update("products", array('quantity') , "WHERE id = ?", array($product_class->getQuantity(), $product[$i])) ;
-
-						}
+						//removed the product since user will be the one putting quantity
+						// $get_product =	$db->select('products', array('quantity'), "id = ?", array($product[$i]) );
+						// foreach ($get_product as $p ) 
+						// {
+						// 	$total_qty = $p['quantity'] - $quantity[$i];
+						// 	$product_class->setQuantity($total_qty);
+						// 	$db->update("products", array('quantity') , "WHERE id = ?", array($product_class->getQuantity(), $product[$i])) ;
+						// }
 
 						$order_details_id = $db->insert("order_detail", $data);
 			        }
-			        header("location: ../orders/manage.php?msg=inserted");
+
+			            $data = [
+							'description' => "Created a new Order",
+							'date_log'    => date("Y-m-d h:i:sa"),
+							'user_id'     => intval($_SESSION['id']) ,
+							'order_id'    => $order_id,
+						];
+						
+						$logs = $db->insert("logs", $data);
+			       		header("location: ../orders/manage.php?msg=inserted");
 				}
 				
 			}
@@ -262,13 +265,13 @@
 			$order->setDateUpdated(date('Y-m-d H:i:s'));
 			$order->setUpdatedBy($_SESSION['id']);
 
-			$fields = array('firstname' ,'lastname' ,'contact_number' ,'country_id','shipping_address' , 'city' , 'zip', 'state_id' , 
-				'same' , 'billing_country_id','billing_address' , 'billing_zip' , 'billing_zip' , 'billing_state_id');
+			$fields = array('firstname' ,'lastname' ,'contact_number' ,'alternate_contact_number','country_id','shipping_address' , 'city' , 'zip', 'state_id' , 'same' , 'billing_country_id','billing_city' , 'billing_zip' , 'billing_zip' , 'billing_state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
 						$customer->getFirstname(),
 						$customer->getLastname(),
 						$customer->getContactNumber(),
+						$customer->getAlternateContactNumber(),
 						$customer->getCountryId(),
 						$customer->getShippingAddress(),
 						$customer->getCity(),
@@ -341,9 +344,7 @@
 					$customer_payment->setAccountNumber(0);
 					$customer_payment->setBankName("");
 					$customer_payment->setRoutingNumber(0);
-				}
-
-			
+				}	
 
 			$fields = array('payment_method' , 'card_type' , 'card_number' , 'card_name', 'expiry_date' , 'cvv' , 'check_number',
 				'account_number','bank_name' ,'routing_number');
@@ -402,6 +403,15 @@
 						);
 			
 			$someone_update = $db->update("order_send_someone", $fields , $where, $params);
+
+			$data = [
+							'description' => "Updated an Order",
+							'date_log'    => date("Y-m-d h:i:sa"),
+							'user_id'     => intval($_SESSION['id']) ,
+							'order_id'    => $order_id_fm,
+						];
+						
+			$logs = $db->insert("logs", $data);
 			header("location: ../orders/manage.php?id=".$order->getOrderId()."&msg=updated");
 		}
 
@@ -425,7 +435,39 @@
 
 		$order_update = $db->update("orders", $fields , $where, $params);
 
+
+		$data = [
+				'description' => "Approved an Order",
+				'date_log'    => date("Y-m-d h:i:sa"),
+				'user_id'     => intval($_SESSION['id']) ,
+				'order_id'    => $order_id,
+			];			
+		$logs = $db->insert("logs", $data);
 		header("location: ../orders/approved_orders.php?msg=approved");
+	}
+
+	if(isset($_GET['shipped']))
+	{
+		echo "okay";
+
+		$order_id = $_GET['id'];
+		$order->setStatus(2);
+		$table  = "orders";
+		$fields = array('status');
+		$where  = "WHERE id = ?"; 
+		$params = array($order->getStatus(), $order_id );
+		$result = $db->update($table, $fields, $where, $params);
+
+		$data = [
+							'description' => "Shipped an Order",
+							'date_log'    => date("Y-m-d h:i:sa"),
+							'user_id'     => intval($_SESSION['id']) ,
+							'order_id'    => $order_id,
+						];
+						
+		$logs = $db->insert("logs", $data);
+   
+		header("location: ../orders/shipped_orders.php?&msg=shipped");
 	}
 
 	if(isset($_GET['send_mail']))
@@ -469,19 +511,24 @@
 		} 
 		else 
 		{
-		    header("location: ../orders/approved_orders.php?msg=sent");
+		    header("location: ../orders/shipped_orders.php?msg=sent");
 		}
 	}
 	if(isset($_POST['add_tracking_number']))
 	{
 		$order->setOrderId($order_id_fm);
-		echo $order->getOrderId();
-	
 		$fields = array("tracking_number");
 		$where  = "WHERE id = ?";
 		$params = array($tracking_number , $order->getOrderId());
 		$db->update("orders", $fields , $where, $params);
-		
+
+		$data = [
+					'description' => "Added Tracking Number",
+					'date_log'    => date("Y-m-d h:i:sa"),
+					'user_id'     => intval($_SESSION['id']) ,
+					'order_id'    => $order_id_fm,
+				];
+		$logs = $db->insert("logs", $data);
 		header("location: ../orders/approved_orders.php?msg=tracking");
 	}
 ?>
