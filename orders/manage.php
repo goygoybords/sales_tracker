@@ -467,7 +467,23 @@
                     <?php if($form_state == 1): ?>
                     <tr>
                       <td><span id="sr_no">1</span></td>
-                      <td><input type="text" name="item_name[]" id="item_name1" class="form-control input-sm" /></td>
+                      <td>
+                      	<select name="item_name[]" id="item_name1" class="form-control input-sm">
+							<option disabled selected>Choose Items Here</option>
+	  							<?php 
+	  								foreach ($list_product as $p ) : 
+	  									$product = new Product();
+	  									$product->setProductId($p['id']);
+	  									$product->setProductDescription($p['product_description']);
+	  									$product->setQuantity($p['quantity']);
+	  							?>
+	  								<option value ="<?php echo $product->getProductId(); ?>" >
+	  									<?php echo $product->getProductDescription(); ?>
+	  										
+	  									</option>
+	  							<?php endforeach;  ?>
+	  					</select>
+                      </td>
                       <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" /></td>
                       <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" /></td>
                       <td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount1" data-srno="1" class="form-control input-sm order_item_actual_amount" readonly /></td>
@@ -484,7 +500,6 @@
                 		<?php 
                 			$m = 1;
 							foreach ($get_orders as $g ): 
-								
 								$details = new Order_Details();
 								$details->setProductId($g['product_id']);
 								$details->setQuantity($g['quantity']);
@@ -494,10 +509,24 @@
 						<tr>
                       <td>
                       	<span id="sr_no"><?php echo $m; ?></span>
-                      	<input type="hidden" name="counter" id = "counter" value="<?php echo $m; ?>">
+                      	<input type="hidden" name="counter" id = "counter" value="<?php echo count($get_orders); ?>">
                       </td>
                       <td>
-                      		<input type="text" name="item_name[]" id="item_name<?php echo $m; ?>" class="form-control input-sm" value="<?php echo $details->getProductId(); ?>" />
+                      		<select name="item_name[]" id="item_name1" class="form-control input-sm">
+								<option disabled selected>Choose Items Here</option>
+		  							<?php 
+		  								foreach ($list_product as $p ) : 
+		  									$product = new Product();
+		  									$product->setProductId($p['id']);
+		  									$product->setProductDescription($p['product_description']);
+		  									$product->setQuantity($p['quantity']);
+		  							?>
+		  								<option value ="<?php echo $product->getProductId(); ?>" 
+											<?php echo ($product->getProductId() == $details->getProductId() ? "selected='selected'" : ""); ?>>
+  											<?php echo $product->getProductDescription(); ?>
+  										</option>
+		  							<?php endforeach;  ?>
+	  						</select>
                       </td>
                       <td><input type="text" name="order_item_quantity[]" id="order_item_quantity<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_quantity" value = "<?php echo $details->getQuantity(); ?>"/></td>
                       <td><input type="text" name="order_item_price[]" id="order_item_price<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_price" value="<?php echo $details->getUnitPrice(); ?>" /></td>
@@ -1254,7 +1283,7 @@
           html_code += '<tr id="row_id_'+count+'">';
           html_code += '<td><span id="sr_no">'+count+'</span></td>';
           
-          html_code += '<td><input type="text" name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></td>';
+          html_code += '<td><select name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></select></td>';
           
           html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" /></td>';
           html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" /></td>';
@@ -1269,6 +1298,24 @@
           html_code += '<td><input type="text" name="order_item_final_amount[]" id="order_item_final_amount'+count+'" data-srno="'+count+'" readonly class="form-control input-sm order_item_final_amount" /></td>';
           html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
           html_code += '</tr>';
+
+	        $.ajax({
+            type: "GET",
+            url: '../process/ajax/get_items.php',
+            data: 'json',
+            success: function(data)
+            {
+               	var datas = JSON.parse(data);
+                $('#item_name'+count).append('<option disabled selected>Choose Items Here</option>');
+                for (var i = 0; i < datas.length; i++) 
+                {
+                    // $('.product'+counter).append('<option value='+datas[i].id+'>'+datas[i].product_description+ " --- Stock On Hand: " + datas[i].quantity + '</option>');
+                    $('#item_name'+count).append('<option value='+datas[i].id+'>'+datas[i].product_description + '</option>');
+                    
+                }
+            }
+        	});
+
           $('#invoice-item-table').append(html_code);
         });
         
@@ -1356,9 +1403,8 @@
 		{
 			var final_total_amt = $('#final_total_amt').val();
         	var count = $("#counter").val() ;
-        	var count = parseInt(count) + 1;
-        	alert(count );
-        
+        	var count = parseInt(count);
+        	
 	        $(document).on('click', '#add_row', function(){
 	          count++;
 	          $('#total_item').val(count);
