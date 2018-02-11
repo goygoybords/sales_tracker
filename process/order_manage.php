@@ -404,6 +404,36 @@
 			
 			$someone_update = $db->update("order_send_someone", $fields , $where, $params);
 
+			$delete_item = $db->delete("order_detail", "order_id = ?" , array($order->getOrderId() )  );
+			if($delete_item == 1)
+			{
+
+				//Order Detail Detail Entries
+		        for($i=0; $i < count($item_name) ; $i++)
+		        {
+		            $detail->setOrderId($order_id_fm);
+		            $detail->setProductId(intval($item_name[$i]));
+		            $detail->setQuantity(intval($order_item_quantity[$i]));
+		            $detail->setUnitPrice(doubleval($order_item_price[$i]));
+		            $detail->setAmount(doubleval($order_item_actual_amount[$i]));
+		            $detail->setStatus(1);
+
+		            $data = [
+						'order_id' 	  => $detail->getOrderId(),
+						'product_id'  => $detail->getProductId() ,
+						'quantity' 	  => $detail->getQuantity() ,
+						'unit_price ' => $detail->getUnitPrice() ,
+						'amount'  	  => $detail->getAmount()   ,
+						'status' 	  => $detail->getStatus() ,
+					];
+					$order_details_id = $db->insert("order_detail", $data);
+		        }
+
+			}
+
+				
+
+
 			$data = [
 							'description' => "Updated an Order",
 							'date_log'    => date("Y-m-d h:i:sa"),

@@ -65,6 +65,18 @@
 	        $result = $cmd->execute($params);
 	        return $result;
 	    }
+	    public function delete($table, $where = '1', $params = array() , $limit = '')
+ 		{
+	 		//fetchArgs, etc
+	        //$fields = implode(', ', $fields);
+	        //create query
+	        $sql = "DELETE FROM {$table} WHERE $where";
+
+	        //prepare statement
+	        $cmd = $this->db->prepare($sql);
+	        $result = $cmd->execute($params);
+	        return $result;
+	    }
 
 	    public function getDb()
 	    {
