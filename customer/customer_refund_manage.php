@@ -19,7 +19,7 @@
 	$name = "save_entry";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
-	$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2 AND refunded = 0");
+	$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2 AND refunded = 0"); //status is being shipped already
 	 
 	if($refund_id)
 	{
@@ -104,6 +104,17 @@
 															</div>
 														<div class="form-group">
 															<label for="team" class="col-sm-2 control-label">Invoice Number</label>
+															<?php if($form_state == 1): ?>
+															<div class="col-sm-6">															<select name = "order_id"  class = "form-control" >
+																	<option> </option> 
+																	<?php foreach ($list_orders as $o ) : ?>
+																		<option value="<?php echo $o['id']; ?>">
+																			<?php echo $o['invoice_number']; ?>	
+																		</option>
+																	<?php endforeach; ?>
+																</select>
+															</div>
+															<?php elseif($form_state == 2): ?>
 															<div class="col-sm-6">
 																<?php 
 																	$table = 'orders';
@@ -127,6 +138,7 @@
 																</select>
 															</div>
 															<button id = "change" class = "btn btn-info">Change Invoice</button>
+															<?php endif; ?>
 														</div>
 														<div class="form-group">
 															<label for="Password5" class="col-sm-2 control-label">Amount</label>
