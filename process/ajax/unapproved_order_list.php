@@ -39,8 +39,7 @@ $primaryKey = 'id';
 
 $columns = array(
 
-  array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
-
+    array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
                 return date('Y-m-d', strtotime($d));

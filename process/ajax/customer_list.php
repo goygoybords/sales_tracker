@@ -41,17 +41,15 @@ $columns = array(
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> View Orders
                             </span>
-                        </a> &nbsp;
-                        
+                        </a> 
                         <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
                             </span>
-                        </a> &nbsp;
-                       
-                        <a href="../process/customer_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to delete this record?\')" >
+                        </a> 
+                        <a href="../process/customer_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to blacklist this record?\')" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Delete
+                                <i class="fa fa-remove"></i> Blocked
                             </span>
                         </a>
                         ';

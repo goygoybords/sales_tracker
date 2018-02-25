@@ -36,7 +36,8 @@
 						</li>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
-
+				
+				<?php if($_SESSION['user_type'] == 1): ?>
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-ship"></i></div>
@@ -56,7 +57,7 @@
 						</li>
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
-				
+				<?php endif; ?>
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-users"></i></div>
@@ -69,18 +70,19 @@
 								<span class="title">Customers</span>
 							</a>
 						</li>
-						<?php if($_SESSION['user_type'] == 1): ?>
+						
 						<li>
 							<a href="../customer/blacklist_customer.php">
 								<span class="title">Blacklist Customers</span>
 							</a>
 						</li>
-						<?php endif; ?>
+						<?php if($_SESSION['user_type'] == 1): ?>
 						<li>
 							<a href="../customer/customer_refund.php">
 								<span class="title">Customer Refund</span>
 							</a>
 						</li>
+						<?php endif; ?>
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->

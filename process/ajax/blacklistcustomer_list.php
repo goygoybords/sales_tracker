@@ -36,23 +36,34 @@ $columns = array(
     array( 'db' => '`c`.`shipping_address`',  'dt' => 3, 'field' => 'shipping_address' ),
     array( 'db' => '`c`.`id`',              'dt' => 4, 'formatter' => function( $d, $row )
             {
-                return '
-                         <a href="customer_orders.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> View Orders
-                            </span>
-                        </a> 
-                        <a href="manage.php?id='.$d.'" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
-                            </span>
-                        </a> 
-                        <a href="../process/customer_manage.php?id='.$d.'&p=list&active" onclick="return confirm(\'Are you sure you want to remove this customer in the blacklist record?\')" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-remove"></i> Unblacklist
-                            </span>
-                        </a>
-                        ';
+                if($_SESSION['user_type'] == 1)
+                {
+                    return '
+                             <a href="customer_orders.php?id='.$d.'" >
+                                <span class="label label-inverse" style = "color:black;">
+                                    <i class="fa fa-edit"></i> View Orders
+                                </span>
+                            </a> 
+                            <a href="manage.php?id='.$d.'" >
+                                <span class="label label-inverse" style = "color:black;">
+                                    <i class="fa fa-edit"></i> Edit
+                                </span>
+                            </a> 
+                            <a href="../process/customer_manage.php?id='.$d.'&p=list&active" onclick="return confirm(\'Are you sure you want to remove this customer in the blacklist record?\')" >
+                                <span class="label label-inverse" style = "color:black;">
+                                    <i class="fa fa-remove"></i>Unblocked
+                                </span>
+                            </a>
+                            ';
+                }
+                else
+                {
+                    return '
+                             <a href="customer_orders.php?id='.$d.'" >
+                                <span class="label label-inverse" style = "color:black;">
+                                    <i class="fa fa-edit"></i> View Orders
+                                </span>';
+                }
             },
             'field' => 'id' )
     );
@@ -76,23 +87,23 @@ $sql_details = array(
     
     $joinQuery = "";
     $extraWhere =  "" ;
-    if($_SESSION['user_type'] == 3)
-    {
-        $joinQuery = "FROM customer c";
-        $extraWhere =  "c.created_by =".$_SESSION['id']." AND  c.status = 1" ;
-    }
-    else if($_SESSION['user_type'] == 4)
-    {
-        $joinQuery = "FROM customer c
-                        JOIN users u
-                        ON c.created_by = u.id";
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  c.status = 1" ;
-    }
-    else
-    {
+    // if($_SESSION['user_type'] == 3)
+    // {
+    //     $joinQuery = "FROM customer c";
+    //     $extraWhere =  "c.created_by =".$_SESSION['id']." AND  c.status = 1" ;
+    // }
+    // else if($_SESSION['user_type'] == 4)
+    // {
+    //     $joinQuery = "FROM customer c
+    //                     JOIN users u
+    //                     ON c.created_by = u.id";
+    //     $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  c.status = 1" ;
+    // }
+    // else
+    // {
         $joinQuery = "FROM customer c";
          $extraWhere =  "c.status = 0" ;
-    }
+    //}
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

@@ -7,6 +7,8 @@
 
 	include '../include/start.html';
 	require('../include/header.php');
+
+	
 ?>
 <!-- BEGIN BASE-->
 <div id="base">
