@@ -77,7 +77,7 @@ $sql_details = array(
                 JOIN users u 
                 ON o.prepared_by = u.id
                ";
-      $extraWhere =  "o.status BETWEEN 0 AND 1" ;
+      $extraWhere =  "o.status BETWEEN 0 AND 2" ;
     
     
     echo json_encode(
