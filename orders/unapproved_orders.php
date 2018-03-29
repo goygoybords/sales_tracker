@@ -60,7 +60,7 @@
 											
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
-														<th>Invoice Number</th>
+														<th>Order ID</th>
 														<th>Order Date</th>
 														<th>Customer</th>
 														<th>Notes</th>

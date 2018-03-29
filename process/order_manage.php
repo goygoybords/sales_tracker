@@ -55,9 +55,9 @@
 
 		$count_orders = $db->select('orders' , array('id') );
 		$total_orders_inv = count($count_orders) + 1;
-		$grand =  40000 + $total_orders_inv;
+		$grand =  40000 + $total_orders_inv; //"INV-000".$grand
 		
-		$order->setInvoiceNumber("INV-000".$grand); 
+		$order->setInvoiceNumber(""); 
 
 		$order->setTotal(doubleval($total));
 		$order->setShippingMethodId(intval($shipping_method));
@@ -453,11 +453,28 @@
 		$order_id = $_GET['id'];
 		$order->setOrderId($order_id);
 		$order->setApprovedBy($_SESSION['id']);
+
 		$order->setStatus(1);
+
+
+		$count_orders = $db->select('orders' , array('invoice_number') );
+		$counter = 0;
+		foreach ($count_orders as $c ) 
+		{
+			if($c['invoice_number'] != null)
+			{
+				$counter++;
+			}
+		}
+	
+		$total_orders_inv = $counter + 1;
+		$grand =  40000 + $total_orders_inv; 
+		$order->setInvoiceNumber("INV-000".$grand);
 			
-		$fields = array("approved_by", "status");
+		$fields = array("invoice_number","approved_by", "status");
 		$where  = "WHERE id = ?";
 		$params = array(
+				$order->getInvoiceNumber(),
 				$order->getApprovedBy(),
 				$order->getStatus(),
 				$order->getOrderId()
