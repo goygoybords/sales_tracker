@@ -56,7 +56,7 @@ $columns = array(
 
     // array( 'db' => '`o`.`total`',       'dt' => 4, 'field' => 'total' ),
     // array( 'db' => '`s`.`description`', 'dt' => 5, 'field' => 'description' ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
+    array( 'db' => '`o`.`notes`',     'dt' => 3, 'field' => 'notes' ),
     // array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
     // array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 4, "field" => "full_name", "as" => "full_name" ),
     
