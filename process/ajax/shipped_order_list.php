@@ -75,6 +75,14 @@ $columns = array(
                             </span>
                         </a>';
               }
+              else if($_SESSION['user_type'] == 2)
+              {
+                return ' <a href="manage.php?id='.$d.'&add_tracking" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> Add Tracking Number
+                            </span>
+                        </a>' ;
+              }
               else
               {
                 return '
@@ -108,7 +116,7 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-      $extraWhere = "";
+    $extraWhere = "";
     $joinQuery = "";
     if($_SESSION['user_type'] == 3)
     {

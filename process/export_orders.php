@@ -202,7 +202,7 @@
     $fileName = 'list_order'.date('Y-m-d');
 
     //prepare the records to be added on the excel file in an array
-    $excelData = $orders;
+    $excelData = array_unique($orders, SORT_REGULAR);
 
     // Create new PHPExcel object
     $objPHPExcel = new PHPExcel();

@@ -37,7 +37,7 @@
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				
-				<?php if($_SESSION['user_type'] == 1): ?>
+				<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2): ?>
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-ship"></i></div>
