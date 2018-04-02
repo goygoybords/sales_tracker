@@ -238,14 +238,14 @@
             ->setCellValue('A2' , 'List of Orders')
             ->getStyle("A2:Q2")->applyFromArray($style)->getFont()->setSize(16);
 
-  if(isset($_GET['min']) && isset($_GET['max']))
+  if($_GET['min'] != null && $_GET['max'] != null)
   {
       $objPHPExcel->getActiveSheet() 
             ->mergeCells('A3:Q3')
             ->setCellValue('A3' , 'From '.date('Y-m-d' , strtotime($_GET['min'])) .' To '. date('Y-m-d' , strtotime($_GET['max'])))
             ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
   } 
-  else
+  else 
   {
       $objPHPExcel->getActiveSheet() 
             ->mergeCells('A3:Q3')
@@ -280,61 +280,63 @@
         ->getStyle("A5:Q5")->applyFromArray($style)
         ;
 
-  //Put each record in a new cell    
-  $ii = 0;
-  for($i=0; $i<count($excelData); $i++)
+  if(count($excelData) > 0 )
   {
-      $ii = $i+6;
-      $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $excelData[$i][0]);
-      $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($excelData[$i][1])) );
-      $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i][2]);
-      $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i][3])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
-      $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i][4]);
-      $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i][5]);
-      $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $excelData[$i][6]);
-      $objPHPExcel->getActiveSheet()->setCellValue('H'.$ii, $excelData[$i][7]);
-      $objPHPExcel->getActiveSheet()->setCellValue('I'.$ii, $excelData[$i][8]);
-      $objPHPExcel->getActiveSheet()->setCellValue('J'.$ii, $excelData[$i][9]);
-      $objPHPExcel->getActiveSheet()->setCellValue('K'.$ii, $excelData[$i][10]);
-      $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $excelData[$i][11]);
-      $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $excelData[$i][12])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
-      $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
-      $objPHPExcel->getActiveSheet()->setCellValue('O'.$ii, $excelData[$i][14])->getStyle('O'.$ii)->getNumberFormat()->setFormatCode("0.00");
-      $objPHPExcel->getActiveSheet()->setCellValue('P'.$ii, $excelData[$i][15]);
-      $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, $excelData[$i][16]);
-     
-      if($excelData[$i][16] == 0)
-        $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "On Hold Order");
-      else if($excelData[$i][16] == 1)
-        $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
-      else if($excelData[$i][16] == 2)
-        $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
+    //Put each record in a new cell    
+    $ii = 0;
+    for($i=0; $i<count($excelData); $i++)
+    {
+        $ii = $i+6;
+        $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $excelData[$i][0]);
+        $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($excelData[$i][1])) );
+        $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i][2]);
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i][3])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
+        $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i][4]);
+        $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i][5]);
+        $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $excelData[$i][6]);
+        $objPHPExcel->getActiveSheet()->setCellValue('H'.$ii, $excelData[$i][7]);
+        $objPHPExcel->getActiveSheet()->setCellValue('I'.$ii, $excelData[$i][8]);
+        $objPHPExcel->getActiveSheet()->setCellValue('J'.$ii, $excelData[$i][9]);
+        $objPHPExcel->getActiveSheet()->setCellValue('K'.$ii, $excelData[$i][10]);
+        $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $excelData[$i][11]);
+        $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $excelData[$i][12])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
+        $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
+        $objPHPExcel->getActiveSheet()->setCellValue('O'.$ii, $excelData[$i][14])->getStyle('O'.$ii)->getNumberFormat()->setFormatCode("0.00");
+        $objPHPExcel->getActiveSheet()->setCellValue('P'.$ii, $excelData[$i][15]);
+        $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, $excelData[$i][16]);
+       
+        if($excelData[$i][16] == 0)
+          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "On Hold Order");
+        else if($excelData[$i][16] == 1)
+          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
+        else if($excelData[$i][16] == 2)
+          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
 
-      // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
-      //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+        // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
+        //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
+    }
+
+    $iiiv2 = $ii + 1;
+    $objPHPExcel->getActiveSheet() 
+                ->setCellValue('N'.$iiiv2, "=SUM(N6:N".($ii).")")->getStyle('N'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
+    
+    $objPHPExcel->getActiveSheet() 
+                ->setCellValue('O'.$iiiv2, "=SUM(O6:O".($ii).")")->getStyle('O'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
+                   
+
+
+    $iii = $ii + 3;
+    $objPHPExcel->getActiveSheet() 
+              ->setCellValue('A'.$iii , 'Prepared By: ');
+    $objPHPExcel->getActiveSheet()
+              ->setCellValue('B'.$iii , $_SESSION['firstname']." ".$_SESSION['lastname']);
   }
-
-  $iiiv2 = $ii + 1;
-  $objPHPExcel->getActiveSheet() 
-              ->setCellValue('N'.$iiiv2, "=SUM(N6:N".($ii).")")->getStyle('N'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
-  
-  $objPHPExcel->getActiveSheet() 
-              ->setCellValue('O'.$iiiv2, "=SUM(O6:O".($ii).")")->getStyle('O'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
-                 
-
-
-  $iii = $ii + 3;
-  $objPHPExcel->getActiveSheet() 
-            ->setCellValue('A'.$iii , 'Prepared By: ');
-  $objPHPExcel->getActiveSheet()
-            ->setCellValue('B'.$iii , $_SESSION['firstname']." ".$_SESSION['lastname']);
-  
   // Set worksheet title
    $objPHPExcel->getActiveSheet()->setTitle("Admin");
    $objPHPExcel->setActiveSheetIndex(0);
    header('Content-Type: application/vnd.ms-excel');
    header('Content-Disposition: attachment;filename="' . $fileName . '.xls"');
-  header('Cache-Control: max-age=0');
+    header('Cache-Control: max-age=0');
 
   $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
   $objWriter->save('php://output');
