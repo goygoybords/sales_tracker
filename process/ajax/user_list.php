@@ -32,7 +32,7 @@ $primaryKey = 'id';
 $columns = array(
     array( 'db' => '`u`.`id`',   'dt' => 0, 'field' => 'id' ),
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 1, "field" => "name", "as" => "name" ),
-    array( 'db' => '`u`.`email`',       'dt' => 2, 'field' => 'email' ),
+    array( 'db' => '`u`.`username`',       'dt' => 2, 'field' => 'username' ),
     array( 'db' => '`ut`.`type`',       'dt' => 3, 'field' => 'type' ),
     array( 'db' => '`t`.`team_name`',   'dt' => 4, 'field' => 'team_name' ),
     array( 'db' => '`u`.`id`',          'dt' => 5, 'formatter' => function( $d, $row )

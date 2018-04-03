@@ -4,7 +4,7 @@
 		private $id;
 		private $firstname;
 		private $lastname;
-		private $email;
+		private $username;
 		private $password;
 		private $status;
 		private $usertypeid;
@@ -53,14 +53,14 @@
 			$this->lastname = $lastname;
 		}
 
-		public function getEmail()
+		public function getUsername()
 		{
-			return $this->email;
+			return $this->username;
 		}
 
-		public function setEmail($email)
+		public function setUsername($username)
 		{
-			$this->email = $email;
+			$this->username = $username;
 		}
 
 		public function getPassword(){

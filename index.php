@@ -16,8 +16,8 @@
 							<div class="col-md-12 col-sm-12">
 							<form class="form floating-label" action="process/login_process.php" accept-charset="utf-8" method="post">
 								<div class="form-group">
-									<input type="email" class="form-control" id="email" name="email" required>
-									<label for="email">Email</label>
+									<input type="text" class="form-control" id="email" name="username" required>
+									<label for="email">Username</label>
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control" id="password" name="password" required>

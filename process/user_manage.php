@@ -16,7 +16,7 @@
 		// user setters and getters
 		$user->setFirstname(htmlentities($firstname));
 		$user->setLastname(htmlentities($lastname));
-		$user->setEmail(htmlentities($email));
+		$user->setUsername(htmlentities($username));
 		$user->setPassword($encrpytion->encryptIt($password));
 		$user->setUsertypeid($user_type);
 		$user->setScreenName($screen_name);
@@ -27,7 +27,7 @@
 		$data = [
 					'first_name' => $user->getFirstname()  , 
 					'lastname'  => $user->getLastname()   ,
-					'email'     => $user->getEmail()      ,
+					'username'     => $user->getUsername()      ,
 					'password'  => $user->getPassword()   ,
 					'usertypeid' => $user->getUsertypeid() ,
 					'screen_name' => $user->getScreenName(),
@@ -36,9 +36,9 @@
 					'status' => $user->getStatus() ,
 				];
 
-		$fields = array('email');
-		$where = "email = ?";
-		$params = array($user->getEmail());
+		$fields = array('username');
+		$where = "username = ?";
+		$params = array($user->getUsername());
 
 		$check = $db->select($table, $fields, $where , $params  );
 		if(count($check) == 1)
@@ -58,16 +58,16 @@
 		$user->setId(htmlentities($id));
 		$user->setFirstname(htmlentities($firstname));
 		$user->setLastname(htmlentities($lastname));
-		$user->setEmail(htmlentities($email));
+		$user->setUsername(htmlentities($username));
 		$user->setScreenName($screen_name);
 		$user->setPassword($encrpytion->encryptIt($password));
 		$user->setTeamId($team);
 		$user->setUsertypeid($user_type);
 
 		$table  = "users";
-		$fields = array('first_name' ,'lastname' ,'email' , 'password' , 'usertypeid' , 'screen_name' , 'team_id');
+		$fields = array('first_name' ,'lastname' ,'username' , 'password' , 'usertypeid' , 'screen_name' , 'team_id');
 		$where  = "WHERE id = ?";
-		$params = array($user->getFirstname(), $user->getLastname(), $user->getEmail(),
+		$params = array($user->getFirstname(), $user->getLastname(), $user->getUsername(),
 				$user->getPassword(), $user->getUsertypeid(),  $user->getScreenName() , $user->getTeamId() ,$user->getId() );
 		
 		$result = $db->update($table, $fields, $where, $params);

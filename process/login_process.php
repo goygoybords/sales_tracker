@@ -19,7 +19,7 @@
 	if(isset($_POST['login']))
 	{
 
-		$user->setEmail(htmlentities($email));
+		$user->setUsername(htmlentities($username));
 		$user->setPassword(htmlentities(encryptIt($password)));
 
 		$user->setDatelastlogin(strtotime(date('Y-m-d')));
@@ -27,8 +27,8 @@
 	
 		$table = "users";
 		$fields = array('id','first_name' , 'lastname', 'usertypeid', 'screen_name');
-		$where = "email = ? AND password = ? AND status = 1";
-		$params = array($user->getEmail(), $user->getPassword() );
+		$where = "username = ? AND password = ? AND status = 1";
+		$params = array($user->getUsername(), $user->getPassword() );
 
 		$login = $db->select($table, $fields, $where, $params);
 		if(count($login) > 0)

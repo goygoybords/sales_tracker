@@ -121,10 +121,10 @@
 															</div>
 														</div>
 														<div class="form-group">
-															<label for="Email5" class="col-sm-2 control-label">Email</label>
+															<label for="Email5" class="col-sm-2 control-label">Username</label>
 															<div class="col-sm-10">
-																<input type="text" name = "email" class="form-control"  id="Email5"
-																value = "<?php echo $user->getEmail(); ?>" required>
+																<input type="text" name = "username" class="form-control"  id="Email5"
+																value = "<?php echo $user->getUsername(); ?>" required>
 															</div>
 														</div>
 														<div class="form-group">
