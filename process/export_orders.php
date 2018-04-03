@@ -200,13 +200,10 @@
     
     $orders = $cmd->fetchAll();
     $fileName = 'list_order'.date('Y-m-d');
-
     //prepare the records to be added on the excel file in an array
     $excelData = array_unique($orders, SORT_REGULAR);
-
     // Create new PHPExcel object
     $objPHPExcel = new PHPExcel();
-
     // Set document properties
     $objPHPExcel->getProperties()
         ->setCreator("sales tracker")
@@ -215,30 +212,25 @@
         ->setDescription("Excel Sheet")
         ->setKeywords("Excel Sheet")
         ->setCategory("Me");
-
   // Set active sheet index to the first sheet, so Excel opens this as the first sheet
   $objPHPExcel->setActiveSheetIndex(0)
    ->getPageSetup()
    ->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-
   // Add column headers
   $style = array(
         'alignment' => array(
             'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
         )
     );
-
   $objPHPExcel->getActiveSheet()
             ->mergeCells('A1:Q1')
             ->setCellValue('A1' , 'Sales Tracker ')
             ->getStyle("A1:Q1")->applyFromArray($style)->getFont()->setSize(16);
-
   $objPHPExcel->getActiveSheet() 
             ->mergeCells('A2:Q2')
             ->setCellValue('A2' , 'List of Orders')
             ->getStyle("A2:Q2")->applyFromArray($style)->getFont()->setSize(16);
-
-  if($_GET['min'] != null && $_GET['max'] != null)
+  if(isset($_GET['min']) != null && $_GET['max'] != null)
   {
       $objPHPExcel->getActiveSheet() 
             ->mergeCells('A3:Q3')
@@ -252,13 +244,11 @@
             ->setCellValue('A3' , 'As of '.date('Y-m-d'))
             ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
   }         
-
   foreach(range('A','Q') as $columnID) 
   {
       $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
         ->setAutoSize(true);
   }
-
   $objPHPExcel->getActiveSheet()
         ->setCellValue('A5', 'Order ID')
         ->setCellValue('B5', 'Date')
@@ -279,7 +269,6 @@
         ->setCellValue('Q5', 'Remarks')       
         ->getStyle("A5:Q5")->applyFromArray($style)
         ;
-
   if(count($excelData) > 0 )
   {
     //Put each record in a new cell    
@@ -311,11 +300,9 @@
           $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
         else if($excelData[$i][16] == 2)
           $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
-
         // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
         //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
     }
-
     $iiiv2 = $ii + 1;
     $objPHPExcel->getActiveSheet() 
                 ->setCellValue('N'.$iiiv2, "=SUM(N6:N".($ii).")")->getStyle('N'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
@@ -323,8 +310,6 @@
     $objPHPExcel->getActiveSheet() 
                 ->setCellValue('O'.$iiiv2, "=SUM(O6:O".($ii).")")->getStyle('O'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
                    
-
-
     $iii = $ii + 3;
     $objPHPExcel->getActiveSheet() 
               ->setCellValue('A'.$iii , 'Prepared By: ');
@@ -337,9 +322,6 @@
    header('Content-Type: application/vnd.ms-excel');
    header('Content-Disposition: attachment;filename="' . $fileName . '.xls"');
     header('Cache-Control: max-age=0');
-
   $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
   $objWriter->save('php://output');
-
-
 ?>
