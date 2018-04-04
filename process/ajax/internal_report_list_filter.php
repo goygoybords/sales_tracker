@@ -73,38 +73,15 @@ $sql_details = array(
         $max =  date('Y-m-d', strtotime($_GET['max']));
         $agent = intval($_GET['agent']);
         $team = intval($_GET['team']);
-  
-    if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0) //search by date
-    {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
-    }
-    else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by all
-    {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' ";
-    }
 
-    else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0) // search by agent only
-    {
-        $extraWhere = " o.prepared_by = '$agent' ";
-    }
-    else if($agent == 0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team != 0) // search by team only
-    {
-        $extraWhere = " u.team_id = '$team' ";
-    }
-    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 && $agent == 0) //search by date and team
-    {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
-    }
-    else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team == 0 && $agent != 0) //search by date and agent
-    {
-        $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND o.prepared_by = '$agent' ";
-    }
-    else
-    {
-        $extraWhere =  "o.status BETWEEN 0 AND 1" ;
-    }
 
-    $joinQuery = "FROM orders o
+    if($_SESSION['user_type'] == 4)
+    {
+        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0) //search by date
+        {
+            $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.order_date BETWEEN '$min' AND '$max' ";
+        }
+            $joinQuery = "FROM orders o
                   JOIN customer c 
                   ON o.customer_id = c.id 
                   JOIN shipping_method s
@@ -112,6 +89,52 @@ $sql_details = array(
                   JOIN users u 
                   ON o.prepared_by = u.id
                  ";
+    }
+  
+    else
+    {
+        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0) //search by date
+        {
+            $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
+        }
+        else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0) //search by all
+        {
+            $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' ";
+        }
+
+        else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0) // search by agent only
+        {
+            $extraWhere = " o.prepared_by = '$agent' ";
+        }
+        else if($agent == 0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team != 0) // search by team only
+        {
+            $extraWhere = " u.team_id = '$team' ";
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 && $agent == 0) //search by date and team
+        {
+            $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team == 0 && $agent != 0) //search by date and agent
+        {
+            $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND o.prepared_by = '$agent' ";
+        }
+        else
+        {
+            $extraWhere =  "o.status BETWEEN 0 AND 1" ;
+        } 
+
+        $joinQuery = "FROM orders o
+                  JOIN customer c 
+                  ON o.customer_id = c.id 
+                  JOIN shipping_method s
+                  ON s.id = o.shipping_method_id
+                  JOIN users u 
+                  ON o.prepared_by = u.id
+                 ";
+    }
+    
+
+    
 
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )

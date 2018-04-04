@@ -32,7 +32,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Reports</header>
+								<header><i class="fa fa-fw fa-users"></i>Internal Reports</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -58,8 +58,9 @@
 										<div class="col-lg-offset-0 col-md-12">
 											<div id = "filters">
 												<div class="row">
+													<?php if($_SESSION['user_type'] == 4): ?>
 													
-													<!-- date filters -->
+													<?php else: ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<select name = "agents" class = "form-control dirty" id = "agents"  >
@@ -84,6 +85,8 @@
 															<label class="Team/Group">Team/Group</label>
 														</div>
 													</div>
+					
+													<?php endif; ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker1'>
@@ -104,11 +107,12 @@
 											                </div>
 											            </div>
 													</div>
+													
 												</div>
 											</div>
 											<!-- <input type = "text" name = "filter" id = "filter"> -->
 											<input type = "submit" id = "filteraction" value = "Apply Filter" class = "btn btn-success">
-											<a href = "../process/export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
+											<a href = "../process/internal_export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
 												<br/>
 												<br/>
 												<table class = "table display responsive nowrap" id = "lead-tbl">

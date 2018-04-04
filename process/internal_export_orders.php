@@ -6,25 +6,52 @@
     $db = new Database();
     if (!isset($_GET['min']) && !isset($_GET['max']) && !isset($_GET['agent']) && !isset($_GET['team']))
     {
-         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
-                  o.notes, 
-                  c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
-                 FROM orders o
-                 JOIN customer c
-                 ON o.customer_id = c.id
-                 JOIN state s
-                 ON c.state_id = s.id
-                 JOIN countries coun
-                 ON c.country_id = coun.country_id
-                 JOIN shipping_method ship
-                 ON o.shipping_method_id = ship.id
-                 JOIN users u 
-                 ON u.id = o.prepared_by
-                 ORDER BY 1
-            ";
-        $cmd = $db->getDb()->prepare($sql);
-        $cmd->execute(array());      
+         if($_SESSION['user_type'] == 4)
+         {
+            $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
+                    o.notes, 
+                    c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
+                     ship.price, o.tracking_number, o.status , o.total
+                   FROM orders o
+                   JOIN customer c
+                   ON o.customer_id = c.id
+                   JOIN state s
+                   ON c.state_id = s.id
+                   JOIN countries coun
+                   ON c.country_id = coun.country_id
+                   JOIN shipping_method ship
+                   ON o.shipping_method_id = ship.id
+                   JOIN users u 
+                   ON u.id = o.prepared_by
+                   where u.team_id = ?
+                   ORDER BY 1
+              ";
+              $cmd = $db->getDb()->prepare($sql);
+              $cmd->execute(array($_SESSION['team_id'])); 
+         }
+         else
+         {
+           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
+                    o.notes, 
+                    c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
+                     ship.price, o.tracking_number, o.status , o.total
+                   FROM orders o
+                   JOIN customer c
+                   ON o.customer_id = c.id
+                   JOIN state s
+                   ON c.state_id = s.id
+                   JOIN countries coun
+                   ON c.country_id = coun.country_id
+                   JOIN shipping_method ship
+                   ON o.shipping_method_id = ship.id
+                   JOIN users u 
+                   ON u.id = o.prepared_by
+                   ORDER BY 1
+              ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array());  
+        }
+            
     }
     else
     {
@@ -35,7 +62,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
+                   ship.price, o.tracking_number, o.status , o.total
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -59,7 +86,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
+                   ship.price, o.tracking_number, o.status , o.total
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -82,7 +109,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
+                   ship.price, o.tracking_number, o.status , o.total
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -105,7 +132,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
+                   ship.price, o.tracking_number, o.status , o.total
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -128,7 +155,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
+                   ship.price, o.tracking_number, o.status , o.total
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -151,7 +178,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status 
+                   ship.price, o.tracking_number, o.status , o.total
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -173,7 +200,7 @@
     
     $orders  = $cmd->fetchAll();
     
-    $fileName = 'list_order'.date('Y-m-d');
+    $fileName = 'internal_report'.date('Y-m-d');
     //prepare the records to be added on the excel file in an array
     $excelData = array_unique($orders, SORT_REGULAR);
    
@@ -182,7 +209,7 @@
     // Set document properties
     $objPHPExcel->getProperties()
         ->setCreator("sales tracker")
-        ->setTitle("Order List")
+        ->setTitle("Internal Report")
         ->setSubject("My Excel Sheet")
         ->setDescription("Excel Sheet")
         ->setKeywords("Excel Sheet")
@@ -199,7 +226,7 @@
     );
   $objPHPExcel->getActiveSheet()
             ->mergeCells('A1:Q1')
-            ->setCellValue('A1' , 'Sales Tracker ')
+            ->setCellValue('A1' , 'Internal Report ')
             ->getStyle("A1:Q1")->applyFromArray($style)->getFont()->setSize(16);
   $objPHPExcel->getActiveSheet() 
             ->mergeCells('A2:Q2')
@@ -248,8 +275,10 @@
   {
     //Put each record in a new cell    
     $ii = 6;
+    $total = 0;
     foreach ($excelData as $d ) 
     {
+       $total = $total + $d['total'];
        $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $d['invoice_number']);
        $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($d['order_date'])) );
        $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $d['CustomerName']);
@@ -269,8 +298,6 @@
           $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
         else if($d['status'] == 2)
           $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
-        // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
-        //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_Numb
 
         $sql2 = "SELECT o.invoice_number, od.quantity, p.product_description, 
                 p.product_price AS 'Price/Pill', od.unit_price AS 'Price'
@@ -291,42 +318,8 @@
           $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $d2['product_description'] );
           $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $d2['Price/Pill'])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
           $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $d2['Price'])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
-       
            $ii++;  
         }
-        
-        
-      
-    
-    // for($i=0; $i<count($excelData); $i++)
-    // {
-    //     $ii = $i+6;
-    //     $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $excelData[$i][0]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($excelData[$i][1])) );
-    //     $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i][2]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i][3])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
-    //     $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i][4]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i][5]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $excelData[$i][6]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('H'.$ii, $excelData[$i][7]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('I'.$ii, $excelData[$i][8]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('J'.$ii, $excelData[$i][9]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('K'.$ii, $excelData[$i][10]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $excelData[$i][11]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $excelData[$i][12])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
-    //     $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
-    //     $objPHPExcel->getActiveSheet()->setCellValue('O'.$ii, $excelData[$i][14])->getStyle('O'.$ii)->getNumberFormat()->setFormatCode("0.00");
-    //     $objPHPExcel->getActiveSheet()->setCellValue('P'.$ii, $excelData[$i][15]);
-    //     $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, $excelData[$i][16]);
-       
-    //     if($excelData[$i][16] == 0)
-    //       $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "On Hold Order");
-    //     else if($excelData[$i][16] == 1)
-    //       $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
-    //     else if($excelData[$i][16] == 2)
-    //       $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
-    //     // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
-    //     //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
     }
     $iiiv2 = $ii + 1;
     $objPHPExcel->getActiveSheet() 
@@ -340,13 +333,16 @@
               ->setCellValue('A'.$iii , 'Prepared By: ');
     $objPHPExcel->getActiveSheet()
               ->setCellValue('B'.$iii , $_SESSION['firstname']." ".$_SESSION['lastname']);
+    $objPHPExcel->getActiveSheet()->setCellValue('C'.$iii , 'Total Sales: ');
+    $objPHPExcel->getActiveSheet()->setCellValue('D'.$iii, $total)
+        ->getStyle('D'.$iii)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE);
   }
   // Set worksheet title
-   $objPHPExcel->getActiveSheet()->setTitle("Admin");
-   $objPHPExcel->setActiveSheetIndex(0);
-   header('Content-Type: application/vnd.ms-excel');
-   header('Content-Disposition: attachment;filename="' . $fileName . '.xls"');
+    $objPHPExcel->getActiveSheet()->setTitle("Internal Report");
+    $objPHPExcel->setActiveSheetIndex(0);
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="' . $fileName . '.xls"');
     header('Cache-Control: max-age=0');
-  $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-  $objWriter->save('php://output');
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+    $objWriter->save('php://output');
 ?>

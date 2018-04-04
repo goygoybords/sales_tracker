@@ -69,7 +69,9 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-      $joinQuery = "FROM orders o
+        if($_SESSION['user_type'] == 4)
+        {
+            $joinQuery = "FROM orders o
                   JOIN customer c 
                 ON o.customer_id = c.id 
                 JOIN shipping_method s
@@ -77,7 +79,22 @@ $sql_details = array(
                 JOIN users u 
                 ON o.prepared_by = u.id
                ";
-      $extraWhere =  "o.status BETWEEN 0 AND 2" ;
+            $extraWhere =  "u.team_id = ".$_SESSION['team_id']." AND o.status BETWEEN 0 AND 2" ;
+        }
+        else
+        {
+            $joinQuery = "FROM orders o
+                  JOIN customer c 
+                ON o.customer_id = c.id 
+                JOIN shipping_method s
+                ON s.id = o.shipping_method_id
+                JOIN users u 
+                ON o.prepared_by = u.id
+               ";
+            $extraWhere =  "o.status BETWEEN 0 AND 2" ;
+        }
+      
+     
     
     
     echo json_encode(

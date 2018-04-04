@@ -26,7 +26,7 @@
 
 	
 		$table = "users";
-		$fields = array('id','first_name' , 'lastname', 'usertypeid', 'screen_name');
+		$fields = array('id','first_name' , 'lastname', 'usertypeid', 'screen_name', 'team_id');
 		$where = "username = ? AND password = ? AND status = 1";
 		$params = array($user->getUsername(), $user->getPassword() );
 
@@ -41,6 +41,7 @@
 				$_SESSION['lastname'] = $l['lastname'];
 				$_SESSION['user_type'] = $l['usertypeid'];
 				$_SESSION['screen_name'] = $l['screen_name'];
+				$_SESSION['team_id'] = $l['team_id'];
 				$_SESSION['isLogin'] = true;
 				if($l['usertypeid'] == 4)
 				{
