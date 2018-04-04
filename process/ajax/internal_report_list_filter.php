@@ -155,6 +155,10 @@ $sql_details = array(
         {
             $extraWhere = "u.team_id = '$team' AND o.prepared_by = '$agent' AND o.status = '$status' ";
         }
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0) //search by status
+        {
+            $extraWhere = "o.status = '$status' ";
+        }
         else
         {
             $extraWhere =  "o.status BETWEEN 1 AND 3" ;
