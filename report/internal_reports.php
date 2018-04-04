@@ -107,6 +107,17 @@
 											                </div>
 											            </div>
 													</div>
+													<div class="col-sm-6">
+														<div class="form-group ">
+															<select name = "status" class = "form-control dirty" id = "status"  >
+																<option></option>
+																<option value="0">On Hold</option>
+																<option value="1">Approved/Processed</option>
+																<option value="2">Shipped</option>
+															</select>
+															<label class="Status">Status</label>
+														</div>
+													</div>
 													
 												</div>
 											</div>
@@ -171,10 +182,10 @@
 			var max = $("#max").val();
 			var agent = $( "#agents option:selected" ).val();
 			var team = $( "#teams option:selected" ).val();
+			var status = $( "#status option:selected" ).val();
 
-			$("#export").attr("href", "../process/internal_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team);
-		
-			var data = dataTable.ajax.url( "../process/ajax/internal_report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team).load();
+			$("#export").attr("href", "../process/internal_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team+"&status="+status);
+			var data = dataTable.ajax.url( "../process/ajax/internal_report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team+"&status="+status).load();
 		});
 	} );
 </script>

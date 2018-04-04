@@ -73,14 +73,34 @@ $sql_details = array(
         $max =  date('Y-m-d', strtotime($_GET['max']));
         $agent = intval($_GET['agent']);
         $team = intval($_GET['team']);
+        $status = intval($_GET['status']);
 
 
     if($_SESSION['user_type'] == 4)
     {
-        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0) //search by date
+        
+        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0) //search by date
         {
             $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.order_date BETWEEN '$min' AND '$max' ";
         }
+        
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status != 0) //search by date and status
+        {
+            $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.order_date BETWEEN '$min' AND '$max' AND o.status = '$status' ";
+        }
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0) //search by status
+        {
+            $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.status = '$status' ";
+        }
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status == 0) //search by zero status
+        {
+            $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.status = '$status' ";
+        }
+        else
+        {
+            $extraWhere =  "u.team_id = ".$_SESSION['team_id']." AND o.status BETWEEN 0 AND 2" ;
+        }
+
             $joinQuery = "FROM orders o
                   JOIN customer c 
                   ON o.customer_id = c.id 
@@ -89,6 +109,7 @@ $sql_details = array(
                   JOIN users u 
                   ON o.prepared_by = u.id
                  ";
+
     }
   
     else
