@@ -75,7 +75,7 @@ $columns = array(
                             </span>
                         </a>';
               }
-              else if($_SESSION['user_type'] == 2)
+              else if($_SESSION['user_type'] == 2 || $_SESSION['user_type'] == 4 )
               {
                 return ' <a href="manage.php?id='.$d.'&add_tracking" >
                             <span class="label label-inverse" style = "color:black;">
