@@ -114,7 +114,9 @@
 						
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
-
+				<?php endif; ?>
+				
+				<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 4): ?>
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-database"></i></div>
@@ -123,10 +125,12 @@
 					<!--start submenu -->
 					<ul>
 						<li>
-							<a href="../shipping/methods.php">
-								<span class="title">Shipping Methods</span>
+							<a href="../report/internal_reports.php">
+								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
+								<span class="title">Internal Reports</span>
 							</a>
 						</li>
+						<?php if($_SESSION['user_type'] == 1):?>
 						<li>
 							<a href="../report/reports.php">
 								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
@@ -134,9 +138,8 @@
 							</a>
 						</li>
 						<li>
-							<a href="../report/internal_reports.php">
-								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
-								<span class="title">Internal Reports</span>
+							<a href="../shipping/methods.php">
+								<span class="title">Shipping Methods</span>
 							</a>
 						</li>
 						<li>
@@ -145,10 +148,12 @@
 								<span class="title">Logs</span>
 							</a>
 						</li>
+						<?php endif; ?>
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
 				<?php endif; ?>
+
 				<li>
 					<a href="../logout.php">
 						<div class="gui-icon"><i class="fa fa-sign-out"></i></div>
