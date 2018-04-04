@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2018 at 07:53 AM
+-- Generation Time: Apr 04, 2018 at 05:30 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -19,21 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `sales_tracker`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `calendar_events`
---
-
-CREATE TABLE `calendar_events` (
-  `id` int(11) NOT NULL,
-  `event_name` varchar(35) NOT NULL,
-  `description` varchar(50) NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -331,9 +316,9 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `firstname`, `lastname`, `email`, `contact_number`, `alternate_contact_number`, `country_id`, `shipping_address`, `city`, `zip`, `state_id`, `same`, `billing_country_id`, `billing_address`, `billing_city`, `billing_zip`, `billing_state_id`, `created_by`, `status`) VALUES
-(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 106, 'Sun Valley Updated', 'Cebu Queen City of the south', '55555', 16, 1, 106, 'Sun Valley Updated', '', '55555', 16, 12, 1),
-(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 1, 230, '', 'asdasd', '123123', 5, 12, 1),
-(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '123213', 19, 13, 1),
+(1, 'Kevin ', 'Kane', 'john.flashpark@gmail.com', '6541230', '', 106, 'Sun Valley Updated', 'Cebu Queen City of the south', '55555', 16, 1, 106, 'Sun Valley Updated', 'Sun Valley Updated', '55555', 16, 12, 0),
+(11, 'Brock ', 'Lesnar', 'brock@wwe.com', '123123', '', 230, 'asdasd', 'asdsad', '123123', 5, 1, 230, '', 'asdasd', '123123', 5, 12, 0),
+(12, 'Paul ', 'Heyman', 'kevinseankho@gmail.com', '12354545', '34343434', 211, 'asdasdasd', 'updated', '123123', 6, 0, 174, 'Cebu City', 'Cebu City', '123213', 19, 13, 0),
 (13, 'david', 'cook', 'david@gmail.com', '123123', '567567567', 230, 'ghjghj', 'ghjhgj', '45656', 2, 0, 230, 'asdasd', 'ghjhgj', '2313', 59, 15, 1),
 (14, 'wing', 'chun', 'wing@gmail.com', '123', '456456', 230, 'gfjghjhg', 'ghjghj', '6767', 2, 1, 230, 'gfjghjhg', 'ghjghj', '6767', 2, 15, 1),
 (15, 'bruce', 'lee', 'brucelee@gmail.com', '12312', '123', 230, 'asdasd', 'asd', '123123', 5, 1, 230, 'asdasd', 'asd', '123123', 5, 15, 1),
@@ -371,27 +356,12 @@ CREATE TABLE `customer_payment_methods` (
 --
 
 INSERT INTO `customer_payment_methods` (`id`, `customer_id`, `payment_method`, `card_type`, `card_number`, `card_name`, `expiry_date`, `cvv`, `check_number`, `account_number`, `bank_name`, `routing_number`, `status`) VALUES
-(1, 17, 1, 'MasterCard', '123123', 'CCF', '3/19', '111', '', 0, '', 0, 1),
-(2, 15, 1, 'American Expres', '123124123', 'test', '5/19', '111', '', 0, '', 0, 1),
-(3, 18, 1, 'MasterCard', '123123', 'jose chan', '4/20', '111', '', 0, '', 0, 1),
-(4, 20, 1, 'MasterCard', '121212', 'DGL', '1/20', '111', '', 0, '', 0, 1),
-(5, 19, 3, '', '', '', '', '', '', 123123, 'BDO', 123123, 1),
-(6, 18, 2, '', '', '', '', '', '567567', 123123, 'MEtrobank update', 121, 1),
-(7, 18, 1, 'MasterCard', '111', 'asdasd', '04/20', '131', '', 0, '', 0, 1),
-(8, 1, 3, '', '', '', '', '', '', 123455, 'bdo', 12345, 1),
-(9, 1, 1, 'MasterCard', '123455', 'kev', '0412', '111', '', 0, '', 0, 1),
-(10, 19, 1, 'MasterCard', '123123', 'Kev', '0419', '123', '', 0, '', 0, 1),
-(11, 1, 1, 'MasterCard', '1234', 'kev', '04/22', '888', '', 0, '', 0, 1),
-(12, 12, 1, 'MasterCard', '123', 'BDO', '04/20', '222', '', 0, '', 0, 1),
-(13, 11, 1, 'MasterCard', '512232323', '', '04/20', '222', '', 0, '', 0, 1),
-(14, 11, 2, '', '', '', '', '', '90001465', 12345, 'BDO', 0, 1),
-(15, 12, 1, 'MasterCard', '123213', 'asdas', '04/20', '111', '', 0, '', 0, 1),
-(16, 21, 1, 'MasterCard', '123', 'kev', '04/20', '111', '', 0, '', 0, 1),
-(17, 21, 2, '', '', '', '', '', '1231231', 1123123, 'BDO', 12331, 1),
-(18, 21, 1, 'MasterCard', '123', '123', '1231', '111', '', 0, '', 0, 1),
-(19, 12, 1, 'MasterCard', '123123', 'sdfsdf', '01/12', '111', '', 0, '', 0, 1),
-(20, 1, 1, 'MasterCard', '12321', 'asdsad', '04/11', '111', '', 0, '', 0, 1),
-(21, 21, 3, '', '', '', '', '', '', 123213, 'bdo', 123, 1);
+(1, 1, 2, '', '', '', '', '', '12345', 12345, 'BDO', 123, 1),
+(2, 12, 3, '', '', '', '', '', '', 1111, 'BDO', 12, 1),
+(3, 21, 2, '', '', '', '', '', '111', 123123, 'RCBC', 11, 1),
+(4, 13, 3, '', '', '', '', '', '', 123455, 'BDO', 123, 1),
+(5, 19, 2, '', '', '', '', '', '123123', 123, 'bdo', 123, 1),
+(6, 20, 1, 'MasterCard', '23232', 'bdo', '04/11', '111', '', 0, '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -407,15 +377,26 @@ CREATE TABLE `customer_refund` (
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `customer_refund`
+-- Table structure for table `groupings`
 --
 
-INSERT INTO `customer_refund` (`id`, `order_id`, `date`, `amount`, `status`) VALUES
-(1, 4, '0000-00-00', '111.00', 1),
-(5, 13, '2018-02-02', '300.00', 1),
-(6, 11, '2018-02-02', '120.00', 1),
-(7, 13, '2018-02-17', '3650.00', 1);
+CREATE TABLE `groupings` (
+  `id` int(11) NOT NULL,
+  `description` varchar(30) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `groupings`
+--
+
+INSERT INTO `groupings` (`id`, `description`, `status`) VALUES
+(1, 'Group 1', 1),
+(2, 'Group 2', 1),
+(3, 'Group 3', 1);
 
 -- --------------------------------------------------------
 
@@ -481,7 +462,30 @@ INSERT INTO `logs` (`id`, `date_log`, `description`, `user_id`, `order_id`) VALU
 (43, '2018-02-09 01:27:58', 'Created a new Order', 1, 18),
 (44, '2018-02-09 01:38:36', 'Created a new Order', 1, 19),
 (45, '2018-02-09 06:42:46', 'Created a new Order', 1, 20),
-(46, '2018-02-09 06:59:48', 'Created a new Order', 1, 21);
+(46, '2018-02-09 06:59:48', 'Created a new Order', 1, 21),
+(47, '2018-02-12 12:48:35', 'Updated an Order', 1, 19),
+(48, '2018-02-12 12:49:27', 'Updated an Order', 1, 21),
+(49, '2018-02-12 12:56:34', 'Updated an Order', 1, 9),
+(50, '2018-02-26 12:04:02', 'Refunded an Order', 0, 11),
+(51, '2018-02-26 12:04:36', 'Refunded an Order', 0, 11),
+(52, '2018-02-26 12:05:19', 'Approved an Order', 1, 21),
+(53, '2018-02-26 12:05:33', 'Shipped an Order', 1, 21),
+(54, '2018-02-26 12:13:59', 'Created a new Order', 1, 1),
+(55, '2018-02-26 12:15:56', 'Created a new Order', 2, 2),
+(56, '2018-02-26 12:33:39', 'Created a new Order', 3, 3),
+(57, '2018-02-26 01:02:18', 'Updated an Order', 1, 1),
+(58, '2018-02-26 01:02:37', 'Approved an Order', 1, 1),
+(59, '2018-02-26 01:02:42', 'Shipped an Order', 1, 1),
+(60, '2018-04-03 01:31:21', 'Approved an Order', 4, 2),
+(61, '2018-04-03 01:36:13', 'Added Tracking Number', 4, 1),
+(62, '2018-04-03 01:39:59', 'Updated an Order', 1, 3),
+(63, '2018-04-03 01:40:11', 'Updated an Order', 1, 3),
+(64, '2018-04-04 02:19:57', 'Updated an Order', 4, 3),
+(65, '2018-04-04 02:43:15', 'Shipped an Order', 1, 2),
+(66, '2018-04-04 05:13:50', 'Created a new Order', 3, 4),
+(67, '2018-04-04 05:14:17', 'Created a new Order', 3, 5),
+(68, '2018-04-04 05:14:45', 'Created a new Order', 3, 6),
+(69, '2018-04-04 05:15:26', 'Approved an Order', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -516,27 +520,12 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `invoice_number`, `order_date`, `customer_id`, `total`, `shipping_method_id`, `shipping_fee`, `remarks`, `notes`, `payment_method_id`, `merchant`, `prepared_by`, `approved_by`, `date_submitted`, `updated_by`, `date_updated`, `tracking_number`, `refunded`, `status`) VALUES
-(1, 'INV-00040001', '2016-11-30', 17, '25.00', 1, '5.00', 'remarks', 'good', 1, 'salesman', 12, 1, '2016-11-29 14:24:23', 1, '2018-01-15 04:26:00', '1', 0, 1),
-(2, 'INV-00040002', '2016-11-30', 15, '30.00', 1, '5.00', '', '', 2, 'kane', 13, 0, '2016-11-29 14:25:49', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(3, 'INV-00040003', '2016-12-01', 18, '15.00', 1, '5.00', 're', 'nyer', 3, 'ahente john', 19, 0, '2016-12-02 15:11:43', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(4, 'INV-00040004', '2016-12-01', 20, '105.00', 1, '5.00', 'remarks', 'notes', 4, 'KSK Marketing', 12, 1, '2016-12-02 15:22:00', 1, '2018-01-15 04:25:19', '12321', 1, 2),
-(5, 'INV-00040005', '2016-12-23', 19, '35.00', 1, '22.00', 'test', 'test', 5, 'asdsad', 16, 0, '2016-12-13 10:44:27', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(6, 'INV-00040006', '2016-12-15', 18, '25.00', 2, '20.00', 'k', 'k', 6, 'Salesman update', 16, 0, '2016-12-14 09:38:09', 16, '2016-12-14 10:22:08', '0', 0, 0),
-(7, 'INV-00040007', '2016-12-22', 18, '4.00', 1, '22.00', 'ko', 'ko', 7, 'asdsad', 16, 0, '2016-12-14 11:26:53', 1, '2018-01-15 04:22:55', '0', 0, 0),
-(8, 'INV-00040008', '2018-01-15', 1, '4.00', 1, '22.00', '', '', 8, '', 12, 0, '2018-01-15 07:27:20', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(9, 'INV-00040009', '2018-01-25', 1, '1.00', 1, '22.00', '', '', 9, 'asdsad', 14, 0, '2018-01-16 00:11:04', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(10, 'INV-00040010', '2017-01-16', 19, '4.00', 1, '22.00', 'update', 'update\r\n', 10, 'merchant', 14, 0, '2018-01-16 01:12:57', 1, '2018-02-05 00:55:21', '0', 0, 0),
-(11, 'INV-00040011', '2018-01-17', 1, '4.00', 1, '22.00', 'Reshipment', 'notes', 11, 'salesman', 14, 1, '2018-01-16 06:30:00', 1, '2018-02-05 00:44:40', '0', 0, 2),
-(12, 'INV-00040012', '2018-01-01', 12, '4.00', 2, '20.00', 'remarks', 'remarks\r\n', 12, '', 14, 1, '2018-01-16 06:31:35', 1, '2018-02-05 01:35:04', '0', 0, 2),
-(13, 'INV-00040013', '2018-01-01', 11, '4.00', 1, '22.00', '', '', 13, '', 14, 1, '2018-01-16 06:33:02', 0, '0000-00-00 00:00:00', '0', 1, 2),
-(14, 'INV-00040014', '2018-02-01', 11, '6.00', 2, '20.00', 'remarks', 'notes', 14, 'Kev', 1, 0, '2018-02-05 01:27:15', 1, '2018-02-05 01:29:03', '0', 0, 0),
-(15, 'INV-00040015', '2018-02-03', 12, '1.00', 2, '20.00', 'remarks', 'notes', 15, 'kev', 1, 0, '2018-02-05 01:30:05', 1, '2018-02-05 01:32:37', '0', 0, 0),
-(16, 'INV-00040016', '2018-02-03', 21, '2.00', 1, '22.00', 'remarks', 'notes', 16, 'kevv', 1, 0, '2018-02-05 01:31:40', 1, '2018-02-07 00:34:42', '0', 0, 0),
-(17, 'INV-00040017', '2018-01-01', 21, '2.00', 1, '0.00', 'remarks', 'notes\r\n', 17, 'merchant', 1, 0, '2018-02-09 01:23:46', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(18, 'INV-00040018', '1970-01-01', 21, '5.00', 2, '0.00', 'asdasd', 'asdsad', 18, 'merchant', 1, 0, '2018-02-09 01:27:58', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(19, 'INV-00040019', '2018-02-14', 12, '2.00', 2, '0.00', 'marks', 'notes', 19, 'merchant', 1, 0, '2018-02-09 01:38:36', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(20, 'INV-00040020', '2018-02-03', 1, '1.00', 2, '0.00', 'remarks', 'notes\r\n', 20, 'merchant', 1, 0, '2018-02-09 06:42:46', 0, '0000-00-00 00:00:00', '0', 0, 0),
-(21, 'INV-00040021', '2018-02-01', 21, '3.00', 2, '0.00', 'notes', 'notes', 21, 'merchant', 1, 0, '2018-02-09 06:59:48', 0, '0000-00-00 00:00:00', '0', 0, 0);
+(1, 'INV-00040001', '2018-02-26', 1, '2.00', 1, '22.00', 'remarks', 'notes', 1, 'merchant', 1, 1, '2018-02-26 00:13:59', 1, '2018-02-26 01:02:18', '12345', 0, 2),
+(2, 'INV-00040004', '2018-02-26', 12, '1.00', 1, '22.00', '', '', 2, 'merchant', 2, 4, '2018-02-26 00:15:56', 0, '0000-00-00 00:00:00', '0', 0, 2),
+(3, 'INV-00040005', '2018-02-27', 21, '1.00', 1, '22.00', 'remarks\r\n', 'On Hold', 3, 'merchant', 3, 1, '2018-02-26 00:33:39', 4, '2018-04-04 02:19:57', '0', 0, 1),
+(4, '', '2018-04-01', 13, '3.00', 1, '22.00', 'remarks', 'notes', 4, 'merchant', 3, 0, '2018-04-04 05:13:50', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(5, '', '2018-04-02', 19, '1.00', 1, '22.00', 'remarks', 'notes\r\n', 5, 'mechat', 3, 0, '2018-04-04 05:14:17', 0, '0000-00-00 00:00:00', '0', 0, 0),
+(6, '', '2018-04-03', 20, '1.00', 1, '22.00', '', '', 6, 'chant', 3, 0, '2018-04-04 05:14:45', 0, '0000-00-00 00:00:00', '0', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -559,34 +548,14 @@ CREATE TABLE `order_detail` (
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `unit_price`, `amount`, `status`) VALUES
-(1, 1, 2, '2.00', '5.00', '10.00', 1),
-(2, 1, 1, '2.00', '5.00', '10.00', 1),
-(3, 2, 1, '5.00', '5.00', '25.00', 1),
-(4, 3, 1, '5.00', '2.00', '10.00', 1),
-(5, 4, 5, '50.00', '2.00', '100.00', 1),
-(6, 5, 4, '5.00', '5.00', '25.00', 1),
-(7, 5, 1, '2.00', '5.00', '10.00', 1),
-(8, 6, 2, '5.00', '5.00', '25.00', 1),
-(9, 7, 1, '2.00', '2.00', '4.00', 1),
-(10, 8, 4, '2.00', '2.00', '4.00', 1),
-(11, 9, 1, '1.00', '1.00', '1.00', 1),
-(12, 10, 3, '2.00', '2.00', '4.00', 1),
-(13, 11, 2, '2.00', '2.00', '4.00', 1),
-(14, 12, 4, '2.00', '2.00', '4.00', 1),
-(15, 13, 2, '2.00', '2.00', '4.00', 1),
-(16, 14, 3, '2.00', '0.00', '4.00', 1),
-(17, 14, 1, '1.00', '1.00', '2.00', 1),
-(18, 15, 1, '1.00', '1.00', '1.00', 1),
-(19, 16, 3, '2.00', '2.00', '4.00', 1),
-(20, 16, 1, '2.00', '2.00', '2.00', 1),
-(21, 18, 1, '1.00', '1.00', '1.00', 1),
-(22, 18, 2, '2.00', '2.00', '4.00', 1),
-(23, 19, 1, '1.00', '1.00', '1.00', 1),
-(24, 19, 2, '2.00', '1.00', '1.00', 1),
-(25, 20, 2, '1.00', '1.00', '1.00', 1),
-(26, 21, 1, '1.00', '1.00', '1.00', 1),
-(27, 21, 2, '1.00', '1.00', '1.00', 1),
-(28, 21, 3, '1.00', '1.00', '1.00', 1);
+(3, 2, 1, '1.00', '1.00', '1.00', 1),
+(5, 1, 1, '1.00', '1.00', '1.00', 1),
+(6, 1, 2, '1.00', '1.00', '1.00', 1),
+(9, 3, 3, '1.00', '1.00', '1.00', 1),
+(10, 4, 1, '1.00', '1.00', '1.00', 1),
+(11, 4, 2, '2.00', '2.00', '2.00', 1),
+(12, 5, 4, '1.00', '1.00', '1.00', 1),
+(13, 6, 5, '1.00', '1.00', '1.00', 1);
 
 -- --------------------------------------------------------
 
@@ -614,22 +583,12 @@ CREATE TABLE `order_send_someone` (
 --
 
 INSERT INTO `order_send_someone` (`id`, `send_counter`, `order_id`, `customer_id`, `send_name`, `send_contact_number`, `send_country_id`, `send_address`, `send_city`, `send_zip`, `send_state_id`, `status`) VALUES
-(1, 1, 6, 18, 'Matthew update', 'Heisan', 230, 'Cal', 'Cal', '112', 3, 1),
-(2, 0, 7, 18, '', '', 230, '', '', '', 0, 1),
-(3, 0, 8, 1, '', '', 230, '', '', '', 0, 1),
-(4, 0, 9, 1, '', '', 230, '', '', '', 0, 1),
-(5, 0, 10, 19, '', '', 230, '', '', '', 0, 1),
-(6, 0, 11, 1, '', '', 230, '', '', '', 0, 1),
-(7, 0, 12, 12, '', '', 230, '', '', '', 0, 1),
-(8, 0, 13, 11, '', '', 230, '', '', '', 0, 1),
-(9, 0, 14, 11, '', '', 230, '', '', '', 0, 1),
-(10, 0, 15, 12, '', '', 230, '', '', '', 0, 1),
-(11, 0, 16, 21, '', '', 230, '', '', '', 0, 1),
-(12, 0, 17, 21, '', '', 230, '', '', '', 0, 1),
-(13, 0, 18, 21, '', '', 230, '', '', '', 0, 1),
-(14, 0, 19, 12, '', '', 230, '', '', '', 0, 1),
-(15, 0, 20, 1, '', '', 230, '', '', '', 0, 1),
-(16, 0, 21, 21, '', '', 230, '', '', '', 0, 1);
+(1, 0, 1, 1, '', '', 230, '', '', '', 0, 1),
+(2, 1, 2, 12, 'Kevin', '12345', 171, '18888', 'LA', '61247', 6, 1),
+(3, 0, 3, 21, '', '', 230, '', '', '', 0, 1),
+(4, 0, 4, 13, '', '', 230, '', '', '', 0, 1),
+(5, 0, 5, 19, '', '', 230, '', '', '', 0, 1),
+(6, 0, 6, 20, '', '', 230, '', '', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -675,9 +634,7 @@ CREATE TABLE `shipping_method` (
 
 INSERT INTO `shipping_method` (`id`, `description`, `price`, `status`) VALUES
 (1, 'EMS', '22.00', 1),
-(2, 'EPACK', '20.00', 1),
-(3, 'test updated', '0.00', 0),
-(4, 'updateted', '11.20', 0);
+(2, 'EPACK', '20.00', 1);
 
 -- --------------------------------------------------------
 
@@ -767,6 +724,7 @@ CREATE TABLE `teams` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `team_name` varchar(50) NOT NULL,
+  `group_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -774,11 +732,9 @@ CREATE TABLE `teams` (
 -- Dumping data for table `teams`
 --
 
-INSERT INTO `teams` (`id`, `user_id`, `team_name`, `status`) VALUES
-(1, 7, 'Degeneration X', 1),
-(2, 10, 'LA Lakers', 1),
-(3, 11, 'Cleveland Cavs', 1),
-(4, 18, 'team lead 4', 1);
+INSERT INTO `teams` (`id`, `user_id`, `team_name`, `group_id`, `status`) VALUES
+(1, 2, 'Team 1', 1, 1),
+(3, 6, 'DX', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -790,7 +746,7 @@ CREATE TABLE `users` (
   `id` int(4) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `lastname` varchar(20) NOT NULL,
-  `email` varchar(35) NOT NULL,
+  `username` varchar(35) NOT NULL,
   `password` varchar(50) NOT NULL,
   `usertypeid` int(2) NOT NULL DEFAULT '1',
   `team_id` int(11) NOT NULL,
@@ -804,22 +760,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `lastname`, `email`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Kevin Sean', 'Kho', 'kevinseankho@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Chinese Mafia', 1473717600, 1516057200, 1),
-(6, 'QA', 'Kevin', 'qakevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 0, '', 1479682800, 0, 1),
-(7, 'Team Leader', 'Kevin', 'teamleadkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 0, '', 1479682800, 0, 1),
-(8, 'agent', 'kevin', 'agentkevin@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 4, '', 1479682800, 1516057200, 1),
-(9, 'kobe test', 'test', 'test@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 0, 'black mamba', 1479682800, 0, 1),
-(10, 'Team Lead 2', 'Kobe', 'kbryant@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 2, '', 1479769200, 1481472000, 1),
-(11, 'Team Leader 3', 'Lebron', 'team_lebro@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 3, '', 1479769200, 1480348800, 1),
-(12, 'Jordan ', 'Clarkson', 'jordanclark@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'Jordan ', 1479769200, 1481472000, 1),
-(13, 'Kyrie', 'Irving', 'kyrieirving@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'Uncle Drew', 1479769200, 1480348800, 1),
-(14, 'D\' Angelo', 'Russell', 'druss@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 2, 'D Russ', 1479769200, 0, 1),
-(15, 'Tristan', 'Thompson', 'tristan@yahoo.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'tristan', 1479769200, 0, 1),
-(16, 'Admin', '', 'admin@salestracker.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Administrator', 1479916800, 1481644800, 1),
-(17, 'test', 'test', 'test2@gmail.com', 'KxKRPT21Kq6z/XezHQ+zwxxz5GRWiN5Z55U4lJNBbRo=', 1, 0, 'test', 1479916800, 1479916800, 1),
-(18, 'team leader', '4', 'teamleader4@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 0, 'team leader 4', 1480003200, 0, 1),
-(19, 'John', 'Esic', 'agentjohn1@gmail.com', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 0, 'John Esic', 1480608000, 1480608000, 1);
+INSERT INTO `users` (`id`, `first_name`, `lastname`, `username`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
+(1, 'admin', 'admin', 'admin', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Administrator', 0, 1522792800, 1),
+(2, 'TL 1', 'TL 1', 'tl', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 1, 'Team Leader 1', 1519599600, 1522792800, 1),
+(3, 'Agent1', 'Agent1', 'agent', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 1, 'Agent1', 1519599600, 1522792800, 1),
+(4, 'QA', 'QA', 'qa', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 2, 1, 'QA 1', 1522706400, 1522792800, 1),
+(5, 'Agent2', 'Agent2', 'agent2', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 3, 3, 'Agent2', 1522792800, 0, 1),
+(6, 'TL 2', 'TL 2', 'tl2', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 4, 0, 'TL2', 1522792800, 1522792800, 1);
 
 -- --------------------------------------------------------
 
@@ -847,12 +794,6 @@ INSERT INTO `usertypes` (`id`, `type`) VALUES
 --
 
 --
--- Indexes for table `calendar_events`
---
-ALTER TABLE `calendar_events`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `countries`
 --
 ALTER TABLE `countries`
@@ -875,6 +816,12 @@ ALTER TABLE `customer_payment_methods`
 -- Indexes for table `customer_refund`
 --
 ALTER TABLE `customer_refund`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `groupings`
+--
+ALTER TABLE `groupings`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -930,7 +877,7 @@ ALTER TABLE `teams`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`username`);
 
 --
 -- Indexes for table `usertypes`
@@ -942,11 +889,6 @@ ALTER TABLE `usertypes`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `calendar_events`
---
-ALTER TABLE `calendar_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `countries`
 --
@@ -961,32 +903,37 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `customer_payment_methods`
 --
 ALTER TABLE `customer_payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `customer_refund`
 --
 ALTER TABLE `customer_refund`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `groupings`
+--
+ALTER TABLE `groupings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `order_send_someone`
 --
 ALTER TABLE `order_send_someone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `products`
 --
@@ -1006,12 +953,12 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `usertypes`
 --
