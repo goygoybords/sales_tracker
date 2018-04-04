@@ -63,6 +63,7 @@
 														<th>Order ID</th>
 														<th>Order Date</th>
 														<th>Customer</th>
+														<th>Remarks</th>
 														<th>Notes</th>
 														<th>Updated By</th>
 														<th>Status</th>

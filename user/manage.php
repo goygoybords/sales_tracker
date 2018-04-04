@@ -44,7 +44,7 @@
 						$user->setLastname($l['lastname']);
 						$user->setPassword($encrpytion->decryptIt($l['password']));
 						$user->setScreenName($l['screen_name']);
-						$user->setEmail($l['email']);
+						$user->setUsername($l['username']);
 						$user->setUsertypeid($l['usertypeid']);
 						$user->setTeamId($l['team_id']);
 						$user->setStatus($l['status']);

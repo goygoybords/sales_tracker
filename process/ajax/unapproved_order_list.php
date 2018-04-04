@@ -55,23 +55,24 @@ $columns = array(
 
     // array( 'db' => '`o`.`total`',       'dt' => 4, 'field' => 'total' ),
     // array( 'db' => '`s`.`description`', 'dt' => 5, 'field' => 'description' ),
-    array( 'db' => '`o`.`notes`',     'dt' => 3, 'field' => 'notes' ),
+    array( 'db' => '`o`.`remarks`',   'dt' => 3, 'field' => 'remarks' ),
+    array( 'db' => '`o`.`notes`',     'dt' => 4, 'field' => 'notes' ),
     // array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
     // array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 4, "field" => "full_name", "as" => "full_name" ),
     
 
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "updated_by", "as" => "updated_by" ),
+    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 5, "field" => "updated_by", "as" => "updated_by" ),
          
-    array( 'db' => '`o`.`status`', 'dt' => 5, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
             {
                 if($d == 0)
                   return "On Hold";
             }, 'field' => 'status' 
         ),
 
-    array( 'db' => '`o`.`id`', 'dt' => 6, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`id`', 'dt' => 7, 'formatter' => function( $d, $row )
             {
-                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+                if($_SESSION['user_type'] == 1)
                 {
                     return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
@@ -85,7 +86,7 @@ $columns = array(
                         </a>
                         ';
                 }
-                else if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4)
+                else 
                 {
                   return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
