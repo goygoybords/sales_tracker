@@ -42,11 +42,11 @@ $columns = array(
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "full_name", "as" => "full_name" ),
     array( 'db' => '`o`.`status`', 'dt' => 4, 'formatter' => function( $d, $row )
             {
-                if($d == 0)
+                if($d == 1)
                     return "On Hold";
-                else if($d == 1)
-                    return "Approved";
                 else if($d == 2)
+                    return "Approved";
+                else if($d == 3)
                     return "Shipped";
             }, 'field' => 'status' 
         ),

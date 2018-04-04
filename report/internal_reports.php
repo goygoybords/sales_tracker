@@ -111,9 +111,9 @@
 														<div class="form-group ">
 															<select name = "status" class = "form-control dirty" id = "status"  >
 																<option></option>
-																<option value="0">On Hold</option>
-																<option value="1">Approved/Processed</option>
-																<option value="2">Shipped</option>
+																<option value="1">On Hold</option>
+																<option value="2">Approved/Processed</option>
+																<option value="3">Shipped</option>
 															</select>
 															<label class="Status">Status</label>
 														</div>

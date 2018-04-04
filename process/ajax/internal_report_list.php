@@ -41,11 +41,11 @@ $columns = array(
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "full_name", "as" => "full_name" ),
     array( 'db' => '`o`.`status`', 'dt' => 4, 'formatter' => function( $d, $row )
             {
-                if($d == 0)
+                if($d == 1)
                     return "On Hold";
-                else if($d == 1)
-                    return "Approved";
                 else if($d == 2)
+                    return "Approved";
+                else if($d == 3)
                     return "Shipped";
             }, 'field' => 'status' 
         ),
@@ -79,7 +79,7 @@ $sql_details = array(
                 JOIN users u 
                 ON o.prepared_by = u.id
                ";
-            $extraWhere =  "u.team_id = ".$_SESSION['team_id']." AND o.status BETWEEN 0 AND 2" ;
+            $extraWhere =  "u.team_id = ".$_SESSION['team_id']." AND o.status BETWEEN 1 AND 3" ;
         }
         else
         {
@@ -91,7 +91,7 @@ $sql_details = array(
                 JOIN users u 
                 ON o.prepared_by = u.id
                ";
-            $extraWhere =  "o.status BETWEEN 0 AND 2" ;
+            $extraWhere =  "o.status BETWEEN 1 AND 3" ;
         }
       
      
