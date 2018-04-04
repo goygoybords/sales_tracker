@@ -134,6 +134,12 @@
 							</a>
 						</li>
 						<li>
+							<a href="../report/internal_reports.php">
+								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
+								<span class="title">Internal Reports</span>
+							</a>
+						</li>
+						<li>
 							<a href="../logs/logs.php">
 								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
 								<span class="title">Logs</span>
