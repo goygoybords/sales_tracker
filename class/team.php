@@ -6,6 +6,7 @@
 		private $id;
 		private $user_id;
 		private $team_name;
+		private $group_id;
 		private $status;
 
 	    /**
@@ -100,6 +101,25 @@
 	    public function setStatus($status)
 	    {
 	        $this->status = $status;
+
+	        return $this;
+	    }
+
+	    public function getGroupId()
+	    {
+	        return $this->group_id;
+	    }
+
+	    /**
+	     * Sets the value of status.
+	     *
+	     * @param mixed $status the status
+	     *
+	     * @return self
+	     */
+	    public function setGroupId($group_id)
+	    {
+	        $this->group_id = $group_id;
 
 	        return $this;
 	    }

@@ -22,7 +22,7 @@
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
 	$team_lead_list = $db->select('users' , array('id','first_name' , 'lastname'), 'usertypeid = ? AND status = ?' , array(4, 1) );
-
+	$group_list 	= $db->select('groupings' , array('id','description'), 'status = ?' , array(1) );
 	if($team_id)
 	{
 			if($msg != 'deleted')
@@ -41,6 +41,7 @@
 						$team->setId($l['id']);
 						$team->setUserId($l['user_id']);
 						$team->setTeamName($l['team_name']);
+						$team->setGroupId($l['group_id']);
 						$team->setStatus($l['status']);
 					}
 
@@ -109,6 +110,21 @@
 																		<option value = "<?php echo $l['id']; ?>" 
 																			<?php echo ($team->getUserId() == $l['id'] ? "selected='selected'" : ""); ?> >
 																			<?php echo $l['first_name']." ".$l['lastname']; ?>
+																		</option>
+																
+																	<?php endforeach; ?>
+																</select>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="group_id" class="col-sm-2 control-label">Group</label>
+															<div class="col-sm-10">
+																<select name = "group_id" id="group_id" class = "form-control" required>
+																	<option></option>
+																	<?php foreach($group_list as $l) : ?>
+																		<option value = "<?php echo $l['id']; ?>" 
+																			<?php echo ($team->getGroupId() == $l['id'] ? "selected='selected'" : ""); ?> >
+																			<?php echo $l['description']; ?>
 																		</option>
 																
 																	<?php endforeach; ?>

@@ -10,10 +10,12 @@
 	require '../class/database.php';
 	$db = new Database();
 	
-	 $sql = "SELECT t.id, CONCAT(u.first_name, ' ', u.lastname) AS 'TeamLeader',t.team_name
+	 $sql = "SELECT t.id, CONCAT(u.first_name, ' ', u.lastname) AS 'TeamLeader',t.team_name , g.description
 				FROM teams t
 				JOIN users u
 				ON t.user_id = u.id
+				JOIN groupings g 
+				ON g.id = t.group_id
 				WHERE t.status = 1
             ";
     $cmd = $db->getDb()->prepare($sql);
@@ -71,6 +73,7 @@
 														<th>#</th>
 														<th>Team Leader</th>
 														<th>Team Name</th>
+														<th>Group</th>
 														<th>Action</th>
 													</thead>
 													<tbody>
@@ -79,6 +82,7 @@
 															<td><?php echo $t['id'];  ?> </td>
 															<td><?php echo $t['TeamLeader'];  ?></td>
 															<td><?php echo $t['team_name'];  ?></td>
+															<td><?php echo $t['description']; ?></td>
 															<td>
 										                        <a href="manage_teams.php?id=<?php echo $t['id']; ?>" >
 										                            <span class="label label-inverse" style = "color:black;">
