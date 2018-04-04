@@ -65,7 +65,7 @@ $columns = array(
          
     array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
             {
-                if($d == 0)
+                if($d == 1)
                   return "On Hold";
             }, 'field' => 'status' 
         ),
@@ -130,7 +130,7 @@ $sql_details = array(
                   LEFT JOIN users up
                   ON o.updated_by = up.id
                  ";
-        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 0" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 1" ;
     }
     else if($_SESSION['user_type'] == 4)
     {
@@ -146,7 +146,7 @@ $sql_details = array(
                  ";
                   // WHERE u.team_id = 3
 
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 0" ;
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 1" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
     {
@@ -160,7 +160,7 @@ $sql_details = array(
                   LEFT JOIN users up
                   ON o.updated_by = up.id
                  ";
-        $extraWhere =  "o.status = 0" ;
+        $extraWhere =  "o.status = 1" ;
     }
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )

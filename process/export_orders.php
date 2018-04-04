@@ -263,11 +263,11 @@
         $objPHPExcel->getActiveSheet()->setCellValue('O'.$ii, $d['price'])->getStyle('O'.$ii)->getNumberFormat()->setFormatCode("0.00");
         $objPHPExcel->getActiveSheet()->setCellValue('P'.$ii, $d['tracking_number']);
 
-        if($d['status'] == 0)
+        if($d['status'] == 1)
           $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "On Hold Order");
-        else if($d['status'] == 1)
-          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
         else if($d['status'] == 2)
+          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
+        else if($d['status'] == 3)
           $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
         // $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $excelData[$i][13])
         //->getStyle('N'.$ii)->getNumberFormat()->setFormatCode(PHPExcel_Style_Numb

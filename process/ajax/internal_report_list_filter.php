@@ -78,7 +78,6 @@ $sql_details = array(
 
     if($_SESSION['user_type'] == 4)
     {
-        
         if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0) //search by date
         {
             $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.order_date BETWEEN '$min' AND '$max' ";
@@ -109,9 +108,8 @@ $sql_details = array(
                   JOIN users u 
                   ON o.prepared_by = u.id
                  ";
-
     }
-  
+
     else
     {
         if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0) //search by date

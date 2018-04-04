@@ -43,9 +43,9 @@ $columns = array(
     array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 5, "field" => "updated_by", "as" => "updated_by" ),
     array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
             {
-                if($d == 1)
+                if($d == 2)
                     return "Approved";
-                else if($d == 2)
+                else if($d == 3)
                     return "Shipped";
             }, 'field' => 'status' 
         ),
@@ -115,7 +115,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 1" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 4)
     {
@@ -131,7 +131,7 @@ $sql_details = array(
                  ";
                   // WHERE u.team_id = 3
 
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 1" ;
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
     {
@@ -145,7 +145,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.status = 1" ;
+        $extraWhere =  "o.status = 2" ;
     }
     
     

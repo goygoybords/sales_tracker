@@ -102,7 +102,7 @@
 			if($customer_id)
 			{
 				$order->setCustomerId($customer_id);
-				$order->setStatus(0);
+				$order->setStatus(1);
 
 				$customer_payment->setCustomerId($customer_id);
 				$customer_payment->setPaymentMethod(intval($payment_method));
@@ -454,7 +454,7 @@
 		$order->setOrderId($order_id);
 		$order->setApprovedBy($_SESSION['id']);
 
-		$order->setStatus(1);
+		$order->setStatus(2);
 
 
 		$count_orders = $db->select('orders' , array('invoice_number') );
@@ -498,7 +498,7 @@
 		echo "okay";
 
 		$order_id = $_GET['id'];
-		$order->setStatus(2);
+		$order->setStatus(3);
 		$table  = "orders";
 		$fields = array('status');
 		$where  = "WHERE id = ?"; 
