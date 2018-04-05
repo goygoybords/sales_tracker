@@ -4,7 +4,7 @@
     require '../class/customer.php';
     session_start();
     $db = new Database();
-    if (!isset($_GET['min']) && !isset($_GET['max']) && !isset($_GET['agent']) && !isset($_GET['team']) && !isset($_GET['status']))
+    if (!isset($_GET['min']) && !isset($_GET['max']) && !isset($_GET['agent']) && !isset($_GET['team']) && !isset($_GET['status']) && !isset($_GET['groups']))
     {
          if($_SESSION['user_type'] == 4)
          {
@@ -57,7 +57,7 @@
     {
         $min =  date('Y-m-d', strtotime($_GET['min']));
         $max =  date('Y-m-d', strtotime($_GET['max']));
-      if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] == 0 && $_GET['agent'] == 0 && $_GET['status'] == 0)  // search by date
+      if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] == 0 && $_GET['agent'] == 0 && $_GET['status'] == 0 && $_GET['groups'] == 0)  // search by date
       {
          if($_SESSION['user_type'] == 4)
          {
@@ -107,7 +107,7 @@
             $cmd->execute(array($min , $max));
         }
       } 
-      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0) //search by date and status
+      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by date and status
       {
          if($_SESSION['user_type'] == 4)
          {
@@ -156,7 +156,7 @@
           $cmd->execute(array($min , $max, $_GET['status']));
          }
       }
-      else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] != 0 && $_GET['agent'] != 0 && $_GET['status'] != 0) //search by all
+      else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] != 0 && $_GET['agent'] != 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by all
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
@@ -179,7 +179,7 @@
         $cmd = $db->getDb()->prepare($sql);
         $cmd->execute(array($min , $max , $_GET['agent'] , $_GET['team'] , $_GET['status']));
       }
-      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['team'] == 0 && $_GET['agent'] != 0  && $_GET['status'] == 0) // search by agent only
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['team'] == 0 && $_GET['agent'] != 0  && $_GET['status'] == 0 && $_GET['groups'] == 0) // search by agent only
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
@@ -202,7 +202,7 @@
         $cmd = $db->getDb()->prepare($sql);
         $cmd->execute(array($_GET['agent']));
       }
-      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['team'] != 0 && $_GET['agent'] == 0 && $_GET['status'] == 0) // search by team only
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['team'] != 0 && $_GET['agent'] == 0 && $_GET['status'] == 0 && $_GET['groups'] == 0) // search by team only
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
@@ -225,7 +225,7 @@
         $cmd = $db->getDb()->prepare($sql);
         $cmd->execute(array($_GET['agent']));
       }
-      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] == 0 && $_GET['agent'] != 0 && $_GET['status'] == 0 ) //search by date and agent
+      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] == 0 && $_GET['agent'] != 0 && $_GET['status'] == 0 && $_GET['groups'] == 0 ) //search by date and agent
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
@@ -248,7 +248,7 @@
         $cmd = $db->getDb()->prepare($sql);
         $cmd->execute(array($min , $max, $_GET['agent']));
       }
-      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] != 0 && $_GET['agent'] == 0 && $_GET['status'] == 0) //search by date and team
+      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] != 0 && $_GET['agent'] == 0 && $_GET['status'] == 0 && $_GET['groups'] == 0) //search by date and team
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
@@ -271,7 +271,7 @@
         $cmd = $db->getDb()->prepare($sql);
         $cmd->execute(array($min , $max, $_GET['team']));
       }
-     else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] != 0 && $_GET['status'] != 0) //search by date status and team
+     else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] != 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by date status and team
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -294,7 +294,7 @@
           $cmd = $db->getDb()->prepare($sql);
           $cmd->execute(array($min , $max, $_GET['team'] , $_GET['status'] ));
       }
-      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] != 0 && $_GET['team'] == 0 && $_GET['status'] != 0) //search by date status and agent
+      else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] != 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by date status and agent
       {
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -317,7 +317,7 @@
           $cmd = $db->getDb()->prepare($sql);
           $cmd->execute(array($min , $max, $_GET['agent'] , $_GET['status'] ));
       }
-      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] != 0 && $_GET['team'] == 0 && $_GET['status'] != 0) //search by status and agent
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] != 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by status and agent
       {
         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -340,7 +340,7 @@
           $cmd = $db->getDb()->prepare($sql);
           $cmd->execute(array($_GET['agent'] , $_GET['status'] ));
       }
-      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] != 0 && $_GET['status'] != 0) //search by status and team
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] != 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by status and team
       {
         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -363,7 +363,7 @@
           $cmd = $db->getDb()->prepare($sql);
           $cmd->execute(array($_GET['team'] , $_GET['status'] ));
       }
-      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] != 0 && $_GET['team'] != 0 && $_GET['status'] != 0) //search by status agent and team
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] != 0 && $_GET['team'] != 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by status agent and team
       {
         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -386,7 +386,7 @@
           $cmd = $db->getDb()->prepare($sql);
           $cmd->execute(array($_GET['team'] , $_GET['agent'] , $_GET['status'] ));
       }
-      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0) //search by status only
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by status only
       {
         if($_SESSION['user_type'] == 4)
          {
@@ -435,6 +435,114 @@
             $cmd->execute(array($_GET['status'] ));
         }
       }
+      else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] == 0 && $_GET['groups'] != 0) //search by group only
+        {
+          $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
+                    o.notes, 
+                    c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
+                     ship.price, o.tracking_number, o.status , o.total, o.id
+                   FROM orders o
+                   JOIN customer c
+                   ON o.customer_id = c.id
+                   JOIN state s
+                   ON c.state_id = s.id
+                   JOIN countries coun
+                   ON c.country_id = coun.country_id
+                   JOIN shipping_method ship
+                   ON o.shipping_method_id = ship.id
+                   JOIN users u 
+                   ON u.id = o.prepared_by
+                   JOIN teams tm
+                   ON u.team_id = tm.id
+                   JOIN groupings g 
+                   ON g.id = tm.group_id
+                   WHERE g.id = ?
+                   ORDER BY 1
+                ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($_GET['groups'] ));
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] == 0 && $_GET['groups'] != 0) //search by date and group 
+        {
+          $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
+                    o.notes, 
+                    c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
+                     ship.price, o.tracking_number, o.status , o.total, o.id
+                   FROM orders o
+                   JOIN customer c
+                   ON o.customer_id = c.id
+                   JOIN state s
+                   ON c.state_id = s.id
+                   JOIN countries coun
+                   ON c.country_id = coun.country_id
+                   JOIN shipping_method ship
+                   ON o.shipping_method_id = ship.id
+                   JOIN users u 
+                   ON u.id = o.prepared_by
+                   JOIN teams tm
+                   ON u.team_id = tm.id
+                   JOIN groupings g 
+                   ON g.id = tm.group_id
+                   WHERE o.order_date BETWEEN ? AND ? AND g.id = ? 
+                   ORDER BY 1
+                ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($min , $max, $_GET['groups'] ));
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] != 0) //search by date status and group 
+        {
+          $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
+                    o.notes, 
+                    c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
+                     ship.price, o.tracking_number, o.status , o.total, o.id
+                   FROM orders o
+                   JOIN customer c
+                   ON o.customer_id = c.id
+                   JOIN state s
+                   ON c.state_id = s.id
+                   JOIN countries coun
+                   ON c.country_id = coun.country_id
+                   JOIN shipping_method ship
+                   ON o.shipping_method_id = ship.id
+                   JOIN users u 
+                   ON u.id = o.prepared_by
+                   JOIN teams tm
+                   ON u.team_id = tm.id
+                   JOIN groupings g 
+                   ON g.id = tm.group_id
+                   WHERE o.order_date BETWEEN ? AND ? AND g.id = ? AND o.status = ? 
+                   ORDER BY 1
+                ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($min , $max, $_GET['groups'] , $_GET['status'] ));
+        }
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] != 0) //search by status and group 
+        {
+          $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
+                    o.notes, 
+                    c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
+                     ship.price, o.tracking_number, o.status , o.total, o.id
+                   FROM orders o
+                   JOIN customer c
+                   ON o.customer_id = c.id
+                   JOIN state s
+                   ON c.state_id = s.id
+                   JOIN countries coun
+                   ON c.country_id = coun.country_id
+                   JOIN shipping_method ship
+                   ON o.shipping_method_id = ship.id
+                   JOIN users u 
+                   ON u.id = o.prepared_by
+                   JOIN teams tm
+                   ON u.team_id = tm.id
+                   JOIN groupings g 
+                   ON g.id = tm.group_id
+                   WHERE g.id = ? AND o.status = ?
+                   ORDER BY 1
+                ";
+            $cmd = $db->getDb()->prepare($sql);
+            $cmd->execute(array($_GET['groups'] , $_GET['status'] ));
+        }
     }
     
     $orders  = $cmd->fetchAll();
