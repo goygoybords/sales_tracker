@@ -204,8 +204,10 @@
 			if(groups == null)
 				groups = 0;
 
-			$("#export").attr("href", "../process/internal_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team+"&status="+status);
-			var data = dataTable.ajax.url( "../process/ajax/internal_report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team+"&status="+status).load();
+			$("#export").attr("href", "../process/internal_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team
+				+"&status="+status+"&groups="+groups);
+			var data = dataTable.ajax.url( "../process/ajax/internal_report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="
+				+team+"&status="+status+"&groups="+groups).load();
 		});
 	} );
 </script>

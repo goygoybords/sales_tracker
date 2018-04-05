@@ -73,20 +73,21 @@ $sql_details = array(
         $agent = intval($_GET['agent']);
         $team = intval($_GET['team']);
         $status = intval($_GET['status']);
+        $groups = intval($_GET['groups']);
 
 
     if($_SESSION['user_type'] == 4)
     {
-        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0) //search by date
+        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0 && $groups == 0) //search by date
         {
             $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.order_date BETWEEN '$min' AND '$max' ";
         }
         
-        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status != 0) //search by date and status
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status != 0 && $groups == 0) //search by date and status
         {
             $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.order_date BETWEEN '$min' AND '$max' AND o.status = '$status' ";
         }
-        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0) //search by status
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0 && $groups == 0) //search by status
         {
             $extraWhere = "u.team_id = ".$_SESSION['team_id']." AND o.status = '$status' ";
         }
@@ -94,7 +95,6 @@ $sql_details = array(
         {
             $extraWhere =  "u.team_id = ".$_SESSION['team_id']." AND o.status BETWEEN 1 AND 3" ;
         }
-
             $joinQuery = "FROM orders o
                   JOIN customer c 
                   ON o.customer_id = c.id 
@@ -106,58 +106,74 @@ $sql_details = array(
     }
     else
     {
-        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0) //search by date
+        if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0 && $groups == 0) //search by date
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max' ";
         }
-        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status != 0) //search by date and status
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status != 0 && $groups == 0) //search by date and status
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND o.status = '$status' ";
         }
-        else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0 && $status != 0) //search by all
+        else if ($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team != 0 && $status != 0 && $groups == 0) //search by all
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max'  AND o.prepared_by = '$agent' AND u.team_id = '$team' AND o.status = '$status' ";
         }
 
-        else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0 && $status == 0) // search by agent only
+        else if($agent !=0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team == 0 && $status == 0 && $groups == 0) // search by agent only
         {
             $extraWhere = " o.prepared_by = '$agent' ";
         }
-        else if($agent == 0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team != 0 && $status == 0) // search by team only
+        else if($agent == 0 && $_GET['min'] == 0 && $_GET['max'] == 0 && $team != 0 && $status == 0 && $groups == 0) // search by team only
         {
             $extraWhere = " u.team_id = '$team' ";
         }
-        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 && $agent == 0 && $status == 0) //search by date and team
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team != 0 && $agent == 0 && $status == 0 && $groups == 0) //search by date and team
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' ";
         }
-        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team == 0 && $agent != 0 && $status == 0) //search by date and agent
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $team == 0 && $agent != 0 && $status == 0 && $groups == 0) //search by date and agent
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND o.prepared_by = '$agent' ";
         }
-        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team != 0 && $status != 0) //search by date status and team
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team != 0 && $status != 0 && $groups == 0) //search by date status and team
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND u.team_id = '$team' AND o.status = '$status' ";
         }
-        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team == 0 && $status != 0) //search by date status and agent
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent != 0 && $team == 0 && $status != 0 && $groups == 0) //search by date status and agent
         {
             $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND o.prepared_by = '$agent' AND o.status = '$status' ";
         }
-        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent != 0 && $team == 0 && $status != 0) //search by status and agent
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent != 0 && $team == 0 && $status != 0 && $groups == 0) //search by status and agent
         {
             $extraWhere = "o.prepared_by = '$agent' AND o.status = '$status' ";
         }
-        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team != 0 && $status != 0) //search by status and team
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team != 0 && $status != 0 && $groups == 0) //search by status and team
         {
             $extraWhere = "u.team_id = '$team' AND o.status = '$status' ";
         }
-        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent != 0 && $team != 0 && $status != 0) //search by status agent and team
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent != 0 && $team != 0 && $status != 0 && $groups == 0) //search by status agent and team
         {
             $extraWhere = "u.team_id = '$team' AND o.prepared_by = '$agent' AND o.status = '$status' ";
         }
-        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0) //search by status
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0 && $groups == 0) //search by status
         {
             $extraWhere = "o.status = '$status' ";
+        }
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status == 0 && $groups != 0) //search by group only
+        {
+            $extraWhere = "g.id = '$groups' ";
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0 && $groups != 0) //search by date and group 
+        {
+            $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND g.id = '$groups' ";
+        }
+        else if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status != 0 && $groups != 0) //search by date status and group 
+        {
+            $extraWhere = "o.order_date BETWEEN '$min' AND '$max' AND g.id = '$groups' AND o.status = '$status' ";
+        }
+        else if($_GET['min'] == 0 && $_GET['max'] == 0 && $agent == 0 && $team == 0 && $status != 0 && $groups != 0) //search by status and group 
+        {
+            $extraWhere = "g.id = '$groups' AND o.status = '$status' ";
         }
         else
         {
@@ -171,6 +187,10 @@ $sql_details = array(
                   ON s.id = o.shipping_method_id
                   JOIN users u 
                   ON o.prepared_by = u.id
+                  JOIN teams tm
+                  ON u.team_id = tm.id
+                  JOIN groupings g 
+                  ON g.id = tm.group_id
                  ";
     }
 
