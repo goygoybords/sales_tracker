@@ -546,7 +546,7 @@
                 JOIN products p 
                 ON p.id = od.product_id
                 WHERE o.id = ?
-                ORDER BY o.invoice_number";
+                ";
         $cmd2= $db->getDb()->prepare($sql2);
         $cmd2->execute(array($d['id']));  
         $orders2 = $cmd2->fetchAll();
