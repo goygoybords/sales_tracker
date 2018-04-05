@@ -41,11 +41,11 @@ $columns = array(
     array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 3, "field" => "full_name", "as" => "full_name" ),
     array( 'db' => '`o`.`status`', 'dt' => 4, 'formatter' => function( $d, $row )
             {
-                if($d == 0)
+                if($d == 1)
                     return "On Hold";
-                else if($d == 1)
-                    return "Approved";
                 else if($d == 2)
+                    return "Approved";
+                else if($d == 3)
                     return "Shipped";
             }, 'field' => 'status' 
         ),
@@ -68,18 +68,15 @@ $sql_details = array(
 
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
-    
-      $joinQuery = "FROM orders o
-                  JOIN customer c 
-                ON o.customer_id = c.id 
-                JOIN shipping_method s
-                ON s.id = o.shipping_method_id
-                JOIN users u 
-                ON o.prepared_by = u.id
-               ";
-      $extraWhere =  "o.status BETWEEN 0 AND 2" ;
-    
-    
+    $joinQuery = "FROM orders o
+          JOIN customer c 
+        ON o.customer_id = c.id 
+        JOIN shipping_method s
+        ON s.id = o.shipping_method_id
+        JOIN users u 
+        ON o.prepared_by = u.id
+       ";
+    $extraWhere =  "o.status BETWEEN 1 AND 3" ;
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )
     );

@@ -11,7 +11,8 @@
 	$db = new Database();
 
 	$list_agents = $db->select("users" , array('id', 'first_name', 'lastname') , "usertypeid = 3");
-	$list_teams = $db->select("teams" , array('id, team_name'), 'status = 1' );
+	$list_teams  = $db->select("teams" , array('id, team_name'), 'status = 1' );
+	$list_group  = $db->select("groupings" , array('id, description'), 'status = 1' );
 
 ?>
 <!-- BEGIN BASE-->
@@ -32,7 +33,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Reports</header>
+								<header><i class="fa fa-fw fa-users"></i>Internal Reports</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -58,8 +59,6 @@
 										<div class="col-lg-offset-0 col-md-12">
 											<div id = "filters">
 												<div class="row">
-													
-													<!-- date filters -->
 													<div class="col-sm-6">
 														<div class="form-group">
 															<select name = "agents" class = "form-control dirty" id = "agents"  >
@@ -81,7 +80,7 @@
 																	</option>
 																<?php endforeach; ?>
 															</select>
-															<label class="Team/Group">Team/Group</label>
+															<label class="Team/Group">Team</label>
 														</div>
 													</div>
 													<div class="col-sm-6">
@@ -104,6 +103,28 @@
 											                </div>
 											            </div>
 													</div>
+													<div class="col-sm-6">
+														<div class="form-group ">
+															<select name = "status" class = "form-control dirty" id = "status"  >
+																<option></option>
+																<option value="1">On Hold</option>
+																<option value="2">Approved/Processed</option>
+																<option value="3">Shipped</option>
+															</select>
+															<label class="Status">Status</label>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="form-group">
+															<select name = "groups" class = "form-control dirty" id = "groups"  >
+																<option></option>
+																<?php foreach ($list_group as $l ) :?>
+																	<option value="<?php echo $l['id']; ?>"><?php echo $l['description']; ?></option>
+																<?php endforeach; ?>
+															</select>
+															<label class="Group">Groupings</label>
+														</div>
+													</div>													
 												</div>
 											</div>
 											<!-- <input type = "text" name = "filter" id = "filter"> -->
@@ -119,7 +140,7 @@
 														<th>Prepared By/Salesperson</th>
 														<th>Status</th>		
 													</thead>
-<!-- 									
+<!-- 							
 												</table>
 											</div>
 										</div>
@@ -165,12 +186,22 @@
 		{
 			var min = $("#min").val();
 			var max = $("#max").val();
+			var status = $( "#status option:selected" ).val();
 			var agent = $( "#agents option:selected" ).val();
 			var team = $( "#teams option:selected" ).val();
+			var groups = $( "#groups option:selected" ).val();
 
-			$("#export").attr("href", "../process/export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team);
-		
-			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team).load();
+			if(agent == null)
+				agent = 0;
+			if(team == null)
+				team = 0;
+			if(groups == null)
+				groups = 0;
+
+			$("#export").attr("href", "../process/export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team
+				+"&status="+status+"&groups="+groups);
+			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="
+				+team+"&status="+status+"&groups="+groups).load();
 		});
 	} );
 </script>
