@@ -41,16 +41,23 @@
 				$_SESSION['lastname'] = $l['lastname'];
 				$_SESSION['user_type'] = $l['usertypeid'];
 				$_SESSION['screen_name'] = $l['screen_name'];
-				$_SESSION['team_id'] = $l['team_id'];
 				$_SESSION['isLogin'] = true;
-				if($l['usertypeid'] == 4)
+				
+				if($l['team_id'] != 0)
 				{
-					$teams = $db->select('teams' , array('id'), 'user_id = ?' , array($l['id']));
+					$_SESSION['team_id'] = $l['team_id'];
+					$teams = $db->select('teams' , array('team_name'), 'id = ?' , array($l['team_id']));
 					foreach ($teams as $t ) 
 					{
-						$_SESSION['team_id'] = $t['id'];
+						$_SESSION['team_name'] = $t['team_name'];
 					}
 				}
+				else
+				{
+					$_SESSION['team_id'] = 0;
+					$_SESSION['team_name'] = "";
+				}
+
 				$db->update("users", array('datelastlogin'), "WHERE id = ?" , array($user->getDatelastlogin() , $l['id']));
 				header("location: ../orders/unapproved_orders.php");
 			}

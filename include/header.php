@@ -84,7 +84,7 @@
 					<li class="dropdown">
 						<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
 							<span class="profile-info" id="profile-info">
-								<?php echo $_SESSION['firstname']." ".$_SESSION['lastname']; ?>
+								<?php echo $_SESSION['screen_name']; ?>
 							</span>
 						</a>
 						<ul class="dropdown-menu animation-dock">
