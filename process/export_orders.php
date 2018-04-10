@@ -146,7 +146,7 @@
                  ORDER BY 1  
             ";
         $cmd = $db->getDb()->prepare($sql);
-        $cmd->execute(array($_GET['agent']));
+        $cmd->execute(array($_GET['team']));
       }
       else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] == 0 && $_GET['agent'] != 0 && $_GET['status'] == 0 && $_GET['groups'] == 0 ) //search by date and agent
       {
