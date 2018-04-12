@@ -54,10 +54,9 @@ $columns = array(
                 {
                     return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Edit
+                                <i class="fa fa-edit"></i> &nbsp; Edit/View 
                             </span>
-                        </a> 
-                        ';
+                        </a> ';
                 }
                 else
                     return '<a href="manage.php?id='.$d.'" >
