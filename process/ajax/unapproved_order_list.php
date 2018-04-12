@@ -62,7 +62,7 @@ $columns = array(
         ),
     array( 'db' => '`o`.`id`', 'dt' => 9, 'formatter' => function( $d, $row )
             {
-                if($_SESSION['user_type'] == 1)
+                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 5)
                 {
                     return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
