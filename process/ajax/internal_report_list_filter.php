@@ -76,7 +76,7 @@ $sql_details = array(
         $groups = intval($_GET['groups']);
 
 
-    if($_SESSION['user_type'] == 4)
+    if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5 )
     {
         if($_GET['min'] != 0 && $_GET['max'] != 0 && $agent == 0 && $team == 0 && $status == 0 && $groups == 0) //search by date
         {

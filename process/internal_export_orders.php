@@ -6,7 +6,7 @@
     $db = new Database();
     if (!isset($_GET['min']) && !isset($_GET['max']) && !isset($_GET['agent']) && !isset($_GET['team']) && !isset($_GET['status']) && !isset($_GET['groups']))
     {
-         if($_SESSION['user_type'] == 4)
+         if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5 )
          {
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -59,7 +59,7 @@
         $max =  date('Y-m-d', strtotime($_GET['max']));
       if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['team'] == 0 && $_GET['agent'] == 0 && $_GET['status'] == 0 && $_GET['groups'] == 0)  // search by date
       {
-         if($_SESSION['user_type'] == 4)
+         if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5 )
          {
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
@@ -109,7 +109,7 @@
       } 
       else if($_GET['min'] != 0 && $_GET['max'] != 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by date and status
       {
-         if($_SESSION['user_type'] == 4)
+         if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5 )
          {
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                       o.notes, 
@@ -388,7 +388,7 @@
       }
       else if($_GET['min'] == 0 && $_GET['max'] == 0 && $_GET['agent'] == 0 && $_GET['team'] == 0 && $_GET['status'] != 0 && $_GET['groups'] == 0) //search by status only
       {
-        if($_SESSION['user_type'] == 4)
+        if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5 )
          {
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                       o.notes, 

@@ -36,7 +36,7 @@ $columns = array(
     array( 'db' => '`p`.`quantity`',            'dt' => 3, 'field' => 'quantity' ),
     array( 'db' => '`p`.`id`',                    'dt' => 4, 'formatter' => function( $d, $row )
             {
-                if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
+                if($_SESSION['user_type'] == 1)
                 {
                     return '<a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
@@ -48,6 +48,15 @@ $columns = array(
                                 <i class="fa fa-remove"></i> Delete
                             </span>
                         </a>
+                        ';
+                }
+                if( $_SESSION['user_type'] == 2 || $_SESSION['user_type'] == 5)
+                {
+                    return '<a href="manage.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> Edit
+                            </span>
+                        </a> 
                         ';
                 }
                 else

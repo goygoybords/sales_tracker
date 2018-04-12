@@ -149,6 +149,7 @@
 																	<option value = "2" <?php if($user->getUsertypeid() == 2) echo "selected"; ?> >QA</option>
 																	<option value = "3" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Agent</option>
 																	<option value = "4" <?php if($user->getUsertypeid() == 4) echo "selected"; ?> >Team Leader</option>
+																	<option value = "5" <?php if($user->getUsertypeid() == 5) echo "selected"; ?> >TL - Semi Admin</option>
 																</select>
 															</div>
 														</div>

@@ -69,7 +69,7 @@ $sql_details = array(
     // require( 'ssp.php' );
     require('ssp.customized.class.php' );
     
-        if($_SESSION['user_type'] == 4)
+        if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5 )
         {
             $joinQuery = "FROM orders o
                   JOIN customer c 

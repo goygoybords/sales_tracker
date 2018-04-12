@@ -66,13 +66,7 @@
 														<th>Quantity</th>
 														<th>Action</th>
 													</thead>
-													<tbody>
-														<tr>
-															<td></td>
-															<td></td>
-															<td></td>
-														</tr>
-													</tbody>
+													
 												</table>
 											</div>
 										</div>

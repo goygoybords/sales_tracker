@@ -116,7 +116,7 @@
 				</li><!--end /menu-li -->
 				<?php endif; ?>
 				
-				<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 4): ?>
+				<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5): ?>
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-database"></i></div>

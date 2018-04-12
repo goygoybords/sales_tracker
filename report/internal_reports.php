@@ -59,7 +59,7 @@
 										<div class="col-lg-offset-0 col-md-12">
 											<div id = "filters">
 												<div class="row">
-													<?php if($_SESSION['user_type'] != 4): ?>
+													<?php if($_SESSION['user_type'] == 1): ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<select name = "agents" class = "form-control dirty" id = "agents"  >
@@ -117,7 +117,7 @@
 															<label class="Status">Status</label>
 														</div>
 													</div>
-													<?php if($_SESSION['user_type'] != 4): ?>
+													<?php if($_SESSION['user_type'] == 1): ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<select name = "groups" class = "form-control dirty" id = "groups"  >
@@ -135,7 +135,9 @@
 											</div>
 											<!-- <input type = "text" name = "filter" id = "filter"> -->
 											<input type = "submit" id = "filteraction" value = "Apply Filter" class = "btn btn-success">
-											<a href = "../process/internal_export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
+											<?php if($_SESSION['user_type'] == 5): ?>
+												<a href = "../process/internal_export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
+											<?php endif; ?>
 												<br/>
 												<br/>
 												<table class = "table display responsive nowrap" id = "lead-tbl">

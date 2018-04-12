@@ -31,9 +31,8 @@
 	$list_countries = $db->select("countries" , array("*"));
 	$list_methods = $db->select("shipping_method", array("*") , "status = 1");
 
-	$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
-	/**
-	this statement states that when an agent creates a customer he/she will only transact on that customer.
+	//$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
+	//this statement states that when an agent creates a customer he/she will only transact on that customer.
 	if($_SESSION['user_type'] == 3)
 	{
 		$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "created_by = ? AND status = ?", array($_SESSION['id'] , 1));
@@ -43,8 +42,6 @@
 		$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
 	}
 
-	*/
-	
 	
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
