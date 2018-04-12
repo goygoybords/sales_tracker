@@ -32,34 +32,28 @@ $primaryKey = 'id';
 
 $columns = array(
     array( 'db' => '`o`.`invoice_number`',       'dt' => 0, 'field' => 'invoice_number' ),
-
-
     array( 'db' => '`o`.`order_date`', 'dt' => 1, 'formatter' => function( $d, $row )
             {
                 return date('Y-m-d', strtotime( $d));
             }, 'field' => 'order_date' 
         ),
-
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
     array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "approved_by", "as" => "approved_by" ),
-    array( 'db' => '`o`.`status`', 'dt' => 5, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`notes`',       'dt' => 4, 'field' => 'notes' ),
+    array( 'db' => '`o`.`total`',       'dt' => 5, 'field' => 'total' ),
+    array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
             {
-                if($d == 1)
+                if($d == 2)
                     return "Approved";
-                else if($d == 2)
+                else if($d == 3)
                     return "Shipped";
             }, 'field' => 'status' 
         ),
-    array( 'db' => '`o`.`id`',          'dt' => 6, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
-                return ' <a href="manage.php?id='.$d.'&add_tracking" >
-                            <span class="label label-inverse" style = "color:black;">
-                                <i class="fa fa-edit"></i> Add Tracking Number
-                            </span>
-                        </a>
+                return '
                         <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
@@ -113,7 +107,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  lower(o.remarks) = 'reshipment' AND o.status = 2" ;
+        $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
     else if($_SESSION['user_type'] == 4)
     {
@@ -127,9 +121,8 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-                  // WHERE u.team_id = 3
 
-        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND lower(o.remarks) = 'reshipment' AND o.status = 2" ;
+        $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
     {
@@ -143,7 +136,7 @@ $sql_details = array(
                   JOIN users up
                   ON o.approved_by = up.id
                  ";
-        $extraWhere =  "lower(o.remarks) = 'reshipment' AND o.status = 2   " ;
+        $extraWhere =  "lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
     
     

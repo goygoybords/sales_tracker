@@ -26,7 +26,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Shipped Orders - <?php echo $_SESSION['team_name']; ?></header>
+								<header><i class="fa fa-fw fa-users"></i>Shipped Orders</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -66,13 +66,9 @@
 														<th>Date</th>
 														<th>Customer</th>
 														<th>Remarks</th>
-														<!--<th>Total</th>
-														<th>Shipping Method</th>
-														<th>Remarks</th>
 														<th>Notes</th>
-														<th>Prepared By/Salesperson</th> -->
-														<th>Approved By</th>
-														<!--<th>Tracking Number</th>-->
+														<th>Total</th>
+														<th>Team</th>
 														<th>Status</th>
 														<th>Action</th>
 													</thead>

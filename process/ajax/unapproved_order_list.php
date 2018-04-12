@@ -44,33 +44,23 @@ $columns = array(
                 return date('Y-m-d', strtotime($d));
             }, 'field' => 'order_date' 
         ),
-
-    // array( 'db' => '`o`.`date_submitted`', 'dt' => 2, 'formatter' => function( $d, $row )
-    //         {
-    //             return date('Y-m-d', strtotime($d));
-    //         }, 'field' => 'date_submitted' 
-    //     ),
-
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-
-    // array( 'db' => '`o`.`total`',       'dt' => 4, 'field' => 'total' ),
-    // array( 'db' => '`s`.`description`', 'dt' => 5, 'field' => 'description' ),
     array( 'db' => '`o`.`remarks`',   'dt' => 3, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',     'dt' => 4, 'field' => 'notes' ),
-    // array( 'db' => '`o`.`notes`',       'dt' => 7, 'field' => 'notes' ),
-    // array( 'db' => "CONCAT_WS( '', `u`.`first_name`, ' ' ,`u`.`lastname` )", "dt" => 4, "field" => "full_name", "as" => "full_name" ),
-    
-
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 5, "field" => "updated_by", "as" => "updated_by" ),
-         
-    array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`total`', 'dt' => 5, 'formatter' => function( $d, $row )
+            {
+                return "$".$d;
+            }, 'field' => 'total' 
+        ),
+    array( 'db' => '`up`.`screen_name`' , "dt" => 6, "field" => "updated_by", "as" => "updated_by" ),
+    array( 'db' => '`t`.`team_name`',     'dt' => 7, 'field' => 'team_name' ),
+    array( 'db' => '`o`.`status`', 'dt' => 8, 'formatter' => function( $d, $row )
             {
                 if($d == 1)
                   return "On Hold";
             }, 'field' => 'status' 
         ),
-
-    array( 'db' => '`o`.`id`', 'dt' => 7, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`id`', 'dt' => 9, 'formatter' => function( $d, $row )
             {
                 if($_SESSION['user_type'] == 1)
                 {
@@ -129,6 +119,8 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   LEFT JOIN users up
                   ON o.updated_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
         $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 1" ;
     }
@@ -143,8 +135,9 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   LEFT JOIN users up
                   ON o.updated_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
-                  // WHERE u.team_id = 3
 
         $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 1" ;
     }
@@ -159,6 +152,8 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   LEFT JOIN users up
                   ON o.updated_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
         $extraWhere =  "o.status = 1" ;
     }

@@ -576,6 +576,6 @@
 					'order_id'    => $order_id_fm,
 				];
 		$logs = $db->insert("logs", $data);
-		header("location: ../orders/approved_orders.php?msg=tracking");
+		header("location: ../orders/shipped_orders.php?msg=tracking");
 	}
 ?>

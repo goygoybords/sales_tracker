@@ -39,17 +39,18 @@ $columns = array(
         ),
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
     array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 4, "field" => "approved_by", "as" => "approved_by" ),
-    array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 5, "field" => "updated_by", "as" => "updated_by" ),
-    array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`notes`',     'dt' => 4, 'field' => 'notes' ),
+    array( 'db' => '`o`.`total`', 'dt' => 5, 'formatter' => function( $d, $row )
             {
-                if($d == 2)
-                    return "Approved";
-                else if($d == 3)
-                    return "Shipped";
-            }, 'field' => 'status' 
+                return "$".$d;
+            }, 'field' => 'total' 
         ),
-    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
+    // array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 6, "field" => "approved_by", "as" => "approved_by" ),
+    // array( 'db' => '`u`.`screen_name`' , "dt" => 6, "field" => "prepared_by", "as" => "prepared_by" ),
+    array( 'db' => '`up`.`screen_name`' , "dt" => 6, "field" => "approved_by", "as" => "approved_by" ),
+    // array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 7, "field" => "updated_by", "as" => "updated_by" ),
+    array( 'db' => '`t`.`team_name`',     'dt' => 7, 'field' => 'team_name' ),
+    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
@@ -63,11 +64,6 @@ $columns = array(
                                 <i class="fa fa-edit"></i> Edit
                             </span>
                         </a>';
-                        // <a href="../process/order_manage.php?id='.$d.'&send_mail">
-                        //     <span class="label label-inverse" style = "color:black;">
-                        //         <i class="fa fa-share"></i> Mail
-                        //     </span>
-                        // </a>'
               }
               else
               {
@@ -114,6 +110,8 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   JOIN users up
                   ON o.approved_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
         $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  o.status = 2" ;
     }
@@ -128,9 +126,9 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   JOIN users up
                   ON o.approved_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
-                  // WHERE u.team_id = 3
-
         $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND  o.status = 2" ;
     }
     else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2)
@@ -144,10 +142,11 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   JOIN users up
                   ON o.approved_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
         $extraWhere =  "o.status = 2" ;
     }
-    
     
     echo json_encode(
         SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $extraWhere )

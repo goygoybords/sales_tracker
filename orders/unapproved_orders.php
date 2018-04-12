@@ -28,7 +28,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Unapproved Orders - <?php echo $_SESSION['team_name']; ?></header>
+								<header><i class="fa fa-fw fa-users"></i>Unapproved Orders</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -61,11 +61,13 @@
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
 														<th>Order ID</th>
-														<th>Order Date</th>
+														<th>Date</th>
 														<th>Customer</th>
 														<th>Remarks</th>
 														<th>Notes</th>
+														<th>Total</th>
 														<th>Updated By</th>
+														<th>Team</th>
 														<th>Status</th>
 														<th>Action</th>
 														<!-- 
