@@ -135,7 +135,7 @@
 											</div>
 											<!-- <input type = "text" name = "filter" id = "filter"> -->
 											<input type = "submit" id = "filteraction" value = "Apply Filter" class = "btn btn-success">
-											<?php if($_SESSION['user_type'] == 5): ?>
+											<?php if($_SESSION['user_type'] == 5 || $_SESSION['user_type'] == 1): ?>
 												<a href = "../process/internal_export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
 											<?php endif; ?>
 												<br/>
