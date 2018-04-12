@@ -11,7 +11,7 @@
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -34,7 +34,7 @@
            $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -64,7 +64,7 @@
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -87,7 +87,7 @@
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -114,7 +114,7 @@
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                       o.notes, 
                       c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                       ship.price, o.tracking_number, o.status , o.total , o.id
+                       ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                      FROM orders o
                      JOIN customer c
                      ON o.customer_id = c.id
@@ -137,7 +137,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -161,7 +161,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status , o.total , o.id
+                   ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -184,7 +184,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status , o.total , o.id
+                   ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -207,7 +207,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status , o.total , o.id
+                   ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -230,7 +230,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status , o.total , o.id
+                   ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -253,7 +253,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                   o.notes, 
                   c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                   ship.price, o.tracking_number, o.status , o.total , o.id
+                   ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                  FROM orders o
                  JOIN customer c
                  ON o.customer_id = c.id
@@ -276,7 +276,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -299,7 +299,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -322,7 +322,7 @@
         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -345,7 +345,7 @@
         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total , o.id
+                     ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -368,7 +368,7 @@
         $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total, o.id
+                     ship.price, o.tracking_number, o.status , o.total, o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -393,7 +393,7 @@
             $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                       o.notes, 
                       c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                       ship.price, o.tracking_number, o.status , o.total , o.id
+                       ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                      FROM orders o
                      JOIN customer c
                      ON o.customer_id = c.id
@@ -416,7 +416,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                       o.notes, 
                       c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                       ship.price, o.tracking_number, o.status , o.total , o.id
+                       ship.price, o.tracking_number, o.status , o.total , o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                      FROM orders o
                      JOIN customer c
                      ON o.customer_id = c.id
@@ -440,7 +440,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total, o.id
+                     ship.price, o.tracking_number, o.status , o.total, o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -467,7 +467,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total, o.id
+                     ship.price, o.tracking_number, o.status , o.total, o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -494,7 +494,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total, o.id
+                     ship.price, o.tracking_number, o.status , o.total, o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -521,7 +521,7 @@
           $sql = "SELECT  o.invoice_number , o.order_date, CONCAT(c.firstname, ' ', c.lastname) AS 'CustomerName', 
                     o.notes, 
                     c.shipping_address, c.city,  c.zip, s.code, coun.country_code, ship.description AS 'Shipping Method',
-                     ship.price, o.tracking_number, o.status , o.total, o.id
+                     ship.price, o.tracking_number, o.status , o.total, o.id, CONCAT(u.first_name, ' ', u.lastname) AS 'prepared_by', o.merchant
                    FROM orders o
                    JOIN customer c
                    ON o.customer_id = c.id
@@ -572,50 +572,50 @@
         )
     );
   $objPHPExcel->getActiveSheet()
-            ->mergeCells('A1:Q1')
+            ->mergeCells('A1:E1')
             ->setCellValue('A1' , 'Internal Report ')
-            ->getStyle("A1:Q1")->applyFromArray($style)->getFont()->setSize(16);
+            ->getStyle("A1:E1")->applyFromArray($style)->getFont()->setSize(16);
   $objPHPExcel->getActiveSheet() 
-            ->mergeCells('A2:Q2')
+            ->mergeCells('A2:E2')
             ->setCellValue('A2' , 'List of Orders')
-            ->getStyle("A2:Q2")->applyFromArray($style)->getFont()->setSize(16);
+            ->getStyle("A2:E2")->applyFromArray($style)->getFont()->setSize(16);
   if(isset($_GET['min']) != null && $_GET['max'] != null)
   {
       $objPHPExcel->getActiveSheet() 
-            ->mergeCells('A3:Q3')
+            ->mergeCells('A3:E3')
             ->setCellValue('A3' , 'From '.date('Y-m-d' , strtotime($_GET['min'])) .' To '. date('Y-m-d' , strtotime($_GET['max'])))
-            ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
+            ->getStyle("A3:E3")->applyFromArray($style)->getFont()->setSize(16);
   } 
   else 
   {
       $objPHPExcel->getActiveSheet() 
-            ->mergeCells('A3:Q3')
+            ->mergeCells('A3:E3')
             ->setCellValue('A3' , 'As of '.date('Y-m-d'))
-            ->getStyle("A3:Q3")->applyFromArray($style)->getFont()->setSize(16);
+            ->getStyle("A3:E3")->applyFromArray($style)->getFont()->setSize(16);
   }         
-  foreach(range('A','Q') as $columnID) 
+  foreach(range('A','E') as $columnID) 
   {
       $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
         ->setAutoSize(true);
   }
   $objPHPExcel->getActiveSheet()
-        ->setCellValue('A5', 'Order ID')
-        ->setCellValue('B5', 'Date')
-        ->setCellValue('C5', 'Name')
-        ->setCellValue('D5', 'Quantity')
-        ->setCellValue('E5', 'Product Name')
-        ->setCellValue('F5', 'Notes')
-        ->setCellValue('G5', 'Shipping Address')
-        ->setCellValue('H5', 'City')
-        ->setCellValue('I5', 'Zip')
-        ->setCellValue('J5', 'State')
-        ->setCellValue('K5', 'Country')
-        ->setCellValue('L5', 'Shipping Method')
-        ->setCellValue('M5', 'Price/Pill')
-        ->setCellValue('N5', 'Price')  
-        ->setCellValue('O5', 'Shipping')   
-        ->setCellValue('P5', 'Tracking Number')   
-        ->setCellValue('Q5', 'Remarks')       
+        ->setCellValue('A5', 'Agent')
+        ->setCellValue('B5', 'Date Process')
+        ->setCellValue('C5', 'Customer Name')
+        ->setCellValue('D5', 'Total')
+        ->setCellValue('E5', 'Merchant Name')
+        //->setCellValue('F5', 'Merchant Name')
+        // ->setCellValue('G5', 'Shipping Address')
+        // ->setCellValue('H5', 'City')
+        // ->setCellValue('I5', 'Zip')
+        // ->setCellValue('J5', 'State')
+        // ->setCellValue('K5', 'Country')
+        // ->setCellValue('L5', 'Shipping Method')
+        // ->setCellValue('M5', 'Price/Pill')
+        // ->setCellValue('N5', 'Price')  
+        // ->setCellValue('O5', 'Shipping')   
+        // ->setCellValue('P5', 'Tracking Number')   
+        // ->setCellValue('Q5', 'Remarks')       
         ->getStyle("A5:Q5")->applyFromArray($style)
         ;
   if(count($excelData) > 0 )
@@ -626,54 +626,57 @@
     foreach ($excelData as $d ) 
     {
        $total = $total + $d['total'];
-       $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $d['invoice_number']);
+       $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $d['prepared_by']);
        $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, date('Y-m-d' , strtotime($d['order_date'])) );
        $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $d['CustomerName']);
-       $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $d['notes']);
-        $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $d['shipping_address']);
-        $objPHPExcel->getActiveSheet()->setCellValue('H'.$ii, $d['city']);
-        $objPHPExcel->getActiveSheet()->setCellValue('I'.$ii, $d['zip']);
-        $objPHPExcel->getActiveSheet()->setCellValue('J'.$ii, $d['code']);
-        $objPHPExcel->getActiveSheet()->setCellValue('K'.$ii, $d['country_code']);
-        $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $d['Shipping Method']);
-        $objPHPExcel->getActiveSheet()->setCellValue('O'.$ii, $d['price'])->getStyle('O'.$ii)->getNumberFormat()->setFormatCode("0.00");
-        $objPHPExcel->getActiveSheet()->setCellValue('P'.$ii, $d['tracking_number']);
+       $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $d['total'])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
+       $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $d['merchant'])->getStyle('E'.$ii)->getNumberFormat()->setFormatCode("0.00");
+       // $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $d['notes']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $d['shipping_address']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('H'.$ii, $d['city']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('I'.$ii, $d['zip']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('J'.$ii, $d['code']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('K'.$ii, $d['country_code']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('L'.$ii, $d['Shipping Method']);
+       //  $objPHPExcel->getActiveSheet()->setCellValue('O'.$ii, $d['price'])->getStyle('O'.$ii)->getNumberFormat()->setFormatCode("0.00");
+       //  $objPHPExcel->getActiveSheet()->setCellValue('P'.$ii, $d['tracking_number']);
 
-        if($d['status'] == 1)
-          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "On Hold Order");
-        else if($d['status'] == 2)
-          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
-        else if($d['status'] == 3)
-          $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
+    //     if($d['status'] == 1)
+    //       $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "On Hold Order");
+    //     else if($d['status'] == 2)
+    //       $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Approved Order");
+    //     else if($d['status'] == 3)
+    //       $objPHPExcel->getActiveSheet()->setCellValue('Q'.$ii, "Shipped");
 
-        $sql2 = "SELECT o.invoice_number, od.quantity, p.product_description, 
-                p.product_price AS 'Price/Pill', od.unit_price AS 'Price'
-                FROM orders o
-                JOIN order_detail od
-                ON o.id = od.order_id
-                JOIN products p 
-                ON p.id = od.product_id
-                WHERE o.id = ?
-                ";
-        $cmd2= $db->getDb()->prepare($sql2);
-        $cmd2->execute(array($d['id']));  
-        $orders2 = $cmd2->fetchAll();
+    //     $sql2 = "SELECT o.invoice_number, od.quantity, p.product_description, 
+    //             p.product_price AS 'Price/Pill', od.unit_price AS 'Price'
+    //             FROM orders o
+    //             JOIN order_detail od
+    //             ON o.id = od.order_id
+    //             JOIN products p 
+    //             ON p.id = od.product_id
+    //             WHERE o.id = ?
+    //             ";
+    //     $cmd2= $db->getDb()->prepare($sql2);
+    //     $cmd2->execute(array($d['id']));  
+    //     $orders2 = $cmd2->fetchAll();
     
-       foreach ($orders2 as $d2 ) 
-       {
-          $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $d2['quantity'])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
-          $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $d2['product_description'] );
-          $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $d2['Price/Pill'])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
-          $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $d2['Price'])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
-           $ii++;  
-        }
+    //    foreach ($orders2 as $d2 ) 
+    //    {
+    //       $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $d2['quantity'])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
+    //       $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $d2['product_description'] );
+    //       $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $d2['Price/Pill'])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
+    //       $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $d2['Price'])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
+    //        $ii++;  
+    //     }
+       $ii++;  
     }
-    $iiiv2 = $ii + 1;
-    $objPHPExcel->getActiveSheet() 
-                ->setCellValue('N'.$iiiv2, "=SUM(N6:N".($ii).")")->getStyle('N'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
+    // $iiiv2 = $ii + 1;
+    // $objPHPExcel->getActiveSheet() 
+    //             ->setCellValue('N'.$iiiv2, "=SUM(N6:N".($ii).")")->getStyle('N'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
     
-    $objPHPExcel->getActiveSheet() 
-                ->setCellValue('O'.$iiiv2, "=SUM(O6:O".($ii).")")->getStyle('O'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
+    // $objPHPExcel->getActiveSheet() 
+    //             ->setCellValue('O'.$iiiv2, "=SUM(O6:O".($ii).")")->getStyle('O'.$iiiv2)->getNumberFormat()->setFormatCode("0.00");
                    
     $iii = $ii + 3;
     $objPHPExcel->getActiveSheet() 
