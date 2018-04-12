@@ -143,6 +143,11 @@
 							</a>
 						</li>
 						<li>
+							<a href="../user/groupings.php">
+								<span class="title">Groupings</span>
+							</a>
+						</li>
+						<li>
 							<a href="../logs/logs.php">
 								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
 								<span class="title">Logs</span>
