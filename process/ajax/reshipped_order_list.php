@@ -41,7 +41,8 @@ $columns = array(
     array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
     array( 'db' => '`o`.`notes`',       'dt' => 4, 'field' => 'notes' ),
     array( 'db' => '`o`.`total`',       'dt' => 5, 'field' => 'total' ),
-    array( 'db' => '`o`.`status`', 'dt' => 6, 'formatter' => function( $d, $row )
+    array( 'db' => '`t`.`team_name`',     'dt' => 6, 'field' => 'team_name' ),
+    array( 'db' => '`o`.`status`', 'dt' => 7, 'formatter' => function( $d, $row )
             {
                 if($d == 2)
                     return "Approved";
@@ -49,7 +50,7 @@ $columns = array(
                     return "Shipped";
             }, 'field' => 'status' 
         ),
-    array( 'db' => '`o`.`id`',          'dt' => 7, 'formatter' => function( $d, $row )
+    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
@@ -106,6 +107,8 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   JOIN users up
                   ON o.approved_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
         $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
@@ -120,6 +123,8 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   JOIN users up
                   ON o.approved_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
 
         $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND lower(o.remarks) = 'reshipment' AND o.status = 3" ;
@@ -135,6 +140,8 @@ $sql_details = array(
                   ON o.prepared_by = u.id
                   JOIN users up
                   ON o.approved_by = up.id
+                  JOIN teams t 
+                  ON u.team_id = t.id
                  ";
         $extraWhere =  "lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
