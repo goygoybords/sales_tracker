@@ -145,11 +145,15 @@
 															<label for="UserType" class="col-sm-2 control-label">User Type</label>
 															<div class="col-sm-10">
 																<select name = "user_type" id="user_type" class = "form-control" required>
+																	<?php if($_SESSION['user_type'] == 1): ?>
 																	<option value = "1" <?php if($user->getUsertypeid() == 1) echo "selected"; ?> >Admin</option>
+																	<?php endif; ?>
 																	<option value = "2" <?php if($user->getUsertypeid() == 2) echo "selected"; ?> >QA</option>
 																	<option value = "3" <?php if($user->getUsertypeid() == 3) echo "selected"; ?> >Agent</option>
 																	<option value = "4" <?php if($user->getUsertypeid() == 4) echo "selected"; ?> >Team Leader</option>
+																	<?php if($_SESSION['user_type'] == 1): ?>
 																	<option value = "5" <?php if($user->getUsertypeid() == 5) echo "selected"; ?> >TL - Semi Admin</option>
+																	<?php endif; ?>
 																</select>
 															</div>
 														</div>

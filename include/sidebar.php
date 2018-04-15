@@ -93,7 +93,7 @@
 						<span class="title">Product</span>
 					</a>
 				</li>
-				<?php if($_SESSION['user_type'] == 1): ?>
+				<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 5): ?>
 				<li class="gui-folder">
 					<a>
 						<div class="gui-icon"><i class="fa fa-user-plus"></i></div>
@@ -101,11 +101,13 @@
 					</a>
 					<!--start submenu -->
 					<ul>
+						<?php if($_SESSION['user_type'] == 1): ?>
 						<li>
 							<a href="../user/teams.php">
 								<span class="title">Team Leader List</span>
 							</a>
 						</li>
+						<?php endif; ?>
 						<li>
 							<a href="../user/user.php">
 								<span class="title">User Accounts</span>
