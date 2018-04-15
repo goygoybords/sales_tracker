@@ -21,7 +21,7 @@
 	$name = "register_team";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
-	$team_lead_list = $db->select('users' , array('id','first_name' , 'lastname'), 'usertypeid = ? AND status = ?' , array(4, 1) );
+	$team_lead_list = $db->select('users' , array('id','first_name' , 'lastname'), 'usertypeid IN  (?, ?) AND status = ?' , array(4, 5, 1) );
 	$group_list 	= $db->select('groupings' , array('id','description'), 'status = ?' , array(1) );
 	if($team_id)
 	{
