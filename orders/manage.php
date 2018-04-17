@@ -419,7 +419,8 @@
 										<input type="hidden" name="order_id_fm" value = "<?php echo $order->getOrderId(); ?>">
 										<input type="hidden" name="payment_method_id_fm" value = "<?php echo $order->getPaymentMethodId(); ?>">
 										
-	
+										<input type="hidden" id = "session_id" value="<?php echo $_SESSION['user_type']; ?>">
+			
 
 										<div class="form-group">
 											<label><b>ORDER DETAILS</b></label>
@@ -471,7 +472,11 @@
 								  					</select>
 							                      </td>
 							                      <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" value = "0.00" /></td>
-							                      <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" value = "0.00" /></td>
+												 <?php if($_SESSION['user_type'] == 3): ?>
+							                      <td><input readonly type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" value = "0.00" /></td>
+							                  	 <?php else: ?>
+							                  	 <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" value = "0.00" /></td>
+							                      <?php endif; ?>
 							                      <td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount1" data-srno="1" class="form-control input-sm order_item_actual_amount" value = "0.00"  /></td>
 							                      <td></td>
 							                    </tr>
@@ -1147,6 +1152,8 @@
 		var state = $("#form_state").val();
 		var count = 0;
 		var final_total_amt = $('#final_total_amt').text();
+		var session = $("#session_id").val();
+
 		if(state == 1)
 		{
         	count = 1;
@@ -1164,7 +1171,12 @@
           html_code += '<td><span id="sr_no">'+count+'</span></td>';
           html_code += '<td><select name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></select></td>';
           html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" value="0.00" /></td>';
-          html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
+
+          if(session == 3)
+          	html_code += '<td><input readonly type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
+          else
+          	html_code += '<td><input readonly type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
+          
           html_code += '<td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_actual_amount" value="0.00" /></td>';
           html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
           html_code += '</tr>';
