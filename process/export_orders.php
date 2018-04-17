@@ -521,6 +521,7 @@
     //Put each record in a new cell    
     $ii = 6;
     $total = 0;
+    $total_price = 0;
     foreach ($excelData as $d ) 
     {
        $total = $total + $d['total'];
@@ -557,13 +558,15 @@
         $cmd2->execute(array($d['id']));  
         $orders2 = $cmd2->fetchAll();
     
+
        foreach ($orders2 as $d2 ) 
        {
-          $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $d2['quantity'])->getStyle('D'.$ii)->getNumberFormat()->setFormatCode("0.00");
+          $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $d2['quantity']);
           $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $d2['product_description'] );
           $objPHPExcel->getActiveSheet()->setCellValue('M'.$ii, $d2['Price/Pill'])->getStyle('M'.$ii)->getNumberFormat()->setFormatCode("0.00");
-          $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $d2['Price'])->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
-           $ii++;  
+          $total_price = $d2['quantity'] * $d2['Price/Pill'];
+          $objPHPExcel->getActiveSheet()->setCellValue('N'.$ii, $total_price)->getStyle('N'.$ii)->getNumberFormat()->setFormatCode("0.00");
+          $ii++;  
         }
     }
     $iiiv2 = $ii + 1;
