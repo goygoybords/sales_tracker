@@ -1214,12 +1214,12 @@
             var tax3_amount = 0;
             var item_total = 0;
             quantity = $('#order_item_quantity'+j).val();
-            if(quantity > 0)
-            {
+            // if(quantity > 0)
+            // {
               price = $('#order_item_price'+j).val();
-              if(price > 0)
-              {
-              	 actual_amount = $('#order_item_actual_amount'+j).val();
+              // if(price > 0)
+              // {
+              	actual_amount = $('#order_item_actual_amount'+j).val();
               	if(actual_amount > 0)
               	{
               		//actual_amount = parseFloat(quantity) * parseFloat(price);
@@ -1227,8 +1227,8 @@
 	                final_item_total = parseFloat(final_item_total) + parseFloat(item_total);
 	                $('#order_item_final_amount'+j).val(item_total);
               	}  
-              }
-            }
+              //}
+            //}
           }
           $('#final_total_amt').val(final_item_total);
         }
