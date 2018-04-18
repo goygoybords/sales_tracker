@@ -112,7 +112,7 @@ $sql_details = array(
                  ";
         $extraWhere =  "o.prepared_by =".$_SESSION['id']." AND  lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
-    else if($_SESSION['user_type'] == 4)
+    else if($_SESSION['user_type'] == 4 || $_SESSION['user_type'] == 5)
     {
         $joinQuery = "FROM orders o
                     JOIN customer c 
@@ -129,7 +129,7 @@ $sql_details = array(
 
         $extraWhere =  "u.team_id =".$_SESSION['team_id']." AND lower(o.remarks) = 'reshipment' AND o.status = 3" ;
     }
-    else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2 || $_SESSION['user_type'] == 5)
+    else if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 2 )
     {
         $joinQuery = "FROM orders o
                     JOIN customer c 
