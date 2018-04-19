@@ -9,12 +9,9 @@
 	extract($_POST);
 	if(isset($_POST['register_team']))
 	{
-
 		$team->setUserId(intval($user_id));
 		$team->setTeamName(htmlentities($team_name));
 		$team->setGroupId(intval($group_id));
-
-
 		$team->setStatus(1);
 
 		$data = [
@@ -23,8 +20,14 @@
 					'group_id'	 => $team->getGroupId(),
 					'status' => $team->getStatus() ,
 				];
-
 		$result = $db->insert($table, $data);
+		
+		$table = "users";
+		$fields = array('team_id');
+		$where  = "WHERE id = ?";
+		$params = array($db->getDb()->lastInsertId(), $team->getUserId() );
+		$result = $db->update($table, $fields, $where, $params);
+
 		header("location: ../user/manage_teams.php?msg=inserted");
 	}
 
