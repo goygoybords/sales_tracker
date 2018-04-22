@@ -6,7 +6,7 @@
 	$where = "status = ?";
 	$params = array(1);
 
-	$products = $db->select($table, $fields, $where, $params);
+	$products = $db->select($table, $fields, $where, $params, 'order by 2');
 	echo json_encode( $products );
 	
 ?>

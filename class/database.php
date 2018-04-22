@@ -38,12 +38,12 @@
  			}
 
  		}
- 		public function select($table, $fields, $where = '1', $params = array() , $limit = '')
+ 		public function select($table, $fields, $where = '1', $params = array() ,$orderby = '' , $limit = '')
  		{
 	 		//fetchArgs, etc
 	        $fields = implode(', ', $fields);
 	        //create query
-	        $sql = "SELECT {$fields} FROM {$table} WHERE $where $limit";
+	        $sql = "SELECT {$fields} FROM {$table} WHERE $where $orderby $limit";
 
 	        //prepare statement
 	        $cmd = $this->db->prepare($sql);

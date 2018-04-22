@@ -27,7 +27,7 @@
 	$submit_caption = "Save Order";
 	$submit_name = "save_order";
 	
-	$list_product = $db->select("products", array("*"), "status = ?" , array(1));
+	$list_product = $db->select("products", array("*"), "status = ?" , array(1), 'order by 2');
 	$list_countries = $db->select("countries" , array("*"));
 	$list_methods = $db->select("shipping_method", array("*") , "status = 1");
 

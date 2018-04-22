@@ -86,13 +86,14 @@
 
 					</ul><!--end /submenu -->
 				</li><!--end /menu-li -->
-
+				<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 5): ?>
 				<li>
 					<a href="../product/product.php">
 						<div class="gui-icon"><i class="fa fa-list-alt"></i></div>
 						<span class="title">Product</span>
 					</a>
 				</li>
+				<?php endif; ?>
 				<?php if($_SESSION['user_type'] == 1): ?>
 				<li class="gui-folder">
 					<a>
