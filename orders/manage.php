@@ -472,7 +472,7 @@
 								  					</select>
 							                      </td>
 							                      <td><input type="text" name="order_item_quantity[]" id="order_item_quantity1" data-srno="1" class="form-control input-sm order_item_quantity" value = "0.00" /></td>
-												 <?php if($_SESSION['user_type'] == 3): ?>
+												 <?php if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4): ?>
 							                      <td><input readonly type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" value = "0.00" /></td>
 							                  	 <?php else: ?>
 							                  	 <td><input type="text" name="order_item_price[]" id="order_item_price1" data-srno="1" class="form-control input-sm number_only order_item_price" value = "0.00" /></td>
@@ -1172,7 +1172,7 @@
           html_code += '<td><select name="item_name[]" id="item_name'+count+'" class="form-control input-sm" /></select></td>';
           html_code += '<td><input type="text" name="order_item_quantity[]" id="order_item_quantity'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_quantity" value="0.00" /></td>';
 
-          if(session == 3)
+          if(session == 3 || session == 4)
           	html_code += '<td><input readonly type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
           else
           	html_code += '<td><input readonly type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
