@@ -801,6 +801,8 @@
 													<label class="remarks">Remarks</label>
 												</div> -->
 											</div>
+											<?php if($_SESSION['user_type'] == 3 || $_SESSION['user_type'] == 4) { $read_only = "readonly"; }  ?>
+													
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
 														<textarea class ="form-control" name = "notes" <?php echo $read_only; ?> id = "notes" rows = "5"><?php echo $order->getNotes(); ?></textarea>
