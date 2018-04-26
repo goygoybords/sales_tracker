@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2018 at 04:32 AM
+-- Generation Time: Apr 26, 2018 at 02:14 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -293,7 +293,7 @@ CREATE TABLE `customer` (
   `id` int(11) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `contact_number` varchar(15) NOT NULL,
   `alternate_contact_number` varchar(15) NOT NULL,
   `country_id` int(11) NOT NULL,
@@ -358,15 +358,6 @@ CREATE TABLE `groupings` (
   `description` varchar(30) NOT NULL,
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `groupings`
---
-
-INSERT INTO `groupings` (`id`, `description`, `status`) VALUES
-(1, 'Group 1', 1),
-(2, 'Group 2', 1),
-(3, 'Group 3', 1);
 
 -- --------------------------------------------------------
 
@@ -574,6 +565,13 @@ CREATE TABLE `teams` (
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `teams`
+--
+
+INSERT INTO `teams` (`id`, `user_id`, `team_name`, `group_id`, `status`) VALUES
+(1, 1, 'Admin ', 0, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -599,7 +597,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `lastname`, `username`, `password`, `usertypeid`, `team_id`, `screen_name`, `datecreated`, `datelastlogin`, `status`) VALUES
-(1, 'Adminstrator', 'Adminstrator', 'admin', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 0, 'Adminstrator', 0, 1522879200, 1);
+(1, 'admin', 'admin', 'admin', 'rEqbiBtYxeOa4ZSRiIuwkVh532h7w2Ldbgtv+UJ47ek=', 1, 1, 'Adminstrator', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -620,7 +618,8 @@ INSERT INTO `usertypes` (`id`, `type`) VALUES
 (1, 'Admin'),
 (2, 'QA'),
 (3, 'Agent'),
-(4, 'Team Lead');
+(4, 'Team Lead'),
+(5, 'TL - Semi Admin');
 
 --
 -- Indexes for dumped tables
@@ -636,8 +635,7 @@ ALTER TABLE `countries`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `customer_payment_methods`
@@ -746,7 +744,7 @@ ALTER TABLE `customer_refund`
 -- AUTO_INCREMENT for table `groupings`
 --
 ALTER TABLE `groupings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `logs`
 --
@@ -776,7 +774,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `shipping_method`
 --
 ALTER TABLE `shipping_method`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `state`
 --
@@ -786,7 +784,7 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -796,7 +794,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `usertypes`
 --
 ALTER TABLE `usertypes`
-  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

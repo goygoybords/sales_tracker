@@ -33,7 +33,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>Reports</header>
+								<header><i class="fa fa-fw fa-users"></i>TL Semi Reports</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -59,6 +59,7 @@
 										<div class="col-lg-offset-0 col-md-12">
 											<div id = "filters">
 												<div class="row">
+													<?php if($_SESSION['user_type'] == 1): ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<select name = "agents" class = "form-control dirty" id = "agents"  >
@@ -83,6 +84,8 @@
 															<label class="Team/Group">Team</label>
 														</div>
 													</div>
+					
+													<?php endif; ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker1'>
@@ -114,6 +117,7 @@
 															<label class="Status">Status</label>
 														</div>
 													</div>
+													<?php if($_SESSION['user_type'] == 1): ?>
 													<div class="col-sm-6">
 														<div class="form-group">
 															<select name = "groups" class = "form-control dirty" id = "groups"  >
@@ -124,12 +128,14 @@
 															</select>
 															<label class="Group">Groupings</label>
 														</div>
-													</div>													
+													</div>
+													<?php endif; ?>
+													
 												</div>
 											</div>
 											<!-- <input type = "text" name = "filter" id = "filter"> -->
 											<input type = "submit" id = "filteraction" value = "Apply Filter" class = "btn btn-success">
-											<a href = "../process/export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
+												<a href = "../process/tlsemi_export_orders.php" id = "export" class = "btn btn-success">Export To Excel</a>
 												<br/>
 												<br/>
 												<table class = "table display responsive nowrap" id = "lead-tbl">
@@ -140,7 +146,7 @@
 														<th>Prepared By/Salesperson</th>
 														<th>Status</th>		
 													</thead>
-<!-- 							
+<!-- 									
 												</table>
 											</div>
 										</div>
@@ -175,7 +181,7 @@
 	        "sPaginationType": "full_numbers",
 	        "order": [1,'desc'],
 	            "ajax":{
-	                url :"../process/ajax/report_list.php", // json datasource
+	                url :"../process/ajax/internal_report_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
 
@@ -198,9 +204,9 @@
 			if(groups == null)
 				groups = 0;
 
-			$("#export").attr("href", "../process/export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team
+			$("#export").attr("href", "../process/tlsemi_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team
 				+"&status="+status+"&groups="+groups);
-			var data = dataTable.ajax.url( "../process/ajax/report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="
+			var data = dataTable.ajax.url( "../process/ajax/tlsemi_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="
 				+team+"&status="+status+"&groups="+groups).load();
 		});
 	} );

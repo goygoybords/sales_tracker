@@ -133,11 +133,19 @@
 								<span class="title">Internal Reports</span>
 							</a>
 						</li>
-						<?php if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 5):?>
+						<?php if($_SESSION['user_type'] == 1 ):?>
 						<li>
 							<a href="../report/reports.php">
 								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
 								<span class="title">Reports</span>
+							</a>
+						</li>
+						<?php endif; ?>
+						<?php if($_SESSION['user_type'] == 5 ):?>
+						<li>
+							<a href="../report/tlsemi_reports.php">
+								<!-- <div class="gui-icon"><i class="fa fa-table"></i></div> -->
+								<span class="title">TL - Semi Reports</span>
 							</a>
 						</li>
 						<?php endif; ?>
