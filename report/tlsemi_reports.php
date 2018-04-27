@@ -33,7 +33,7 @@
 					<div class="col-lg-offset-0 col-md-12">
 						<div class="card card-underline">
 							<div class="card-head">
-								<header><i class="fa fa-fw fa-users"></i>TL Semi Reports</header>
+								<header><i class="fa fa-fw fa-users"></i>Internal Reports</header>
 							</div><!--end .card-head -->
 							<div class="col-lg-offset-0 col-md-12">
 								<?php
@@ -206,7 +206,7 @@
 
 			$("#export").attr("href", "../process/tlsemi_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="+team
 				+"&status="+status+"&groups="+groups);
-			var data = dataTable.ajax.url( "../process/ajax/tlsemi_export_orders.php?min="+min+"&max="+max+"&agent="+agent+"&team="
+			var data = dataTable.ajax.url( "../process/ajax/internal_report_list_filter.php?min="+min+"&max="+max+"&agent="+agent+"&team="
 				+team+"&status="+status+"&groups="+groups).load();
 		});
 	} );
