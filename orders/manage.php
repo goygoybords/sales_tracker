@@ -618,7 +618,7 @@
 										<div class="row" id = "card_details_view">
     										<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<select name="card_type" class = "form-control" <?php echo $disabled; ?> id = "card_type">
+													<select name="card_type" class = "form-control card_view" <?php echo $disabled; ?> id = "card_type">
 												    	<option value="MasterCard" 
 												    	<?php echo ($customer_payment->getCardType() == "MasterCard" ? "selected='selected'" : ""); ?> >
 												    		MasterCard
@@ -634,25 +634,25 @@
 											</div> 
 											<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<input type="text" name="cardholder" id = "cardholder" <?php echo $read_only; ?> class = "form-control" value = "<?php echo $customer_payment->getCardName(); ?>">
+													<input type="text" name="cardholder" id = "cardholder" <?php echo $read_only; ?> class = "card_view form-control" value = "<?php echo $customer_payment->getCardName(); ?>">
 													<label class="card_holder">Card Holders Name</label>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name="card_number" id = "card_number" class = "form-control" <?php echo $read_only; ?> value = "<?php echo $customer_payment->getCardNumber(); ?>">
+													<input type="text" name="card_number" id = "card_number" class = "card_view form-control" <?php echo $read_only; ?> value = "<?php echo $customer_payment->getCardNumber(); ?>">
 													<label class="card_number">Card Number</label>
 												</div>
 											</div>
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name="expiry_date" id = "expiry_date" class = "form-control" <?php echo $read_only; ?> value = "<?php echo $customer_payment->getExpiryDate(); ?>">
+													<input type="text" name="expiry_date" id = "expiry_date" class = "card_view form-control" <?php echo $read_only; ?> value = "<?php echo $customer_payment->getExpiryDate(); ?>">
 													<label class="expiry_date">Expiry Date (MM/YY)</label>
 												</div>
 											</div> 
 											<div class="col-sm-4">
 												<div class="form-group floating-label">
-													<input type="text" name="cvv" id = "cvv" class = "form-control" <?php echo $read_only; ?> value = "<?php echo $customer_payment->getCvv(); ?>">
+													<input type="text" name="cvv" id = "cvv" class = "card_view form-control" <?php echo $read_only; ?> value = "<?php echo $customer_payment->getCvv(); ?>">
 													<label class="cvv">CVV</label>
 												</div>
 											</div>
@@ -661,24 +661,24 @@
 										<div class="row" id = "check_details_view">
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
-													<input type="text" name="check_account_number" id = "account_number" <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="check_account_number" id = "account_number" <?php echo $read_only; ?> class = "form-control check_view" 
 													value = "<?php echo $customer_payment->getAccountNumber(); ?>">
 													<label class="account_number">Account Number</label>
 												</div>
 
 												<div class="form-group floating-label">
-													<input type="text" name="check_number" id = "check_number"  <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="check_number" id = "check_number"  <?php echo $read_only; ?> class = "form-control check_view" 
 													value = "<?php echo $customer_payment->getCheckNumber(); ?>">
 													<label class="check_number">Check Number</label>
 												</div>
 												<div class="form-group floating-label">
-													<input type="text" name="check_bank_name" id = "bank_name" <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="check_bank_name" id = "bank_name" <?php echo $read_only; ?> class = "form-control check_view" 
 													value = "<?php echo $customer_payment->getBankName(); ?>">
 													<label class="bank_name">Bank Name </label>
 												</div>
 
 												<div class="form-group floating-label">
-													<input type="text" name="check_routing_number" id = "routing_number" <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="check_routing_number" id = "routing_number" <?php echo $read_only; ?> class = "form-control check_view" 
 													value = "<?php echo $customer_payment->getRoutingNumber(); ?>">
 													<label class="routing_number">Routing Number</label>
 												</div>
@@ -688,19 +688,19 @@
 										<div class="row" id = "savings_details_view">
 											<div class="col-sm-12">
 												<div class="form-group floating-label">
-													<input type="text" name="account_number" id = "account_number"  <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="account_number" id = "account_number"  <?php echo $read_only; ?> class = "form-control savings_view" 
 													value = "<?php echo $customer_payment->getAccountNumber(); ?>">
 													<label class="account_number">Account Number</label>
 												</div>
 
 												<div class="form-group floating-label">
-													<input type="text" name="bank_name" id = "bank_name" <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="bank_name" id = "bank_name" <?php echo $read_only; ?> class = "form-control savings_view" 
 													value = "<?php echo $customer_payment->getBankName(); ?>">
 													<label class="bank_name">Bank Name </label>
 												</div>
 
 												<div class="form-group floating-label">
-													<input type="text" name="routing_number" id = "routing_number" <?php echo $read_only; ?> class = "form-control" 
+													<input type="text" name="routing_number" id = "routing_number" <?php echo $read_only; ?> class = "form-control savings_view" 
 													value = "<?php echo $customer_payment->getRoutingNumber(); ?>">
 													<label class="routing_number">Routing Number</label>
 												</div>
@@ -930,18 +930,31 @@
 			$("#card_details_view").show();
 			$("#check_details_view").hide();
 			$("#savings_details_view").hide();
+
+			$(".card_view").prop("required", true);
+	       	$(".check_view").removeProp("required");
+	       	$(".savings_view").removeProp("required");
 		}
 		else if(payment == 2)
 		{
 			$("#card_details_view").hide();
 	       	$("#check_details_view").show();
 	       	$("#savings_details_view").hide();
+
+	       	$(".card_view").removeProp("required");
+	       	$(".check_view").prop("required", true)
+	       	$(".savings_view").removeProp("required");
 		} 
 		else if(payment == 3)
 		{
 			$("#card_details_view").hide();
 	       	$("#check_details_view").hide();
 	       	$("#savings_details_view").show();
+
+
+	       	$(".card_view").removeProp("required");
+	       	$(".check_view").removeProp("required");
+	       	$(".savings_view").prop("required", true)
 
 		}
 		$('#payment_method').change(function()
@@ -952,18 +965,30 @@
 	       			$("#card_details_view").show();
 	       			$("#check_details_view").hide();
 	       			$("#savings_details_view").hide();
+
+	       			$(".card_view").prop("required", true)
+	       			$(".check_view").removeProp("required");
+	       			$(".savings_view").removeProp("required");
 	       		}
 	       		if(payment == 2)
 	       		{
 	       			$("#card_details_view").hide();
 			       	$("#check_details_view").show();
 			       	$("#savings_details_view").hide();
+
+			       	$(".card_view").removeProp("required");
+	       			$(".check_view").prop("required", true)
+	       			$(".savings_view").removeProp("required");
 	       		}
 	       		else if(payment == 3)
 	       		{
 	       			$("#card_details_view").hide();
 			       	$("#check_details_view").hide();
 			       	$("#savings_details_view").show();
+
+			       	$(".card_view").removeProp("required");
+	       			$(".check_view").removeProp("required");
+	       			$(".savings_view").prop("required", true)
 	       		}
 
 	       }
