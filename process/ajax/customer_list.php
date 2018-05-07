@@ -36,6 +36,22 @@ $columns = array(
     array( 'db' => '`c`.`shipping_address`',  'dt' => 3, 'field' => 'shipping_address' ),
     array( 'db' => '`c`.`id`',              'dt' => 4, 'formatter' => function( $d, $row )
             {
+                if($_SESSION['user_type'] == 3)
+                {
+                    return '
+                         <a href="customer_orders.php?id='.$d.'" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-edit"></i> View Orders
+                            </span>
+                        </a> 
+                        <a href="../process/customer_manage.php?id='.$d.'&p=list&del" onclick="return confirm(\'Are you sure you want to blacklist this record?\')" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-remove"></i> Blocked
+                            </span>
+                        </a>
+                        ';
+
+                }
                 return '
                          <a href="customer_orders.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
