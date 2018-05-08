@@ -618,17 +618,8 @@
 										<div class="row" id = "card_details_view">
     										<div class="col-sm-6">
 												<div class="form-group floating-label">
-													<select name="card_type" class = "form-control card_view" <?php echo $disabled; ?> id = "card_type">
-												    	<option value="MasterCard" 
-												    	<?php echo ($customer_payment->getCardType() == "MasterCard" ? "selected='selected'" : ""); ?> >
-												    		MasterCard
-												    	</option>
-												      	<option value="American Express" 
-												      		<?php echo ($customer_payment->getCardType() == "American Express" ? "selected='selected'" : ""); ?>>American Express</option>
-													    <option value="Visa" <?php echo ($customer_payment->getCardType() == "Visa" ? "selected='selected'" : ""); ?> >Visa</option>
-													    <option value="Discover" <?php echo ($customer_payment->getCardType() == "Discover" ? "selected='selected'" : ""); ?> >Discover</option>
-													
-												    </select>
+												<input type="text" name="card_type" id = "card_type" <?php echo $read_only; ?> class = "card_view form-control" value = "<?php echo $customer_payment->getCardType(); ?>">
+												
 													<label class="card_type">Card Type</label>
 												</div>
 											</div> 
