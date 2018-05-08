@@ -41,6 +41,8 @@
 										$error = 'Record was deleted previously';
 									else if($msg == 'none')
 										$error = 'Sorry, the record selected does not exist.';
+									else if($msg == 'blacklist')
+										$error = 'Customer Record was blacklisted';
 									else if($msg == 'approved')
 										$error = 'Record Approved';
 									echo '<span>'.$error.'</span>';

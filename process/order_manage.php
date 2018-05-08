@@ -20,7 +20,7 @@
 	
 	extract($_POST);
 
-	if(!isset($_GET['approve']) && !isset($_GET['send_mail']) && !isset($_GET['add_tracking']))
+	if(!isset($_GET['approve']) && !isset($_GET['send_mail']) && !isset($_GET['add_tracking']) &&!isset($_GET['blacklist']))
 	{
 		$customer->setFirstName(htmlentities($firstname));
 		$customer->setLastname(htmlentities($lastname));
@@ -493,10 +493,29 @@
 		header("location: ../orders/approved_orders.php?msg=approved");
 	}
 
+	if(isset($_GET['blacklist']))
+	{
+
+		$order_id = $_GET['id'];
+		$customer = $db->select('orders' , array('customer_id'), "id = ?" , array($order_id) );
+			
+		$fields = array("status");
+		$where  = "WHERE id = ?";
+		$params = array(0, $customer[0][0]);
+		$db->update("customer", $fields , $where, $params);
+
+		$data = [
+				'description' => "Blacklist an Order",
+				'date_log'    => date("Y-m-d h:i:sa"),
+				'user_id'     => intval($_SESSION['id']) ,
+				'order_id'    => $order_id,
+			];			
+		$logs = $db->insert("logs", $data);
+		header("location: ../orders/unapproved_orders.php?msg=deleted");
+	}
+
 	if(isset($_GET['shipped']))
 	{
-		echo "okay";
-
 		$order_id = $_GET['id'];
 		$order->setStatus(3);
 		$table  = "orders";

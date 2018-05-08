@@ -74,6 +74,11 @@ $columns = array(
                                 <i class="fa fa-check-square-o"></i> Approve 
                             </span>
                         </a>
+                        <a href="../process/order_manage.php?id='.$d.'&blacklist" onclick="return confirm(\'Are you sure you want to blacklist this record?\')" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-check-square-o"></i> Blacklist 
+                            </span>
+                        </a>
                         ';
                 }
                 else 
