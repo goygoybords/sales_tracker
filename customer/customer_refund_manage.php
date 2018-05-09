@@ -19,7 +19,7 @@
 	$name = "save_entry";
 	$msg = (isset($_GET["msg"]) ? $_GET["msg"] : "");
 
-	$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 2 AND refunded = 0"); //status is being shipped already 
+	$list_orders = $db->select('orders' , array('id' , 'invoice_number') , "status = 3 AND refunded = 0"); //status is being shipped already 
 	 
 	if($refund_id)
 	{
