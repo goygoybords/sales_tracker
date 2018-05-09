@@ -45,6 +45,8 @@
 										$error = 'Record has a tracking number';
 									else if($msg == 'shipped')
 										$error = 'Order Shipped';
+									else if($msg == 'refund')
+										$error = 'Order Refunded';
 									echo '<span>'.$error.'</span>';
 								}
 							?>

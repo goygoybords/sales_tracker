@@ -4,7 +4,7 @@
 	
 	$db = new Database();
 	$refund = new Refund();
-
+	session_start();
 	
 	$table = "customer_refund";
 	extract($_POST);
@@ -93,17 +93,44 @@
 				];
 		header("location: ../customer/customer_refund_manage.php?id=".$id."&msg=updated");
 	}
-	if(isset($_GET['del']))
+	if(isset($_GET['refund']))
 	{
-		// $refund->setId($_GET['id']);
-		// $refund->setStatus(0);
-		// $table  = "refunds";
-		// $fields = array('status');
-		// $where  = "WHERE id = ?"; 
-		// $params = array($refund->getStatus(), $refund->getId() );
-		// $result = $db->update($table, $fields, $where, $params);
-		// header("location: ../refund/refund.php?&msg=deleted");
+		$table = "orders";
+		$fields = array('total');
+		$where = "id = ?";
+		$params = array(intval($_GET['id']));
+		$amount_db = $db->select($table, $fields, $where, $params);
+		
 
+		$refund->setOrderId(intval($_GET['id']));
+		$refund->setDate(date('Y-m-d'));
+		$refund->setAmount(intval($amount_db[0][0]));
+		$refund->setStatus(1);
+
+		$data = [
+					'date'      => $refund->getDate(), 
+					'order_id'  => $refund->getOrderId() ,
+					'amount'    => $refund->getAmount()    ,
+					'status'    => $refund->getStatus() ,
+				];
+
+		$result = $db->insert("customer_refund", $data);
+		$data = [
+					'description' => "Refunded an Order",
+					'date_log'    => date("Y-m-d h:i:sa"),
+					'user_id'     => intval($_SESSION['id']) ,
+					'order_id'    => $refund->getOrderId(),
+				];
+						
+		$logs = $db->insert("logs", $data);
+
+		$table  = "orders";
+		$fields = array('refunded');
+		$where  = "WHERE id = ?";
+		$params = array(1 , $refund->getOrderId() );
+		$result = $db->update($table, $fields, $where, $params);
+
+		header("location: ../orders/shipped_orders.php?msg=refund");
 	}
 	
 ?>

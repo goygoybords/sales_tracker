@@ -58,7 +58,7 @@ $columns = array(
     
     array( 'db' => '`o`.`id`',          'dt' => 9, 'formatter' => function( $d, $row )
             {
-              if($_SESSION['user_type'] == 1)
+              if($_SESSION['user_type'] == 1 || $_SESSION['user_type'] == 5)
               {
                 return ' <a href="manage.php?id='.$d.'&add_tracking" >
                             <span class="label label-inverse" style = "color:black;">
@@ -68,6 +68,11 @@ $columns = array(
                         <a href="manage.php?id='.$d.'" >
                             <span class="label label-inverse" style = "color:black;">
                                 <i class="fa fa-edit"></i> Edit
+                            </span>
+                        </a>
+                        <a href="../process/refund_manage.php?id='.$d.'&refund" onclick="return confirm(\'Refund Customer?\')" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-check-square-o"></i> Refund 
                             </span>
                         </a>';
               }
