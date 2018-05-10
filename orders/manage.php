@@ -1019,9 +1019,12 @@
 					  success: function(data)
 	                   {	
 	                   		var parse = JSON.parse(data);
-	                   		for (var i = 0; i < parse.length; i++) 
+	                   		if(parse[1] != undefined)
 	                   		{
-	                   			console.log();
+	                   			alert("This Customer has a refund");
+	                   		}
+	                   		for (var i = 0; i < 1; i++) 
+	                   		{
 	                   			$("#firstname").val(parse[i].firstname).addClass("dirty");
 	                   			$("#lastname").val(parse[i].lastname).addClass("dirty");
 	                   			$("#contact_num").val(parse[i].contact_number).addClass("dirty");
