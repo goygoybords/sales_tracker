@@ -265,7 +265,7 @@
 			$order->setDateUpdated(date('Y-m-d H:i:s'));
 			$order->setUpdatedBy($_SESSION['id']);
 
-			$fields = array('firstname' ,'lastname' ,'contact_number' ,'alternate_contact_number','country_id','shipping_address' , 'city' , 'zip', 'state_id' , 'same' , 'billing_country_id','billing_city' , 'billing_zip' , 'billing_zip' , 'billing_state_id');
+			$fields = array('firstname' ,'lastname' ,'contact_number' ,'alternate_contact_number','country_id','shipping_address' , 'city' , 'zip', 'state_id' , 'same' , 'billing_country_id','billing_address' , 'billing_city' , 'billing_zip' , 'billing_state_id');
 				$where  = "WHERE id = ?";
 				$params = array(
 						$customer->getFirstname(),
