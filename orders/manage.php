@@ -429,7 +429,7 @@
 											<div class="col-sm-12">
 														<div class="form-group">
 											                <div class='input-group date' id='datetimepicker1'>
-											                    <input type='text' id = "order_date" name = "order_date" value = "<?php echo $order->getOrderDate(); ?>" placeholder="Order Date" class="form-control"   />
+											                    <input <?php echo $disabled; ?> type='text' id = "order_date" name = "order_date" value = "<?php echo $order->getOrderDate(); ?>" placeholder="Order Date" class="form-control"   />
 											                    <span class="input-group-addon">
 											                        <span class="glyphicon glyphicon-calendar"></span>
 											                    </span>
