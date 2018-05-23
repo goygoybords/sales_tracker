@@ -65,6 +65,7 @@
 														<th>Order ID</th>
 														<th>Date</th>
 														<th>Customer</th>
+														<th>Contact #</th>
 														<th>Remarks</th>
 														<th>Notes</th>
 														<th>Total</th>

@@ -38,19 +38,20 @@ $columns = array(
             }, 'field' => 'order_date' 
         ),
     array( 'db' => "CONCAT_WS( '', `c`.`firstname`, ' ' ,`c`.`lastname` )", "dt" => 2, "field" => "customer_name", "as" => "customer_name" ),
-    array( 'db' => '`o`.`remarks`',     'dt' => 3, 'field' => 'remarks' ),
-    array( 'db' => '`o`.`notes`',     'dt' => 4, 'field' => 'notes' ),
-    array( 'db' => '`o`.`total`', 'dt' => 5, 'formatter' => function( $d, $row )
+    array( 'db' => '`c`.`contact_number`',     'dt' => 3, 'field' => 'contact_number' ),
+    array( 'db' => '`o`.`remarks`',     'dt' => 4, 'field' => 'remarks' ),
+    array( 'db' => '`o`.`notes`',     'dt' => 5, 'field' => 'notes' ),
+    array( 'db' => '`o`.`total`', 'dt' => 6, 'formatter' => function( $d, $row )
             {
                 return "$".$d;
             }, 'field' => 'total' 
         ),
     // array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 6, "field" => "approved_by", "as" => "approved_by" ),
     // array( 'db' => '`u`.`screen_name`' , "dt" => 6, "field" => "prepared_by", "as" => "prepared_by" ),
-    array( 'db' => '`up`.`screen_name`' , "dt" => 6, "field" => "approved_by", "as" => "approved_by" ),
+    array( 'db' => '`up`.`screen_name`' , "dt" => 7, "field" => "approved_by", "as" => "approved_by" ),
     // array( 'db' => "CONCAT_WS( '', `up`.`first_name`, ' ' ,`up`.`lastname` )", "dt" => 7, "field" => "updated_by", "as" => "updated_by" ),
-    array( 'db' => '`t`.`team_name`',     'dt' => 7, 'field' => 'team_name' ),
-    array( 'db' => '`o`.`id`',          'dt' => 8, 'formatter' => function( $d, $row )
+    array( 'db' => '`t`.`team_name`',     'dt' => 8, 'field' => 'team_name' ),
+    array( 'db' => '`o`.`id`',          'dt' => 9, 'formatter' => function( $d, $row )
             {
               if($_SESSION['user_type'] == 1)
               {
