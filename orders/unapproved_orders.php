@@ -7,9 +7,8 @@
 
 	include '../include/start.html';
 	require('../include/header.php');
-
-	
 ?>
+
 <!-- BEGIN BASE-->
 <div id="base">
 
@@ -59,7 +58,6 @@
 										</div>
 										<br />
 										<div class="col-lg-offset-0 col-md-12">
-											
 												<table class = "table display responsive nowrap" id = "lead-tbl">
 													<thead>
 														<th>Order ID</th>
@@ -73,28 +71,7 @@
 														<th>Team</th>
 														<th>Status</th>
 														<th>Action</th>
-														<!-- 
-														<th>Date Processed</th>
-														<th>Customer</th>
-														<th>Total</th>
-														<th>Shipping Method</th>
-														<th>Remarks</th>
-														<th>Notes</th>
-														<th>Prepared By/Salesperson</th>
-														<th>Updated By</th>
-														<th>Action</th> -->
 													</thead>
-<!-- 													<tfoot>
-														<tr>
-															<td><input type="text" data-column="0"  placeholder = "Search ID" class="search-input-text"></td>
-															<td><input type="text" data-column="1"  placeholder = "Search Lead Status" class="search-input-text"></td>
-															<td><input type="text" data-column="2"  placeholder = "Search Name" class="search-input-text"></td>
-															<td><input type="text" data-column="3"  placeholder = "Search Position" class="search-input-text"></td>
-															<td><input type="text" data-column="4"  placeholder = "Search SI Code" class="search-input-text"></td>
-															<td><input type="text" data-column="5"  placeholder = "Search Address" class="search-input-text"></td>
-															<td></td>
-														</tr>
-													</tfoot> -->
 												</table>
 											</div>
 										</div>
@@ -123,17 +100,30 @@
 			
 		var dataTable = $('#lead-tbl').DataTable(
 	    {
+	    	"aoColumns": [ 
+	    	 	null, null, null, null, { "sClass": "long_text_edit" }, { "sClass": "long_text_edit" }, null,
+		        null, null, null, null,
+		        ],
 			"bProcessing": true,
 			"bServerSide": true,
 				"responsive": true,
 	        "sPaginationType": "full_numbers",
+	        "iDisplayLength": 25,
 	        "order": [0,'desc'],
 	            "ajax":{
 	                url :"../process/ajax/unapproved_order_list.php", // json datasource
 	                type: "get",  // method  , by default get
 	            }
-
-
 	    } );
 	} );
 </script>
+
+<style type="text/css">
+			.dataTable th, .dataTable td {
+			max-width: 80px;
+			min-width: 70px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			}
+		</style>

@@ -125,3 +125,12 @@
 	} );
 </script>
 
+<style type="text/css">
+		.dataTable th, .dataTable td {
+		max-width: 80px;
+		min-width: 70px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		}
+</style>
