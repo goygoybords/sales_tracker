@@ -519,7 +519,7 @@
 							                      	<input <?php echo $read_only; ?> type="text" name="order_item_price[]" id="order_item_price<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_price" value="<?php echo $details->getUnitPrice(); ?>" /></td>
 							                      <td>
 							                      	<input <?php echo $read_only; ?> type="text" name="order_item_actual_amount[]" id="order_item_actual_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_actual_amount" value="<?php echo $details->getAmount(); ?>"  /></td>
-							                      <td></td>
+							                      <td><button type="button" name="remove_row" id="<?php echo $m; ?>" class="btn btn-danger btn-xs remove_row">X</button></td>
 							                    </tr>
 												<?php  $m++; endforeach; ?>
 							            	<?php endif;?>
@@ -1174,7 +1174,6 @@
 		var count = 0;
 		var final_total_amt = $('#final_total_amt').text();
 		var session = $("#session_id").val();
-
 		if(state == 1)
 		{
         	count = 1;
@@ -1196,7 +1195,7 @@
           if(session == 3 || session == 4)
           	html_code += '<td><input readonly type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
           else
-          	html_code += '<td><input readonly type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
+          	html_code += '<td><input type="text" name="order_item_price[]" id="order_item_price'+count+'" data-srno="'+count+'" class="form-control input-sm number_only order_item_price" value="0.00" /></td>';
           
           html_code += '<td><input type="text" name="order_item_actual_amount[]" id="order_item_actual_amount'+count+'" data-srno="'+count+'" class="form-control input-sm order_item_actual_amount" value="0.00" /></td>';
           html_code += '<td><button type="button" name="remove_row" id="'+count+'" class="btn btn-danger btn-xs remove_row">X</button></td>';
@@ -1222,8 +1221,8 @@
         
         $(document).on('click', '.remove_row', function(){
           var row_id = $(this).attr("id");
-          var total_item_amount = $('#order_item_final_amount'+row_id).val();
-          var final_amount = $('#final_total_amt').text();
+          var total_item_amount = $('#order_item_actual_amount'+row_id).val();
+          var final_amount = $('#final_total_amt').val();
           var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
           $('#final_total_amt').val(result_amount);
           $('#row_id_'+row_id).remove();
