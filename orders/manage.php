@@ -1238,7 +1238,7 @@
             success: function(data)
             {
             	console.log(data);
-            	$('#invoice-item-table').load(document.URL +  ' #invoice-item-table');
+            	$('#invoice-item-table').load(document.URL +  ' #invoice-item-table'); //loader
             }
         	});
           $('#final_total_amt').val(result_amount);
