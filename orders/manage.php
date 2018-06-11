@@ -416,7 +416,7 @@
 										<br />
 
 										<input type="hidden" name="customer_id_fm" value="<?php echo $customer->getCustomerId(); ?>">
-										<input type="hidden" name="order_id_fm" value = "<?php echo $order->getOrderId(); ?>">
+										<input type="hidden" name="order_id_fm" id = "order_id"  value = "<?php echo $order->getOrderId(); ?>">
 										<input type="hidden" name="payment_method_id_fm" value = "<?php echo $order->getPaymentMethodId(); ?>">
 										
 										<input type="hidden" id = "session_id" value="<?php echo $_SESSION['user_type']; ?>">
@@ -496,7 +496,7 @@
 							                      	<input type="hidden" name="counter" id = "counter" value="<?php echo count($get_orders); ?>">
 							                      </td>
 							                      <td>
-							                      		<select name="item_name[]" id="item_name1" class="form-control input-sm" <?php echo $disabled; ?> >
+							                      		<select name="item_name[]" id="item_name<?php echo $m; ?>" class="form-control input-sm" <?php echo $disabled; ?> >
 															<option disabled selected>Choose Items Here</option>
 									  							<?php 
 									  								foreach ($list_product as $p ) : 
@@ -519,7 +519,11 @@
 							                      	<input <?php echo $read_only; ?> type="text" name="order_item_price[]" id="order_item_price<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm number_only order_item_price" value="<?php echo $details->getUnitPrice(); ?>" /></td>
 							                      <td>
 							                      	<input <?php echo $read_only; ?> type="text" name="order_item_actual_amount[]" id="order_item_actual_amount<?php echo $m; ?>" data-srno="<?php echo $m; ?>" class="form-control input-sm order_item_actual_amount" value="<?php echo $details->getAmount(); ?>"  /></td>
-							                      <td><button type="button" name="remove_row" id="<?php echo $m; ?>" class="btn btn-danger btn-xs remove_row">X</button></td>
+							                      <td>
+							                      	<?php if ($m > 1): ?>
+							                      		<button type="button" name="remove_row2" id="<?php echo $m; ?>" class="btn btn-danger btn-xs remove_row2">X</button>
+							                      	<?php endif; ?>
+							                      </td>
 							                    </tr>
 												<?php  $m++; endforeach; ?>
 							            	<?php endif;?>
@@ -1217,6 +1221,26 @@
         	});
 
           $('#invoice-item-table').append(html_code);
+        });
+
+        $(document).on('click', '.remove_row2', function(){
+         	var row_id = $(this).attr("id");
+          	var total_item_amount = $('#order_item_actual_amount'+row_id).val();
+          	var final_amount = $('#final_total_amt').val();
+          	var result_amount = parseFloat(final_amount) - parseFloat(total_item_amount);
+          	var item = $( "#item_name"+row_id ).val();
+          	var order_id = $("#order_id").val();
+
+         	$.ajax({
+            type: "POST",
+            url: '../process/ajax/delete_specific_item.php',
+            data: {"product_id": item, "order_id":order_id, "total":result_amount},
+            success: function(data)
+            {
+            	console.log(data);
+            }
+        	});
+          $('#final_total_amt').val(result_amount);
         });
         
         $(document).on('click', '.remove_row', function(){
