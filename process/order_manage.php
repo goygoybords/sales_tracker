@@ -511,7 +511,7 @@
 				'order_id'    => $order_id,
 			];			
 		$logs = $db->insert("logs", $data);
-		header("location: ../orders/unapproved_orders.php?msg=deleted");
+		header("location: ../orders/unapproved_orders.php?msg=blacklisted");
 	}
 
 	if(isset($_GET['shipped']))
@@ -536,50 +536,20 @@
 		header("location: ../orders/shipped_orders.php?&msg=shipped");
 	}
 
-	if(isset($_GET['send_mail']))
+	if(isset($_GET['delete']))
 	{
-		require '../class/phpmailer/PHPMailerAutoload.php';
-		// $order_id = $_GET['id'];
-		// // $order->setOrderId($order_id);
-		
-		// // $get_customer_id = $db->select('orders' , array("customer_id" , "tracking_number"), "id = ?" , array($order->getOrderId() ) );
-		// // $get_email = $db->select('customer' , array('firstname','lastname','email') , 
-		// // 	'id = ?' , array($get_customer_id[0]['customer_id']) );
-
-		// // 	$tracking_number = $get_customer_id[0][1] + 1;
-		// // 	$fields = array("tracking_number");
-		// // 	$where  = "WHERE id = ?";
-		// // 	$params = array($tracking_number , $order->getOrderId());
-		// // 	$db->update("orders", $fields , $where, $params);
-
-		$mail = new PHPMailer;
-		$mail->isSMTP();                                      // Set mailer to use SMTP
-		$mail->SMTPAuth = true;  // authentication enabled
-		$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for GMail
-		$mail->Host = 'smtp.gmail.com';
-		$mail->Port = 465; 
-		$mail->Username = "john.flashpark@gmail.com";  
-		$mail->Password = "goygoy08";
-
-		$mail->setFrom('salestracker@no-reply.com', 'Mailer');
-		$mail->addAddress($get_email[0][2], $get_email[0][0]." ".$get_email[0][1]);     // Add a recipient
-		// $mail->addAddress('ellen@example.com');               // Name is optional
-		//mail->addReplyTo('info@example.com', 'Information');
-		
-		$mail->isHTML(true);                                  // Set email format to HTML
-
-		$mail->Subject = 'Order Process';
-		$mail->Body    = 'Hi. Good Day. <br> We have processed your order. <br> Your Tracking Number is:'.$tracking_number.' ';
-
-		if(!$mail->send()) {
-		    echo 'Message could not be sent.';
-		    echo 'Mailer Error: ' . $mail->ErrorInfo;
-		} 
-		else 
-		{
-		    header("location: ../orders/shipped_orders.php?msg=sent");
-		}
+		$order_id = $_GET['id'];
+		$result = $db->delete("orders", "id = ?" , array($order_id )  );
+		$data = [
+				'description' => "Deleted an Unapproved Order",
+				'date_log'    => date("Y-m-d h:i:sa"),
+				'user_id'     => intval($_SESSION['id']) ,
+				'order_id'    => $order_id,
+			];			
+		$logs = $db->insert("logs", $data);
+		header("location: ../orders/unapproved_orders.php?msg=deleted");
 	}
+
 	if(isset($_POST['add_tracking_number']))
 	{
 		$order->setOrderId($order_id_fm);

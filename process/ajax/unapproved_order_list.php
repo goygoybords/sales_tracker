@@ -80,6 +80,11 @@ $columns = array(
                                 <i class="fa fa-check-square-o"></i> Blacklist 
                             </span>
                         </a>
+                        <a href="../process/order_manage.php?id='.$d.'&delete" onclick="return confirm(\'Are you sure you want to delete this record?\')" >
+                            <span class="label label-inverse" style = "color:black;">
+                                <i class="fa fa-check-square-o"></i> Delete 
+                            </span>
+                        </a>
                         ';
                 }
                 else 
