@@ -37,6 +37,15 @@
 	{
 		$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "created_by = ? AND status = ?", array($_SESSION['id'] , 1));
 	}
+	else if($_SESSION['user_type'] == 4)
+	{
+		//this query is for the TL's view of his team's customer.
+		$sql = "SELECT c.id, c.firstname, c.lastname, u.username, t.team_name FROM customer c 
+				JOIN users u ON c.created_by = u.id JOIN teams t ON u.team_id = t.id WHERE t.id = ? AND c.status = ?";
+        $cmd = $db->getDb()->prepare($sql);
+        $cmd->execute(array(intval($_SESSION['team_id']), 1)); 
+        $list_customer = $cmd->fetchAll();
+	}
 	else
 	{
 		$list_customer = $db->select("customer" , array('id' , 'firstname' , 'lastname'), "status = 1");
